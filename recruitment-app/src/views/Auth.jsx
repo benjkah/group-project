@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 function Auth() {
   const [isLoginMode, setIsLoginMode] = useState(true);
   //const [email, setEmail] = useState('');
@@ -67,6 +67,10 @@ function Auth() {
       <button onClick={() => setIsLoginMode(!isLoginMode)} style={{ marginTop: '10px' }}>
         {isLoginMode ? 'Need to create an account?' : 'Already have an account?'}
       </button>
+
+
+     <div><Link to="/profile">Go to Profile</Link></div>
+
     </div>
   );
 }
