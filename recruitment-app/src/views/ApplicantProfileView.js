@@ -7,7 +7,8 @@ export default observer(
     function ApplicantProfileView(props) 
     {
 
-      
+        
+        console.log("ENTERING APV")
 
        // remove compenets
         function handleRemoveCompetenceACB(id)
