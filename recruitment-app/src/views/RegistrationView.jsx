@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
+import { Link } from 'react-router-dom';
 
 function RegistrationView({ onRegister }) {
   console.log("RegView")
@@ -12,6 +13,8 @@ function RegistrationView({ onRegister }) {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
+  const passwordsMatch = "" // might not be optimal
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -23,8 +26,10 @@ function RegistrationView({ onRegister }) {
       username,
       password,
       confirmPass,
-      role_id: 1 // default applicant, or let them choose if recruiter should be able to register as well
+      role_id: 2 // default applicant, or let them choose if recruiter should be able to register as well
     };
+    
+    const passwordsMatch = password === confirmPass; // same here
 
     const result = await onRegister(userData);
     if (!result.success) {
@@ -108,11 +113,14 @@ function RegistrationView({ onRegister }) {
             required
           />
         </div>
-
+        {!passwordsMatch && confirmPass.length > 0 && (
+          <div className="error-message">Passwords do not match</div>
+        )}
         <button type="submit">
           Sign Up
         </button>
       </form>
+      <p>Already have an account? <Link to="/">Log in here</Link></p>
     </div>
   );
 }

@@ -7,7 +7,7 @@ class UserModel {
   pnr = "";          
   email = "";       
   password = "";     
-  role_id = 1;        // 1=Applicant, 2=Recruiter (placeholder?)
+  role_id = 1;        // 1=Recruiter, 2=Applicant (placeholder?)
   username = "";      
 
 
@@ -26,6 +26,7 @@ class UserModel {
   setUsername(value) { this.username = value; }
   setRole(role) { this.role_id = role; }
   setLoggedIn(status) { this.isLoggedIn = status; }
+  setPersonID(value) {this.person_id = value}
 
 }
 
