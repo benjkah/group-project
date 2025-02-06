@@ -3,6 +3,51 @@ const { config } = require("./config");
 
 let database = null;
 
+async function executeQuery(query, values = [], paramNames = [], isStoredProcedure = true, outputParamName = null) {
+    try {
+      const pool = await sql.connect(config);
+      const request = pool.request();
+  
+      if (values && paramNames) {
+        for (let i = 0; i < values.length; i++) {
+          request.input(paramNames[i], values[i]);
+        }
+      }
+  
+      // Handle output parameter
+      if (outputParamName) {
+        request.output(outputParamName, sql.Int);
+      }
+      
+      // console.log("VALUES ", values);
+      // console.log("PARAM ", paramNames);
+      // console.log("QUERY " , query);
+      // console.log("REQUEST ", request.parameters);
+      values.forEach((val, index) => {
+        if (typeof val === 'undefined') {
+          console.error(`Undefined value found for ${paramNames[index]}`);
+        }
+      });
+      
+      let result;
+      if (isStoredProcedure) {
+        result = await request.execute(query);
+      } else {
+        result = await request.batch(query);
+      }
+  
+      if (outputParamName) {
+        result = { ...result, [outputParamName]: request.parameters[outputParamName].value };
+      }
+  
+      return result;
+    
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
 /*
 
 
@@ -40,6 +85,7 @@ export default class Database {
     }
 }
 */
+/*
 class Database {
     config = {};
     poolconnection = null;
@@ -95,7 +141,7 @@ module.exports = {
     database: new Database,
     sql
 };
-
+*/
 
 /*
 
@@ -106,3 +152,9 @@ export const createDatabaseConnection = async () => {
     return database;
 };
 */
+
+module.exports = {
+    connect: () => sql.connect(config),
+    sql,
+    executeQuery
+  };

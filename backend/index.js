@@ -2,14 +2,15 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser')
 require('dotenv').config();
-const { createDatabaseConnection, connect } = require("./database.js")
+const { connect } = require("./database.js");
+// const { createDatabaseConnection, connect } = require("./database.js")
 
 const router = require('./routes/router')
 
 const app = express()
 
 
-/*
+
 connect()
   .then((connection) => {
     console.log("Connected to the database.");
@@ -18,7 +19,6 @@ connect()
     console.log("Database connection failed!");
     console.log(error);
   });
-*/
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
