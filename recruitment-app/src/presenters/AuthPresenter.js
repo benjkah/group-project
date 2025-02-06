@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
-import userModel from "../models/UserModel"; 
+import userModel from "../models/UserModel";
+import { login as apiLogin, register as apiRegister } from "../services/AuthAPI";
 
 
 function AuthPresenter({ view: ViewComponent, mode }) {
@@ -8,22 +9,29 @@ function AuthPresenter({ view: ViewComponent, mode }) {
   console.log("AuthPres")
 
   async function login(username, password) {
-    // basic validation
     if (!username || !password) {
       return { success: false, message: "Username/Password required." };
     }
 
-    // test username/pass
-    const mockIsValid = (username === "test" && password === "123");
-    if (!mockIsValid) {
-      return { success: false, message: "Invalid credentials." };
-    }
+    try {
+      const data = await apiLogin(username, password);
 
-    // on success, update userModel
-    userModel.setUsername(username);
-    userModel.setLoggedIn(true);
-    return { success: true };
+      // Update the model with data returned from the API
+      userModel.setPersonID(data.personID)
+      userModel.setUsername(data.username);
+      userModel.setName(data.name);
+      userModel.setSurname(data.surname);
+      userModel.setPNR(data.pnr);
+      userModel.setEmail(data.email);
+      userModel.setRole(data.role_id);
+      userModel.setLoggedIn(true);
+
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
+
 
   async function registerUser(userData) {
     if (!userData.name || !userData.surname || !userData.pnr ||
@@ -34,17 +42,22 @@ function AuthPresenter({ view: ViewComponent, mode }) {
       return { success: false, message: "Passwords do not match." };
     }
 
+    try {
+      const data = await apiRegister(userData);
+      
+      userModel.setPersonID(data.personID)
+      userModel.setUsername(data.username);
+      userModel.setName(data.name);
+      userModel.setSurname(data.surname);
+      userModel.setPNR(data.pnr);
+      userModel.setEmail(data.email);
+      userModel.setRole(data.role_id);
+      userModel.setLoggedIn(true);
 
-    userModel.setName(userData.name);
-    userModel.setSurname(userData.surname);
-    userModel.setPNR(userData.pnr);
-    userModel.setEmail(userData.email);
-    userModel.setUsername(userData.username);
-    userModel.setPassword(userData.password);
-    userModel.setRole(userData.role_id || 1);
-    userModel.setLoggedIn(true);
-
-    return { success: true };
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   }
 
   // pass the correct handlers to the ViewComponent
@@ -57,5 +70,4 @@ function AuthPresenter({ view: ViewComponent, mode }) {
     />
   );
 }
-
 export default observer(AuthPresenter);
