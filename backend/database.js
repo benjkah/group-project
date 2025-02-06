@@ -73,6 +73,14 @@ class Database {
     
         return result.rowsAffected[0];
     }
+
+    async getUser(data) {
+        config.log("Hej")
+        const request = this.poolconnection.request();
+        const result = await request.query(`SELECT TOP (10) * FROM [dbo].[person]`);
+
+        return result.recordsets[0];
+    }
 }
 
 const createDatabaseConnection = async () => {
