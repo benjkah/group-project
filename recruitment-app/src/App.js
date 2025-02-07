@@ -29,7 +29,7 @@ function App({ userModel, recruitmentModel }) {
     };
 
 */
-
+/*
     const axiosPostData = async() => {
         const postData = {
             id: 2,
@@ -45,6 +45,7 @@ function App({ userModel, recruitmentModel }) {
         // makeAPICall();
         axiosPostData();
     }, []);
+*/
 
 
   console.log("App.js")
