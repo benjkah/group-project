@@ -1,5 +1,8 @@
+const API_BASE_URL = 'http://localhost:4000';
+ 
  export async function login(username, password) {
     try {
+      console.log("try login api");
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -10,7 +13,8 @@
         const errorData = await response.json();
         throw new Error(errorData.message || 'Login failed.');
       }
-  
+      
+      console.log("before return login");
       return await response.json();
     } catch (error) {
       throw new Error('Server error: ' + error.message);
