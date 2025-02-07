@@ -17,7 +17,7 @@ function AuthPresenter({ view: ViewComponent, mode }) {
       const data = await apiLogin(username, password);
 
       // Update the model with data returned from the API
-      userModel.setPersonID(data.personID)
+      userModel.setPersonID(data.person_id)
       userModel.setUsername(data.username);
       userModel.setName(data.name);
       userModel.setSurname(data.surname);
@@ -45,7 +45,7 @@ function AuthPresenter({ view: ViewComponent, mode }) {
     try {
       const data = await apiRegister(userData);
       
-      userModel.setPersonID(data.personID)
+      userModel.setPersonID(data.person_id)
       userModel.setUsername(data.username);
       userModel.setName(data.name);
       userModel.setSurname(data.surname);
@@ -53,6 +53,8 @@ function AuthPresenter({ view: ViewComponent, mode }) {
       userModel.setEmail(data.email);
       userModel.setRole(data.role_id);
       userModel.setLoggedIn(true);
+
+      console.log("userModel in AuthPres ", userModel);
 
       return { success: true };
     } catch (error) {
@@ -63,7 +65,7 @@ function AuthPresenter({ view: ViewComponent, mode }) {
   // pass the correct handlers to the ViewComponent
   return (
     <ViewComponent
-      mode={mode}          // login or register
+      mode={mode}         
       onLogin={login}
       onRegister={registerUser}
       userModel={userModel}

@@ -105,7 +105,7 @@ router.get('/login', (req, res) => {
 
 */
 
-
+/*
 router.get("/users", async (req, res) => {
     const query = "SELECT TOP (10) * FROM [dbo].[person]";
     const values = [];
@@ -148,6 +148,87 @@ router.get("/users", async (req, res) => {
   
   // module.exports = { router };
 
+*/
 
+/**
+ * 1) LOGIN ROUTE
+ *    Expects {username, password} in req.body
+ */
+router.post("/login", async (req, res) => {
+    const { username, password } = req.body;
+    // Basic validation
+    if (!username || !password) {
+      return res.status(400).json({ message: "Username and password are required." });
+    }
+  
+    const query = `
+      SELECT person_id, name, surname, pnr, email, role_id, username
+      FROM [dbo].[person]
+      WHERE username = @username AND password = @password
+    `;
+    
+    try {
+      // Setting isStoredProcedure = false so we run a raw query
+      const result = await executeQuery(
+        query,
+        [username, password],
+        ["username", "password"],
+        false
+      );
+  
+      // If a matching user is found
+      if (result.recordset && result.recordset.length > 0) {
+        return res.json(result.recordset[0]);
+      } else {
+        // If no user found, invalid credentials
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      return res.status(500).json({ message: "Server error", error });
+    }
+  });
+  
+  /**
+   * 2) REGISTER ROUTE
+   *    Expects:
+   *      {
+   *        name, surname, pnr, email,
+   *        username, password, [optional] role_id
+   *      }
+   */
+  router.post("/register", async (req, res) => {
+    const { name, surname, pnr, email, username, password, role_id = 2 } = req.body;
+  
+    // Basic field validation
+    if (!name || !surname || !pnr || !email || !username || !password) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+  
+    const query = `
+      INSERT INTO [dbo].[person] (name, surname, pnr, email, username, password, role_id)
+      OUTPUT inserted.person_id, inserted.name, inserted.surname, inserted.pnr,
+             inserted.email, inserted.username, inserted.role_id
+      VALUES (@name, @surname, @pnr, @email, @username, @password, @role_id)
+    `;
+    
+    try {
+      const result = await executeQuery(
+        query,
+        [name, surname, pnr, email, username, password, role_id],
+        ["name", "surname", "pnr", "email", "username", "password", "role_id"],
+        false
+      );
+  
+      if (result.recordset && result.recordset.length > 0) {
+        return res.json(result.recordset[0]);
+      } else {
+        return res.status(400).json({ message: "Registration failed." });
+      }
+    } catch (error) {
+      console.error("Register error:", error);
+      return res.status(500).json({ message: "Server error", error });
+    }
+  });
 
 module.exports = router

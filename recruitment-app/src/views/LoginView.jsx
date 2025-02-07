@@ -16,6 +16,7 @@ function LoginView({ onLogin, onRegister, userModel, mode,  }) {
     if (!result.success) {
       alert(result.message);
     } else {
+      console.log("userModel LoginView -> handleSubmit ", userModel);
       if (userModel.role_id === 2) {
         navigate("/profile");
       } else {

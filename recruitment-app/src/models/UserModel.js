@@ -31,4 +31,5 @@ class UserModel {
 }
 
 const userModel = new UserModel();
+console.log("userModel ", userModel);
 export default userModel;
