@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 
-class ApplicationModel {
+class ApplicationListModel {
   applications = []; // each application has { application_id, person_id, handled_id }
   loading = false;
   error = null;
@@ -22,5 +22,7 @@ class ApplicationModel {
   }
 }
 
-const applicationModel = new ApplicationModel();
-export default applicationModel;
+console.log("AppListModel");
+
+const applicationListModel = new ApplicationListModel();
+export default applicationListModel;

@@ -2,13 +2,14 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 const ApplicationListView = observer(({ model }) => {
+  console.log("AppListModel");
   if (model.loading) {
     return <p>Loading applications...</p>;
   }
-
+  /*
   if (model.error) {
-    return <p>Error loading applications: {model.error}</p>;
-  }
+    console.error("Error loading applications:", model.error);
+  }*/
 
   return (
     <div>

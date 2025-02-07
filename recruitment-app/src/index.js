@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import userModel from "./models/UserModel";
 import recruitmentModel from "./models/RecruitmentModel";
+import applicationListModel from "./models/ApplicationListModel";
 
 // If you're including an old trick with 'window.React' for a reason:
 import { createElement } from "react";
@@ -12,7 +13,8 @@ window.React = { createElement: createElement };
 createRoot(document.getElementById("root")).render(
   <App 
     userModel={userModel}
-    recruitmentModel={recruitmentModel} 
+    recruitmentModel={recruitmentModel}
+    applicationListModel={applicationListModel} 
   />
 );
 

@@ -7,9 +7,9 @@ import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import ApplicationListPresenter from "./presenters/ApplicationListPresenter";
 import ApplicationListView from "./views/ApplicationListView";
-import applicationModel from "./models/ApplicationModel";
+import applicationListModel from "./models/ApplicationListModel";
 
-function App({ userModel, recruitmentModel }) {
+function App({ userModel, recruitmentModel, applicationListModel }) {
   console.log("App.js")
   return (
     <Router>
@@ -17,17 +17,21 @@ function App({ userModel, recruitmentModel }) {
             <h1>Recruitment Portal</h1>
             {/* Define Routes */}
             <Routes>
-                <Route path="/" element={<AuthPresenter model={userModel} view={LoginView} mode={2} />} />
+                <Route 
+                    path="/" 
+                    element={<AuthPresenter model={userModel} view={LoginView} mode={2} />} />
                 <Route 
                     path="/profile" 
                     element={<ApplicantProfilePresenter model={recruitmentModel} view={ApplicantProfileView} />} 
                 />
                 <Route 
-                  path="/register"
-                  element={<AuthPresenter model={userModel} view={RegistrationView} />} 
+                    path="/register"
+                    element={<AuthPresenter model={userModel} view={RegistrationView} />} 
                   
                 />
-                <Route path="/applications" element={<ApplicationListPresenter model={applicationModel} view={ApplicationListView} mode={1} />} />
+                <Route 
+                    path="/applications" 
+                    element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />} />
             </Routes>
         </div>
     </Router>

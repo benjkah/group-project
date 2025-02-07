@@ -36,3 +36,24 @@
     }
   }
   
+  export async function getUserData(token) {
+    try {
+      const response = await fetch('/api/auth/me', {
+        method: 'GET',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token  // assuming Bearer token authentication
+        }
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch user data.');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      throw new Error('Server error: ' + error.message);
+    }
+  }
