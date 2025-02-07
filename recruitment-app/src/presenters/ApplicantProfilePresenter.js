@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite";
+import userModel from "../models/UserModel";
 
 export default observer(
     
@@ -34,9 +35,9 @@ export default observer(
 
         return (
             <props.view
-                firstName={model.firstName}
-                lastName={model.lastName}
-                email={model.email}
+               firstName={userModel.name}
+                lastName={userModel.surname}
+                email={userModel.email}
                 competencies={model.competencies}
                 availability={model.availability}
                 availableCompetences={model.availableCompetences}
