@@ -1,8 +1,7 @@
 const API_BASE_URL = "http://localhost:4000";  
-
 export async function login(username, password) {
     try {
-        const response = await fetch(`${API_BASE_URL}/login`, {  // Fix the API URL
+        const response = await fetch(`${API_BASE_URL}/login`, {  
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password }),
