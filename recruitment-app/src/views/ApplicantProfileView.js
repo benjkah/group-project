@@ -8,7 +8,7 @@ export default observer(
     {
 
         
-        console.log("ENTERING APV")
+        console.log("ENTERING ApplProfView")
 
        // remove compenets
         function handleRemoveCompetenceACB(id)

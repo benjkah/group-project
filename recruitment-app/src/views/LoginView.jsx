@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-function LoginView({ onLogin }) {
+function LoginView({ onLogin, onRegister, userModel, mode,  }) {
   console.log("LoginView.js")
 
   const [username, setUsername] = useState("");
@@ -15,17 +16,19 @@ function LoginView({ onLogin }) {
     if (!result.success) {
       alert(result.message);
     } else {
-      // Possibly route to applicant or recruiter home
-      // e.g. if (userModel.role_id === 1) route to applicant
+      if (userModel.role_id === 2) {
+        navigate("/profile");
+      } else {
+        navigate("/profile"); // if we need seperate routing for recruiters, now it just links to the same as applicants
     }
   }
-
+}
   return (
     <div style={{ maxWidth: "300px", margin: "0 auto" }}>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username</label>
+          <label htmlFor="username">Username</label>
           <input 
             type="text" required
             value={username}
@@ -46,7 +49,7 @@ function LoginView({ onLogin }) {
           Login
         </button>
 
-        <button onClick={() => navigate("/register")}>
+        <button type="button" onClick={() => navigate("/register")}>
           Need to create an account?
         </button>
         
