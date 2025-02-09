@@ -124,6 +124,25 @@ router.get("/users", async (req, res) => {
       res.status(500).send(error);
     }
   });
+
+  router.get("/user", async (req, res) => {
+    const query = "SELECT TOP (1) * FROM [dbo].[person] WHERE person_id = 3  ";
+    const values = [];
+    const paramNames = [];
+    const isStoredProcedure = false;
+    try {
+      const result = await executeQuery(
+        query,
+        values,
+        paramNames,
+        isStoredProcedure
+      );
+      res.send(result.recordset);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+  });
   
   router.post("/kalle", async (req, res) => {
     const query = "INSERT INTO [dbo].[role] ([name]) VALUES (kalle)";
