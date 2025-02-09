@@ -13,7 +13,6 @@ function RegistrationView({ onRegister }) {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
-  const passwordsMatch = "" // might not be optimal
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -29,7 +28,6 @@ function RegistrationView({ onRegister }) {
       role_id: 2 // default applicant, or let them choose if recruiter should be able to register as well
     };
     
-    const passwordsMatch = password === confirmPass; // same here
 
     const result = await onRegister(userData);
     if (!result.success) {
@@ -113,7 +111,7 @@ function RegistrationView({ onRegister }) {
             required
           />
         </div>
-        {!passwordsMatch && confirmPass.length > 0 && (
+        {password != confirmPass && confirmPass.length > 0 && (
           <div className="error-message">Passwords do not match</div>
         )}
         <button type="submit">
