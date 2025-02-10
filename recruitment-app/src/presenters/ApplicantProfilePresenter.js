@@ -1,14 +1,16 @@
 import { observer } from "mobx-react-lite";
 import userModel from "../models/UserModel";
 
+import ApplicantProfileView from "../views/ApplicantProfileView";
 export default observer(
     
-    function  ApplicantProfilePresenter(props) {
+    function  ApplicantProfilePresenter({model}) {
 
         console.log("ENTERING AppProfPres")
 
-        const { model } = props;
-    
+       
+        
+
 
         function handleAddCompetence(name, startDate, endDate) 
         {
@@ -34,8 +36,8 @@ export default observer(
 
 
         return (
-            <props.view
-               firstName={userModel.name}
+            <ApplicantProfileView
+                firstName={userModel.name}
                 lastName={userModel.surname}
                 email={userModel.email}
                 competencies={model.competencies}
