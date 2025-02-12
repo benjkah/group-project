@@ -94,31 +94,35 @@ router.get("/users", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
-    const query = "SELECT * FROM [dbo].[person] WHERE username = @username AND password = @password";
-    const values = [req.body.username, req.body.password];
-    const paramNames = ["username", "password"];
+  const { username, password } = req.body;
+  // Basic validation
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password are required." });
+  }
+  try {
+      const query = "SELECT * FROM [dbo].[person] WHERE username = @username AND password = @password";
+      const values = [username, password];
+      const paramNames = ["username", "password"];
 
-    try {
-        const result = await executeQuery(query, values, paramNames, false);
+      const result = await executeQuery(query, values, paramNames, false);
 
-        if (result.recordset.length > 0) {
-            const user = result.recordset[0];
+      if (result.recordset.length === 0) {
+        
+          return res.status(401).json({ message: "Invalid username or password." });
+      }
 
-            // Generate JWT token
-            const token = jwt.sign(
-                { person_id: user.person_id }, 
-                process.env.JWT_SECRET, 
-                { expiresIn: "1h" }
-            );
+      const user = result.recordset[0];
 
-            res.json({ ...user, token }); // ✅ Return user data + token
-        } else {
-            res.status(401).json({ message: "Invalid username or password." });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Internal server error" });
-    }
+      
+      const token = jwt.sign({ person_id: user.person_id }, 
+        process.env.JWT_SECRET, { expiresIn: "2h" });
+
+      res.json({ token, user });
+
+  } catch (error) {
+     
+      res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 
