@@ -1,31 +1,27 @@
-const API_BASE_URL = "http://localhost:4000";  
+const API_BASE_URL = "http://localhost:4000";
 
 export async function fetchProfile() {
-    console.log("Fetching profile from:", `${API_BASE_URL}/profile`);
-
     try {
+        const token = localStorage.getItem("token"); // Retrieve token from localStorage
+        if (!token) {
+            throw new Error("No token available");
+        }
+
         const response = await fetch(`${API_BASE_URL}/profile`, {
-            method: 'GET',
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}` 
             }
         });
 
         if (!response.ok) {
-           
-                const errorData = await response.json();
-                
-                throw new Error(errorData.message || 'Attenpt failed.');
-            
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.message || "Failed to fetch profile.");
         }
 
-        
-        
         return await response.json();
-
     } catch (error) {
-        
         throw new Error("Server error: " + error.message);
     }
 }
