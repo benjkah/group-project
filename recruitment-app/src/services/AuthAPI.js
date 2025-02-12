@@ -1,4 +1,3 @@
-
 const API_BASE_URL = "http://localhost:4000";  
 export async function login(username, password) {
     try {
@@ -12,12 +11,14 @@ export async function login(username, password) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Login failed.');
         }
-
-        return await response.json();
-    } catch (error) {
-        throw new Error('Server error: ' + error.message);
-    }
+      const data = await response.json();
+      localStorage.setItem("token", data.token); 
+      return data;
+  } catch (error) {
+      throw new Error("Server error: " + error.message);
+  }
 }
+
 
   
   export async function register(userData) {
