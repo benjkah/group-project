@@ -2,9 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const helmet = require('helmet');
+
+
 const { connect } = require("./database.js");
+
 const router = require('./routes/router');
+const userRouter = require('./routes/user.js')
+const accessRouter = require('./routes/access.js')
+const createRouter = require('./routes/create.js')
 
 const app = express();
 
@@ -17,30 +22,26 @@ connect()
     console.log(error);
   });
 
-// Use Helmet to configure CSP
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],  // Allow inline scripts during development
-      styleSrc: ["'self'", "'unsafe-inline'"],  // Allow inline styles during development
-      imgSrc: ["'self'", "data:"],  // Allow images from the same domain or base64
-      connectSrc: ["'self'", "http://localhost:4000"],  // Allow API calls to your backend
-    },
-  })
-);
+
+
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: '*',
+  origin: '*',   
   credentials: true,
+  methods: ['GET', 'POST', 'PUT'],
   optionSuccessStatus: 200
 };
 
+
 app.use(cors(corsOptions));
 app.use('/', router);
+app.use('/user', userRouter);
+app.use('/access', accessRouter);
+app.use('/create', createRouter);
+
 
 const port = process.env.DB_LOCAL_PORT;
 app.listen(port, () => {

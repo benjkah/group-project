@@ -40,14 +40,19 @@ function App({ userModel, recruitmentModel }) {
         .then(res => console.log(res.data))
     }
 
-    
+    const [data, setData] = useState('');
+
     useEffect(() => {
-        // makeAPICall();
+        (async function () {
+        const { text } = await( await fetch(`/api/message`)).json();
+        setData(text);
+        })();
         axiosPostData();
-    }, []);
+    });
 
+    console.log(data);
 
-  console.log("App.js")
+  console.log("App.js");
   return (
     <Router>
         <div>
