@@ -85,25 +85,6 @@ router.get('/user', (req, res) => {
     res.send([userData, id])
 });
 
-router.get('/login', (req, res) => {
-    const userData = [
-        {
-            "person_id": 1, 
-            "name": "Anders",
-            "surname": "kalle",
-            "pnr": 22292929,
-            "email": "anders@mmail.com",
-            "role_id": 1,
-            "username": "anders"
-        }
-    ]
-
-    if(userData.email == req.body.email) {
-        res.send(true)
-    } else {
-        res.send(false)
-    }
-});
 
 */
 
@@ -214,7 +195,7 @@ router.post("/login", async (req, res) => {
                 { expiresIn: "1h" }
             );
 
-            res.json({ ...user, token }); // ✅ Return user data + token
+            res.json({ ...user, token }); //  Return user data + token
         } else {
             res.status(401).json({ message: "Invalid username or password." });
         }
