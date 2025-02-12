@@ -11,7 +11,7 @@ export async function fetchProfile() {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` 
+                "Authorization": `ttsehsdj ${token}` 
             }
         });
 
