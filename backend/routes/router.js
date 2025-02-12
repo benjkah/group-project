@@ -145,6 +145,53 @@ router.get("/users", async (req, res) => {
     }
   });
 
+  router.get("/profile", async (req, res) => {
+    const query = `
+        SELECT person_id, name, surname, email
+        FROM [dbo].[person]
+        WHERE person_id = 1  -- Change this based on authentication
+    `;
+
+    try {
+        const result = await executeQuery(query, [], [], false);
+        
+        if (result.recordset.length > 0) {
+            const userProfile = result.recordset[0];
+
+            // TO GET competencies
+            const competenceQuery = `
+                SELECT cp.competence_id, c.name, cp.years_of_experience
+                FROM [dbo].[competence_profile] cp
+                JOIN [dbo].[competence_translation] c ON cp.competence_id = c.competence_id
+                WHERE cp.application_id = 1  -- Change based on logged-in user
+            `;
+            const competenceResult = await executeQuery(competenceQuery, [], [], false);
+
+            // TO GET availability
+            const availabilityQuery = `
+                SELECT from_date, to_date
+                FROM [dbo].[availability]
+                WHERE application_id = 1  -- Change based on logged-in user
+            `;
+            const availabilityResult = await executeQuery(availabilityQuery, [], [], false);
+
+            userProfile.competencies = competenceResult.recordset || [];
+            userProfile.availability = availabilityResult.recordset || [];
+
+            res.status(200).json(userProfile);
+        } else {
+            res.status(404).json({ message: "Profile not found." });
+        }
+
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
+
+
 
 //added Login 
   router.post("/login", async (req, res) => {
