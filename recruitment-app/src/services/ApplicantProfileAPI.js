@@ -2,17 +2,9 @@ const API_BASE_URL = "http://localhost:4000";
 
 export async function fetchProfile() {
     try {
-        const token = localStorage.getItem("token"); // Retrieve token from localStorage
-        if (!token) {
-            throw new Error("No token available");
-        }
-
-        const response = await fetch(`${API_BASE_URL}/profile`, {
+        const response = await fetch(`${API_BASE_URL}/user/profile`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` 
-            }
+            credentials: "include", 
         });
 
         if (!response.ok) {
@@ -25,3 +17,4 @@ export async function fetchProfile() {
         throw new Error("Server error: " + error.message);
     }
 }
+

@@ -90,7 +90,7 @@ router.get("/users", async (req, res) => {
 });
 
 
-
+/*
 
 
 router.post("/login", async (req, res) => {
@@ -111,7 +111,14 @@ router.post("/login", async (req, res) => {
           return res.status(401).json({ message: "Invalid username or password." });
       }
 
-      const user = result.recordset[0];
+            // Generate JWT token
+            const token = jwt.sign(
+                { person_id: user.person_id }, 
+                process.env.JWT_SECRET, 
+                { expiresIn: "1h" }
+            );
+            
+
 
       
       const token = jwt.sign({ person_id: user.person_id }, 
@@ -126,7 +133,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-  
+  */
   // module.exports = { router };
 /*
   function loadUser(req, res, next) {
