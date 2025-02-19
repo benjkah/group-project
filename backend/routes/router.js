@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { executeQuery } = require("../database.js");
@@ -90,7 +90,6 @@ router.get("/users", async (req, res) => {
 });
 
 
-/*
 
 
 router.post("/login", async (req, res) => {
@@ -133,7 +132,7 @@ router.post("/login", async (req, res) => {
 });
 
 
-  */
+  
   // module.exports = { router };
 /*
   function loadUser(req, res, next) {
@@ -154,3 +153,4 @@ router.post("/login", async (req, res) => {
 
 
 module.exports = router
+*/
