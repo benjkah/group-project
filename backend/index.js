@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: "http://localhost:3000",  
+  origin: "http://localhost:3000",     // we can add mutiple domain as ["http://localhost:3000", "https://benjamin.com"]  for more secure and JWT Cookies 
   credentials: true,
   methods: ['GET', 'POST', 'PUT'],
   optionSuccessStatus: 200

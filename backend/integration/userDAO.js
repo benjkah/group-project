@@ -2,6 +2,9 @@ const { executeQuery } = require("../database.js");
 
 
 // UserDAO (Data Access Object) class used  for database interactions
+//Dont use error handling here in DAO
+//  use Null for object that not EXIST
+// use empty array [] for object that is empty
 
 class UserDAO {
 
@@ -27,7 +30,7 @@ class UserDAO {
         const isStoredProcedure = false;
 
         const result = await executeQuery(query, values, paramNames, isStoredProcedure);
-        return result.recordset.length > 0 ? result.recordset[0] : { message: "User not found." };
+        return result.recordset.length > 0 ? result.recordset[0] : null;
     }
    // return  user comenetcies from the database 
     static async findCompetencies(person_id) {
@@ -43,7 +46,7 @@ class UserDAO {
         const isStoredProcedure = false;
     
         const result = await executeQuery(competenceQuery, values, paramNames, isStoredProcedure);
-        return result.recordset.length > 0 ? result.recordset : { message: "No competencies found." };
+        return result.recordset;
     }
     
  // return  user availibilties from the database 
@@ -58,7 +61,7 @@ class UserDAO {
         const isStoredProcedure = false;
     
         const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
-        return result.recordset.length > 0 ? result.recordset : { message: "No availability found." };
+        return result.recordset;
     }
     
 }
