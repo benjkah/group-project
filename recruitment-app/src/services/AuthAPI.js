@@ -10,7 +10,6 @@ export async function login(username, password) {
     
     return response.data;
   } catch (error) {
-    // Attempt to show a meaningful error message
     throw new Error(error.response?.data?.message || 'An error occurred during login.');
   }
 }
@@ -18,6 +17,9 @@ export async function login(username, password) {
 export async function register(userData) {
   try {
     const response = await axios.post(`${API_BASE_URL}/register`, userData);
+    console.log("register new user AuthAPI userData: ", userData)
+    console.log("register new user AuthAPI response.data: ", response.data)
+
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'An error occurred during registration.');
