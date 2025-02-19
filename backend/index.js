@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 require('dotenv').config();
 
 const { connect } = require("./database.js");
@@ -22,7 +23,18 @@ connect()
     console.log(error);
   });
 
-
+// Use Helmet to configure CSP
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],  // Allow inline scripts during development
+      styleSrc: ["'self'", "'unsafe-inline'"],  // Allow inline styles during development
+      imgSrc: ["'self'", "data:"],  // Allow images from the same domain or base64
+      connectSrc: ["'self'", "http://localhost:4000"],  // Allow API calls to your backend
+    },
+  })
+);
 
 
 app.use(bodyParser.json());

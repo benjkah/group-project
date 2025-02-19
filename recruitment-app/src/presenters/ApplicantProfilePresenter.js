@@ -14,11 +14,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     useEffect(() => {
         async function loadApplicantProfile() {
             try {
-                const token = localStorage.getItem("token"); // Ensure token exists
-                if (!token) {
-                    console.log("No user logged in. Skipping profile fetch.");
-                    return;
-                }
 
                 const data = await fetchProfile();
                 console.log("Profile data received:", data);
