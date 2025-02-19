@@ -46,4 +46,4 @@ app.use('/create', createRouter);
 const port = process.env.DB_LOCAL_PORT;
 app.listen(port, () => {
   console.log(`Server is running at port: ${port}`);
-});
+})

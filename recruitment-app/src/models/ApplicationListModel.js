@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
 class ApplicationListModel {
-  applications = []; // each application has { application_id, person_id, handled_id }
+  applications = []; // will store objects like { application_id, person_id, name, surname, handled_id, status }
   loading = false;
   error = null;
 

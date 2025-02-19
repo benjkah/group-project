@@ -30,7 +30,6 @@ async function executeQuery(
     if (isStoredProcedure) {
       result = await request.execute(query);
     } else {
-      // Use .query instead of .batch if you prefer. For single-statement T-SQL, .query() is typical:
       result = await request.query(query);
     }
 

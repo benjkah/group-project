@@ -7,18 +7,15 @@ import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import ApplicationListPresenter from "./presenters/ApplicationListPresenter";
 import ApplicationListView from "./views/ApplicationListView";
+<<<<<<< HEAD
 import applicationModel from "./models/ApplicationModel";
+=======
+>>>>>>> rasmus
 import axios from "axios"
 
-function App({ userModel, recruitmentModel }) {
-/*
-    const makeAPICall = async () => {
-        
-        const id = {
-            id: 2,
-            namn: "kalle"
-        }
+function App({ userModel, recruitmentModel, applicationListModel }) {
 
+<<<<<<< HEAD
         try {
             const response = await fetch('http://localhost:4000/user', id);
             const data = await response.json();
@@ -49,6 +46,8 @@ function App({ userModel, recruitmentModel }) {
         })();
         axiosPostData();
     });
+=======
+>>>>>>> rasmus
 
     console.log(data);
 

@@ -43,7 +43,7 @@ function RegistrationView({ onRegister }) {
       <h2>Create Account</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>First Name</label>
+          <label htmlFor="name">First Name</label>
           <input 
             type="text"
             value={name}
@@ -53,7 +53,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>Surname</label>
+          <label htmlFor="surname">Surname</label>
           <input 
             type="text"
             value={surname}
@@ -63,7 +63,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>PNR</label>
+          <label htmlFor="pnr">PNR</label>
           <input 
             type="text"
             value={pnr}
@@ -73,7 +73,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>Email</label>
+          <label htmlFor="email">Email</label>
           <input 
             type="email"
             value={email}
@@ -83,7 +83,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>Username</label>
+          <label htmlFor="username">Username</label>
           <input 
             type="text"
             value={username}
@@ -93,7 +93,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>Password</label>
+          <label htmlFor="password">Password</label>
           <input 
             type="password"
             value={password}
@@ -103,7 +103,7 @@ function RegistrationView({ onRegister }) {
         </div>
 
         <div>
-          <label>Confirm Password</label>
+          <label htmlFor="password">Confirm Password</label>
           <input 
             type="password"
             value={confirmPass}

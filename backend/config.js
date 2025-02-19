@@ -5,9 +5,10 @@ const config = {
     user: process.env.DB_AZURE_USER,
     password: process.env.DB_AZURE_PASSWORD,
     options: {
-      trustedConnection: true,
+      encrypt: true,
+      //trustedConnection: true,
       enableArithAbort: true,
-      trustServerCertificate: true,
+      trustServerCertificate: false,
     },
 };
 

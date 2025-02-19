@@ -2,14 +2,15 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 
 const ApplicationListView = observer(({ model }) => {
-  console.log("AppListModel");
+  console.log("AppListView");
+  
   if (model.loading) {
     return <p>Loading applications...</p>;
   }
-  /*
+
   if (model.error) {
-    console.error("Error loading applications:", model.error);
-  }*/
+    return <p>Error: {model.error}</p>;
+  }
 
   return (
     <div>
@@ -20,9 +21,8 @@ const ApplicationListView = observer(({ model }) => {
         <ul>
           {model.applications.map((app) => (
             <li key={app.application_id}>
-              <strong>Application ID:</strong> {app.application_id}{" "}
-              <strong>Person ID:</strong> {app.person_id}{" "}
-              <strong>Handled ID:</strong> {app.handled_id}
+              <strong>Applicant:</strong> {app.name} {app.surname} {" | "}
+              <strong>Status:</strong> {app.status}
             </li>
           ))}
         </ul>
