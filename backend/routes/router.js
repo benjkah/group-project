@@ -120,6 +120,48 @@
         return res.status(500).json({ message: "Server error", error });
       }
     });
+
+      /**
+   * 3) GET ALL APPLICATIONS
+   *    Returns an array of applications with:
+   *      application_id,
+   *      person_id,
+   *      name,
+   *      surname,
+   *      handled_id,
+   *      status (accepted, rejected, or unhandled)
+   */
+    router.get("/application", async (req, res) => {
+      console.log("router.get(application)")
+      try {
+        const query = `
+          SELECT
+            a.application_id,
+            a.person_id,
+            p.name,
+            p.surname,
+            a.handled_id,
+            CASE
+              WHEN a.handled_id = 1 THEN 'unhandled'
+              WHEN a.handled_id = 2 THEN 'accepted'
+              WHEN a.handled_id = 3 THEN 'denied'
+            END AS status
+          FROM [dbo].[application] a
+          JOIN [dbo].[person] p ON a.person_id = p.person_id
+        `;
+        const result = await executeQuery(query, [], [], false);
+    
+        // Return the result set as JSON
+        if (result.recordset) {
+          return res.json(result.recordset);
+        } else {
+          return res.json([]);
+        }
+      } catch (error) {
+        console.error("Error retrieving applications:", error);
+        return res.status(500).json({ message: "Server error", error });
+      }
+    });
     
     
 
