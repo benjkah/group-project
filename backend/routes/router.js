@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { executeQuery } = require("../database.js");
@@ -92,7 +92,6 @@ router.get("/users", async (req, res) => {
 
 
 
-
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
   // Basic validation
@@ -154,3 +153,4 @@ router.post("/login", async (req, res) => {
 
 
 module.exports = router
+*/

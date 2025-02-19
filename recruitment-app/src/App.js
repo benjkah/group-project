@@ -30,7 +30,7 @@ function App({ userModel, recruitmentModel }) {
 
 */
 
-    const axiosPostData = async() => {
+    /*const axiosPostData = async() => {
         const postData = {
             id: 2,
             namn: "21"
@@ -53,6 +53,8 @@ function App({ userModel, recruitmentModel }) {
     console.log(data);
 
   console.log("App.js");
+
+  */
   return (
     <Router>
         <div>
