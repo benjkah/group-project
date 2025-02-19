@@ -1,18 +1,27 @@
-import axios from 'axios';
-
-const API_BASE_URL = 'http://localhost:4000';
-
 export async function fetchApplications() {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/api/applications`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
+    try {
+      const response = await fetch('applications', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        let errorMessage = 'Failed to fetch applications.';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
-    });
-
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || 'Failed to fetch applications.');
+  
+      return await response.json();
+    } catch (error) {
+      throw new Error("Server error: " + error.message);
+    }
   }
-}
+  

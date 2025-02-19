@@ -94,19 +94,18 @@ export default observer(
 
                 <h3>Competence Profile</h3>
                 <ul>
-                    {props.competencies.length > 0 ? (
-                        props.competencies.map(function(comp) {
-                            return (
-                                <li key={comp.id}>
-                                    {comp.name} - {displayCompetenceStatusACB(comp)} years 
-                                    <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.id)}>X</button>
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <p>No competences added yet.</p>
-                    )}
-                </ul>
+    {props.competencies.length > 0 ? (
+        props.competencies.map((comp, index) => (
+            <li key={comp.id || index}>  {/* Ensure unique key */}
+                {comp.name} - {displayCompetenceStatusACB(comp)} years 
+                <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.id)}>X</button>
+            </li>
+        ))
+    ) : (
+        <p>No competences added yet.</p>
+    )}
+</ul>
+
 
                 <form onSubmit={handleAddCompetenceACB}>
                     <select name="competence">
@@ -123,19 +122,18 @@ export default observer(
 
                 <h3>Availability</h3>
                 <ul>
-                    {props.availability.length > 0 ? (
-                        props.availability.map(function(avail) {
-                            return (
-                                <li key={avail.id}>
-                                    {displayAvailabilityACB(avail)}
-                                    <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.id)}>X</button>
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <p>No availability added yet.</p>
-                    )}
-                </ul>
+    {props.availability.length > 0 ? (
+        props.availability.map((avail, index) => (
+            <li key={avail.id || index}>  {/* Ensure unique key */}
+                {displayAvailabilityACB(avail)}
+                <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.id)}>X</button>
+            </li>
+        ))
+    ) : (
+        <p>No availability added yet.</p>
+    )}
+</ul>
+
                 
 
                 <form onSubmit={handleAddAvailabilityACB}>

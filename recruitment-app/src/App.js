@@ -7,7 +7,7 @@ import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import ApplicationListPresenter from "./presenters/ApplicationListPresenter";
 import ApplicationListView from "./views/ApplicationListView";
-import applicationListModel from "./models/ApplicationListModel";
+import applicationModel from "./models/ApplicationModel";
 import axios from "axios"
 
 function App({ userModel, recruitmentModel }) {
@@ -29,8 +29,8 @@ function App({ userModel, recruitmentModel }) {
     };
 
 */
-/*
-    const axiosPostData = async() => {
+
+    /*const axiosPostData = async() => {
         const postData = {
             id: 2,
             namn: "21"
@@ -40,36 +40,38 @@ function App({ userModel, recruitmentModel }) {
         .then(res => console.log(res.data))
     }
 
-    
+    const [data, setData] = useState('');
+
     useEffect(() => {
-        // makeAPICall();
+        (async function () {
+        const { text } = await( await fetch(`/api/message`)).json();
+        setData(text);
+        })();
         axiosPostData();
-    }, []);
-*/
+    });
 
+    console.log(data);
 
-  console.log("App.js")
+  console.log("App.js");
+
+  */
   return (
     <Router>
         <div>
             <h1>Recruitment Portal</h1>
             {/* Define Routes */}
             <Routes>
-                <Route 
-                    path="/" 
-                    element={<AuthPresenter model={userModel} view={LoginView} mode={2} />} />
+                <Route path="/" element={<AuthPresenter model={userModel} view={LoginView} mode={2} />} />
                 <Route 
                     path="/profile" 
                     element={<ApplicantProfilePresenter model={recruitmentModel} view={ApplicantProfileView} />} 
                 />
                 <Route 
-                    path="/register"
-                    element={<AuthPresenter model={userModel} view={RegistrationView} />} 
+                  path="/register"
+                  element={<AuthPresenter model={userModel} view={RegistrationView} />} 
                   
                 />
-                <Route 
-                    path="/applications" 
-                    element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />} />
+                <Route path="/applications" element={<ApplicationListPresenter model={applicationModel} view={ApplicationListView} mode={1} />} />
             </Routes>
         </div>
     </Router>

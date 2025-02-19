@@ -1,111 +1,9 @@
-const express = require('express');
+/*const express = require('express');
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const { executeQuery } = require("../database.js");
+const { authenticateUser } = require("../middleware/authMiddleware");
 
-// const { createDatabaseConnection, connect } = require("./../database.js")
-// const db = createDatabaseConnection()
-/*
-router.get('/users', (req, res) => {
-    const userData = [
-        {
-            "id": 1, 
-            "name": "Anders"
-        },
-        {
-            "id": 2,
-            "name": "Johan"
-        },
-        {
-            "id": 3,
-            "name": "Kalle"
-        }
-    ]
-
-    res.send(userData)
-});
-
-
-router.post('/test', async (req, res) => {
-
-    const {id, namn} = req.body;
-
-    res.send({id});
-
-    try {
-        
-        const person = req.body;
-        // const rowsAffected = await db.createPesron(person);
-        res.status(201).json({ rowsAffected });
-    } catch (err) {
-        res.status(500).json({ error: err?.message });
-    }
-    res.send('ok')
-  });
-
-
-router.post('/createPesron', async (req, res) => {
-    try {
-        const person = req.body;
-        const rowsAffected = await db.createPesron(person);
-        res.status(201).json({ rowsAffected });
-    } catch (err) {
-        res.status(500).json({ error: err?.message });
-    }
-    res.send('ok')
-  });
-
-  router.get('/getUser', async (req, res) => {
-    console.log("ok");
-    try {
-        const persons = await db.getUser;
-        console.log("OK 2")
-        res.status(200).json(persons);
-    } catch (err) {
-        res.status(500).json({ error: err?.message })
-    }
-});
-
-
-router.get('/user', (req, res) => {
-    const { id, name } = req.body
-    const userData = [
-        {
-            "person_id": 1, 
-            "name": "Anders",
-            "surname": "kalle",
-            "pnr": 22292929,
-            "email": "anders@mmail.com",
-            "role_id": 1,
-            "username": "anders"
-        }
-    ]
-
-    res.send([userData, id])
-});
-
-router.get('/login', (req, res) => {
-    const userData = [
-        {
-            "person_id": 1, 
-            "name": "Anders",
-            "surname": "kalle",
-            "pnr": 22292929,
-            "email": "anders@mmail.com",
-            "role_id": 1,
-            "username": "anders"
-        }
-    ]
-
-    if(userData.email == req.body.email) {
-        res.send(true)
-    } else {
-        res.send(false)
-    }
-});
-
-*/
-
-/*
 router.get("/users", async (req, res) => {
     const query = "SELECT TOP (10) * FROM [dbo].[person]";
     const values = [];
@@ -145,90 +43,114 @@ router.get("/users", async (req, res) => {
     }
   });
 
+
+  router.get("/profile", authenticateUser, async (req, res) => {
+    const person_id = req.person_id; // Get from authenticated session
+
+    try {
+        const query = `
+            SELECT person_id, name, surname, email
+            FROM [dbo].[person]
+            WHERE person_id = @person_id
+        `;
+        const result = await executeQuery(query, [person_id], ["person_id"], false);
+
+        if (result.recordset.length === 0) {
+            return res.status(404).json({ message: "Profile not found." });
+        }
+
+        let userProfile = result.recordset[0];
+
+        // Fetch competencies dynamically
+        const competenceQuery = `
+            SELECT cp.competence_id, c.name, cp.years_of_experience
+            FROM [dbo].[competence_profile] cp
+            JOIN [dbo].[competence_translation] c ON cp.competence_id = c.competence_id
+            WHERE cp.application_id = @person_id
+        `;
+        const competenceResult = await executeQuery(competenceQuery, [person_id], ["person_id"], false);
+
+        // Fetch availability dynamically
+        const availabilityQuery = `
+            SELECT from_date, to_date
+            FROM [dbo].[availability]
+            WHERE application_id = @person_id
+        `;
+        const availabilityResult = await executeQuery(availabilityQuery, [person_id], ["person_id"], false);
+
+        // Combine all fetched data into userProfile
+        userProfile.competencies = competenceResult.recordset || [];
+        userProfile.availability = availabilityResult.recordset || [];
+
+        res.status(200).json(userProfile);
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+        res.status(500).json({ message: "Internal server error." });
+    }
+});
+
+
+
+
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  // Basic validation
+  if (!username || !password) {
+    return res.status(400).json({ message: "Username and password are required." });
+  }
+  try {
+      const query = "SELECT * FROM [dbo].[person] WHERE username = @username AND password = @password";
+      const values = [username, password];
+      const paramNames = ["username", "password"];
+
+      const result = await executeQuery(query, values, paramNames, false);
+
+      if (result.recordset.length === 0) {
+        
+          return res.status(401).json({ message: "Invalid username or password." });
+      }
+
+            // Generate JWT token
+            const token = jwt.sign(
+                { person_id: user.person_id }, 
+                process.env.JWT_SECRET, 
+                { expiresIn: "1h" }
+            );
+            
+
+
+      
+      const token = jwt.sign({ person_id: user.person_id }, 
+        process.env.JWT_SECRET, { expiresIn: "2h" });
+
+      res.json({ token, user });
+
+  } catch (error) {
+     
+      res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
   
   // module.exports = { router };
+/*
+  function loadUser(req, res, next) {
+    // You would fetch your user from the db
+    var user = { id: 0, name: 'tj', email: 'tj@vision-media.ca', role: 'member' };
+    if (user) {
+      req.user = user;
+      next();
+    } else {
+      next(new Error('Failed to load user ' + req.params.id));
+    }
+  }
 
+  router.get('/user/:id', loadUser, function(req, res){
+    res.send('Viewing user ' + req.user.name);
+  });
 */
 
-/**
- * 1) LOGIN ROUTE
- *    Expects {username, password} in req.body
- */
-router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-    // Basic validation
-    if (!username || !password) {
-      return res.status(400).json({ message: "Username and password are required." });
-    }
-  
-    const query = `
-      SELECT person_id, name, surname, pnr, email, role_id, username
-      FROM [dbo].[person]
-      WHERE username = @username AND password = @password
-    `;
-    
-    try {
-      // Setting isStoredProcedure = false so we run a raw query
-      const result = await executeQuery(
-        query,
-        [username, password],
-        ["username", "password"],
-        false
-      );
-  
-      // If a matching user is found
-      if (result.recordset && result.recordset.length > 0) {
-        return res.json(result.recordset[0]);
-      } else {
-        // If no user found, invalid credentials
-        return res.status(401).json({ message: "Invalid username or password" });
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      return res.status(500).json({ message: "Server error", error });
-    }
-  });
-  
-  /**
-   * 2) REGISTER ROUTE
-   *    Expects:
-   *      {
-   *        name, surname, pnr, email,
-   *        username, password, [optional] role_id
-   *      }
-   */
-  router.post("/register", async (req, res) => {
-    const { name, surname, pnr, email, username, password, role_id = 2 } = req.body;
-  
-    // Basic field validation
-    if (!name || !surname || !pnr || !email || !username || !password) {
-      return res.status(400).json({ message: "All fields are required." });
-    }
-  
-    const query = `
-      INSERT INTO [dbo].[person] (name, surname, pnr, email, username, password, role_id)
-      OUTPUT inserted.person_id, inserted.name, inserted.surname, inserted.pnr,
-             inserted.email, inserted.username, inserted.role_id
-      VALUES (@name, @surname, @pnr, @email, @username, @password, @role_id)
-    `;
-    
-    try {
-      const result = await executeQuery(
-        query,
-        [name, surname, pnr, email, username, password, role_id],
-        ["name", "surname", "pnr", "email", "username", "password", "role_id"],
-        false
-      );
-  
-      if (result.recordset && result.recordset.length > 0) {
-        return res.json(result.recordset[0]);
-      } else {
-        return res.status(400).json({ message: "Registration failed." });
-      }
-    } catch (error) {
-      console.error("Register error:", error);
-      return res.status(500).json({ message: "Server error", error });
-    }
-  });
 
 module.exports = router
+*/

@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
 
 class RecruitmentModelClass {
-  firstName = "Benjamin";
-  lastName = "Kahkeshan";
-  email = "Benjamin@kth.se";
+  firstName = "";
+  lastName = "";
+  email = "";
 
   competencies = [];
   availability = [];
@@ -29,6 +29,15 @@ class RecruitmentModelClass {
   setEmail(email) {
     this.email = email;
   }
+  setCompetencies(competencies) {
+    
+    this.competencies = competencies;
+}
+
+setAvailability(availability) {
+ 
+  this.availability = availability;
+}
 
   addCompetence(name, startDate, endDate) {
     const yearsOfExperience = this.calculateYears(startDate, endDate);
