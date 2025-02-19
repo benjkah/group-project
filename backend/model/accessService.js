@@ -13,8 +13,8 @@ class AccessService {
 //return the value 
             return user;
         } catch (error) {
-            console.error("Login error:", error.message);
-            throw new Error("Login failed. Please try again later.");
+          
+            throw new Error("Login failed.");
         }
     }
 }
