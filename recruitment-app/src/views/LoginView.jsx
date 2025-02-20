@@ -17,11 +17,7 @@ function LoginView({ onLogin, onRegister, userModel, mode,  }) {
       alert(result.message);
     } else {
       console.log("userModel LoginView -> handleSubmit ", userModel);
-      if (userModel.role_id === 2) {
-        navigate("/profile");
-      } else {
-        navigate("/profile"); // if we need seperate routing for recruiters, now it just links to the same as applicants
-    }
+      navigate("/profile");
   }
 }
   return (

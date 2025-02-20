@@ -1,44 +1,30 @@
-const API_BASE_URL = "http://localhost:4000";
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:4000';
 
 export async function login(username, password) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/access/login`, {  
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
-            credentials: "include" 
-        });
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/access/login`,
+      { username, password },
+      { withCredentials: true }
+    );
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Login failed.');
-        }
-
-        return await response.json(); 
-    } catch (error) {
-        throw new Error("Server error: " + error.message);
-    }
+    console.log("login api call ", response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'An error occurred during login.');
+  }
 }
 
+export async function register(userData) {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/access/register`, userData);
+    console.log("register new user AuthAPI userData: ", userData)
+    console.log("register new user AuthAPI response.data: ", response.data)
 
-
-  
-  export async function register(userData) {
-    try {
-      const response = await fetch(`${API_BASE_URL}/users`,  {
-
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Registration failed.');
-      }
-  
-      return await response.json();
-    } catch (error) {
-      throw new Error('Server error: ' + error.message);
-    }
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'An error occurred during registration.');
   }
+}
