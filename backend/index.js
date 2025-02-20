@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const corsOptions = {
   origin: "http://localhost:3000",     // we can add mutiple domain as ["http://localhost:3000", "https://benjamin.com"]  for more secure and JWT Cookies 
   credentials: true,
-  methods: ['GET', 'POST', 'PUT'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   optionSuccessStatus: 200
 };
 app.use(cookieParser()); //use cookies

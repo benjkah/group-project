@@ -35,7 +35,7 @@ class UserDAO {
    // return  user comenetcies from the database 
     static async findCompetencies(person_id) {
         const competenceQuery = `
-            SELECT cp.competence_id, c.name, cp.years_of_experience
+            SELECT  cp.competence_profile_id, cp.competence_id, c.name, cp.years_of_experience
             FROM [dbo].[competence_profile] cp
             JOIN [dbo].[competence_translation] c 
             ON cp.competence_id = c.competence_id 
@@ -52,7 +52,7 @@ class UserDAO {
  // return  user availibilties from the database 
     static async findAvailability(person_id) {
         const availabilityQuery = `
-            SELECT from_date, to_date  
+            SELECT availability_id, from_date, to_date  
             FROM [dbo].[availability] 
             WHERE application_id = @person_id
         `;
@@ -65,19 +65,35 @@ class UserDAO {
     }
 
     //remove competence from application
-    static async removeCompetence(competence_profile_id){
+    static async removeCompetence(id){
         const competencesQuery = `
-        DELETE FROM [dbo].[competence_profile
-        WHERE competence_profile_id = @competence_profile_id;
+        DELETE FROM [dbo].[competence_profile]
+        WHERE competence_profile_id = @id;
     `;
-    const values = [competence_profile_id];
-    const paramNames = ["competence_profile_id"];
+    const values = [id];
+    const paramNames = ["id"];
     const isStoredProcedure = false;
 
     const result = await executeQuery(competencesQuery, values, paramNames, isStoredProcedure);
 
     return result;
     }
+
+    //remove availability from application
+    static async removeAvailability(id){
+      const availabilityQuery = `
+      DELETE FROM [dbo].[availability]
+      WHERE availability_id = @id;
+  `;
+  console.log(availabilityQuery);
+  const values = [id];
+  const paramNames = ["id"];
+  const isStoredProcedure = false;
+
+  const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
+
+  return result;
+  }
     // Check if user (by username/email/pnr) already exists
   static async findByUsernameOrEmailOrPnr(username, email, pnr) {
     const query = `

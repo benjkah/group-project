@@ -11,16 +11,25 @@ export default observer(
         console.log("ENTERING ApplProfView")
 
        // remove compenets
-        function handleRemoveCompetenceACB(id)
-        
+        async function handleRemoveCompetenceACB(id)
         {
-            props.removeCompetence(id);
+            const result = await props.removeCompetence(id);
+            if (!result.success) {
+                alert(result.message);
+            } else {
+
+            }
         }
 
 //remobve avalibility
-        function handleRemoveAvailabilityACB(id) 
+        async function handleRemoveAvailabilityACB(id) 
         {
-            props.removeAvailability(id);
+            const result = await props.removeAvailability(id);
+            if (!result.success) {
+                alert(result.message);
+            } else {
+
+            }
         }
 
 //show on the display
@@ -98,7 +107,7 @@ export default observer(
         props.competencies.map((comp, index) => (
             <li key={comp.id || index}>  {/* Ensure unique key */}
                 {comp.name} - {displayCompetenceStatusACB(comp)} years 
-                <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.id)}>X</button>
+                <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.competence_profile_id)}>X</button>
             </li>
         ))
     ) : (
@@ -124,9 +133,10 @@ export default observer(
                 <ul>
     {props.availability.length > 0 ? (
         props.availability.map((avail, index) => (
+            console.log("check", avail),
             <li key={avail.id || index}>  {/* Ensure unique key */}
                 {displayAvailabilityACB(avail)}
-                <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.id)}>X</button>
+                <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.availability_id)}>X</button>
             </li>
         ))
     ) : (

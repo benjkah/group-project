@@ -22,6 +22,46 @@ class UserService {
         }
     }
 
+    static async deleteAvailability(id) {
+        try {
+            if (!id) {
+                throw new Error("Invalid ID provided for deletion.");
+            }
+    
+            const result = await UserDAO.removeAvailability(id);
+            
+            if (!result || result.affectedRows === 0) { // Ensure database operation was successful
+                throw new Error("No availability found with the given ID.");
+            }
+    
+            return { message: "Availability successfully removed." };
+        } catch (error) {
+            console.error("Error in deleteAvailability:", error.stack);
+            throw new Error("Error removing availability: " + error.message);
+        }
+    }
+    
+    
+    static async deleteCompetence(id) {
+        try {
+            if (!id) {
+                throw new Error("Invalid ID provided for deletion.");
+            }
+    
+            const result = await UserDAO.removeCompetence(id);
+            
+            if (!result || result.affectedRows === 0) { // Ensure database operation was successful
+                throw new Error("No competence found with the given ID.");
+            }
+    
+            return { message: "Availability successfully removed." };
+        } catch (error) {
+            console.error("Error in deleteCompetence:", error.stack);
+            throw new Error("Error removing competence: " + error.message);
+        }
+    }
+    
+
 }
 
 module.exports = UserService;

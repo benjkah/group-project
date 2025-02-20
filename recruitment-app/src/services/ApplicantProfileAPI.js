@@ -1,3 +1,6 @@
+import axios from 'axios';
+
+
 const API_BASE_URL = "http://localhost:4000";
 
 export async function fetchProfile() {
@@ -33,5 +36,29 @@ export async function fetchCompetences(){
     } catch (error) {
         throw new Error("Server error: " + error.message);
     }
+}
+
+export async function deleteAvailability(id) {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/user/deleteAvail/${id}`);
+
+        console.log("Deleted availability: ", response.data);
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'An error occurred during deletion.');
+    }
+}
+
+
+export async function deleteCompetence(id){
+    console.log("API");
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/user/deleteComp/${id}`);
+    
+        console.log("delete comp: ", response.data);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'An error occurred during deletion.');
+      }
 }
 
