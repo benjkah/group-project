@@ -17,7 +17,6 @@ class AppDAO{
     const isStoredProcedure = false;
 
     const result = await executeQuery(competencesQuery, values, paramNames, isStoredProcedure);
-    console.log("compret:"+ result);
     return result.recordset;
     }
 }

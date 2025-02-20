@@ -14,10 +14,12 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     useEffect(() => {
         async function loadApplicantProfile() {
             try {
-
                 const competences = await fetchCompetences();
-                console.log("Comprec" + competences);
-                //model.setCompetences(competences);
+
+                model.availableCompetences = competences.map(comp => ({
+                    id: comp.competence_id,
+                    name: comp.name,
+                }));
 
                 const data = await fetchProfile();
                 console.log("Profile data received:", data);
@@ -61,7 +63,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     function handleRemoveAvailability(index) {
         model.removeAvailability(index);
     }
-
     return (
         <ApplicantProfileView
             firstName={model.firstName}

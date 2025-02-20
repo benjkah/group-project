@@ -14,7 +14,6 @@ class RecruitmentModelClass {
   }
 
   setCompetences(competences){
-    console.log(competences);
     this.availableCompenences = competences;
   }
 

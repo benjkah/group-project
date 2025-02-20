@@ -29,7 +29,6 @@ export async function fetchCompetences(){
             throw new Error(errorMessage.message || "Failed to fetch competences.");
         }
         const data = await response.json();
-        console.log(`bingbong ${JSON.stringify(data, null, 2)}`); // Converts object to a readable JSON string
         return data;
     } catch (error) {
         throw new Error("Server error: " + error.message);
