@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-function RegistrationView({ onRegister }) {
+function RegistrationView({ onLogin, onRegister, userModel, mode }) {
   console.log("RegView")
 
   const [name, setName] = useState("");
@@ -12,6 +13,8 @@ function RegistrationView({ onRegister }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+
+  const navigate = useNavigate();
 
 
   async function handleSubmit(e) {
@@ -30,13 +33,19 @@ function RegistrationView({ onRegister }) {
     
 
     const result = await onRegister(userData);
+    e.preventDefault();
     if (!result.success) {
       alert(result.message);
     } else {
       alert("Registration successful! Logging you in...");
-      // navigate to user home page
+      const result = await onLogin(username, password);
+      if (!result.success) {
+        alert(result.message);
+      } else {
+        navigate("/profile");
     }
   }
+}
 
   return (
     <div style={{ maxWidth: "400px", margin: "0 auto" }}>
@@ -118,7 +127,7 @@ function RegistrationView({ onRegister }) {
           Sign Up
         </button>
       </form>
-      <p>Already have an account? <Link to="/">Log in here</Link></p>
+      <p>Already have an account?</p>
     </div>
   );
 }

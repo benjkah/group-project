@@ -68,9 +68,6 @@ class AccessService {
           throw new Error("Registration failed.");
         }
     
-        // Return token immediately upon registration?
-        // Authorization.sendCookie(newUser, <response>);
-    
         return newUser;
       }
 }
