@@ -56,6 +56,18 @@ class Controller {
           return res.status(400).json({ message: error.message });
         }
     }
+
+    static async getAllApplications(req, res) {
+        try {
+          // Call the service
+          const applications = await ApplicationService.fetchAllApplications();
+          // Return the result set as JSON
+          return res.json(applications);
+        } catch (error) {
+          console.error("Error retrieving applications:", error);
+          return res.status(500).json({ message: error.message });
+        }
+    }
 }
 
 
