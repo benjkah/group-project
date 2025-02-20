@@ -2,7 +2,7 @@
 import {useEffect} from 'react';
 
 import { observer } from "mobx-react-lite";
-import { fetchProfile } from "../services/ApplicantProfileAPI";
+import { fetchProfile, fetchCompetences } from "../services/ApplicantProfileAPI";
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
 export default observer(function ApplicantProfilePresenter({ model }) {
@@ -14,6 +14,12 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     useEffect(() => {
         async function loadApplicantProfile() {
             try {
+                const competences = await fetchCompetences();
+
+                model.availableCompetences = competences.map(comp => ({
+                    id: comp.competence_id,
+                    name: comp.name,
+                }));
 
                 const data = await fetchProfile();
                 console.log("Profile data received:", data);
@@ -21,6 +27,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
                 model.setFirstName(data.name);
                 model.setLastName(data.surname);
                 model.setEmail(data.email);
+                console.log(data)
 
                 model.competencies = data.competencies.map(comp => ({
                     id: comp.competence_id,
@@ -56,7 +63,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     function handleRemoveAvailability(index) {
         model.removeAvailability(index);
     }
-
     return (
         <ApplicantProfileView
             firstName={model.firstName}

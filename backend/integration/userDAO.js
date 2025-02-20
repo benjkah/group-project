@@ -64,6 +64,20 @@ class UserDAO {
         return result.recordset;
     }
 
+    //remove competence from application
+    static async removeCompetence(competence_profile_id){
+        const competencesQuery = `
+        DELETE FROM [dbo].[competence_profile
+        WHERE competence_profile_id = @competence_profile_id;
+    `;
+    const values = [competence_profile_id];
+    const paramNames = ["competence_profile_id"];
+    const isStoredProcedure = false;
+
+    const result = await executeQuery(competencesQuery, values, paramNames, isStoredProcedure);
+
+    return result;
+    }
     // Check if user (by username/email/pnr) already exists
   static async findByUsernameOrEmailOrPnr(username, email, pnr) {
     const query = `
