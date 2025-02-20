@@ -1,5 +1,6 @@
 const AccessService = require("../model/accessService");
 const UserService = require("../model/userService");
+const AppService = require("../model/appService");
 
 class Controller {
     static async login(req, res) {
@@ -21,6 +22,22 @@ class Controller {
             res.status(200).json(userProfile);
         } catch (error) {
             console.error("Error fetching profile:", error);
+            res.status(500).json({ message: error.message });
+        }
+    }
+
+    static async getCompetences(req, res) {
+        console.log("hi");
+        //console.log("cont:"+ lan);
+        lan = "en";
+        if (!lan){
+            lan = "en";
+        }
+        try {
+            const competences = await AppService.getCompetences(lan);
+            res.status(200).json(competences);
+        } catch (error) {
+            console.error("Error fetching competences:", error);
             res.status(500).json({ message: error.message });
         }
     }

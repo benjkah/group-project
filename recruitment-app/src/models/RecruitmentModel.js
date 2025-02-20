@@ -7,15 +7,15 @@ class RecruitmentModelClass {
 
   competencies = [];
   availability = [];
-
-  availableCompetences = [
-    { id: 1, name: "Ticket Sales" },
-    { id: 2, name: "Lotteries" },
-    { id: 3, name: "Roller Coaster Operation" }
-  ];
+  availableCompetences = [];
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setCompetences(competences){
+    console.log(competences);
+    this.availableCompenences = competences;
   }
 
   setFirstName(firstName) {

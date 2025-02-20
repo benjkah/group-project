@@ -11,8 +11,26 @@ export async function fetchProfile() {
             const errorMessage = await response.json();
             throw new Error(errorMessage.message || "Failed to fetch profile.");
         }
-
+        
         return await response.json();
+    } catch (error) {
+        throw new Error("Server error: " + error.message);
+    }
+}
+
+export async function fetchCompetences(){
+    try {
+        const response = await fetch(`${API_BASE_URL}/app/competences`, {
+            method: "GET", 
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.message || "Failed to fetch competences.");
+        }
+        const data = await response.json();
+        console.log(`bingbong ${JSON.stringify(data, null, 2)}`); // Converts object to a readable JSON string
+        return data;
     } catch (error) {
         throw new Error("Server error: " + error.message);
     }

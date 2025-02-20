@@ -2,7 +2,7 @@
 import {useEffect} from 'react';
 
 import { observer } from "mobx-react-lite";
-import { fetchProfile } from "../services/ApplicantProfileAPI";
+import { fetchProfile, fetchCompetences } from "../services/ApplicantProfileAPI";
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
 export default observer(function ApplicantProfilePresenter({ model }) {
@@ -15,12 +15,17 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         async function loadApplicantProfile() {
             try {
 
+                const competences = await fetchCompetences();
+                console.log("Comprec" + competences);
+                //model.setCompetences(competences);
+
                 const data = await fetchProfile();
                 console.log("Profile data received:", data);
 
                 model.setFirstName(data.name);
                 model.setLastName(data.surname);
                 model.setEmail(data.email);
+                console.log(data)
 
                 model.competencies = data.competencies.map(comp => ({
                     id: comp.competence_id,
