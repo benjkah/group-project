@@ -63,6 +63,57 @@ class UserDAO {
         const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
         return result.recordset;
     }
+
+    // Check if user (by username/email/pnr) already exists
+  static async findByUsernameOrEmailOrPnr(username, email, pnr) {
+    const query = `
+      SELECT person_id, username, email, pnr
+      FROM [dbo].[person]
+      WHERE username = @username
+         OR email = @email
+         OR pnr = @pnr
+    `;
+    const values = [username, email, pnr];
+    const paramNames = ["username", "email", "pnr"];
+    const isStoredProcedure = false;
+
+    const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+    return result.recordset.length > 0 ? result.recordset[0] : null;
+  }
+
+  // Insert a new user
+  static async createUser({ name, surname, pnr, email, username, password, role_id }) {
+    const query = `
+      INSERT INTO [dbo].[person] (
+        name, surname, pnr, email, username, password, role_id
+      )
+      OUTPUT 
+        inserted.person_id,
+        inserted.name,
+        inserted.surname,
+        inserted.pnr,
+        inserted.email,
+        inserted.username,
+        inserted.role_id
+      VALUES (
+        @name,
+        @surname,
+        @pnr,
+        @email,
+        @username,
+        @password,
+        @role_id
+      )
+    `;
+
+    const values = [name, surname, pnr, email, username, password, role_id];
+    const paramNames = ["name", "surname", "pnr", "email", "username", "password", "role_id"];
+    const isStoredProcedure = false;
+
+    const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+
+    return result.recordset.length > 0 ? result.recordset[0] : null;
+  }
     
 }
 
