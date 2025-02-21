@@ -18,7 +18,8 @@ class   Authorization {
 //if the cookies exist we decode the codes and attach the user id in person_id
         try {
             const JWTPayload = jwt.verify(jwtCookie, process.env.JWT_SECRET);
-            req.person_id = JWTPayload.person_id;  
+            req.person_id = JWTPayload.person_id;
+            req.role_id = JWTPayload.role_id;  
             next();
         } catch (error) {
             //if its invalid coocies we clear the coockies
@@ -26,6 +27,14 @@ class   Authorization {
             return res.status(403).json({ message: "Invalid or expired token" });
         }
     }
+
+    // check if recruiter
+    static checkRecruiter(req, res, next) {
+        if (req.role_id !== 1) {
+          return res.status(403).json({ message: "Forbidden - Recruiters only." });
+        }
+        next();
+      }
 
 
 //using jwt.sign  we create a token and it contain the id

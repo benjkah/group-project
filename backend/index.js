@@ -7,10 +7,8 @@ require('dotenv').config();
 
 const { connect } = require("./database.js");
 
-//const router = require('./routes/router');
 const userRouter = require("./routes/user.js");
 const accessRouter = require('./routes/access.js')
-const createRouter = require('./routes/create.js')
 const appRouter = require('./routes/app.js')
 
 const app = express();
@@ -52,7 +50,6 @@ app.use(cors(corsOptions));
 //app.use('/', router);
 app.use("/user", userRouter);
 app.use('/access', accessRouter);
-app.use('/create', createRouter);
 app.use('/app', appRouter);
 
 
