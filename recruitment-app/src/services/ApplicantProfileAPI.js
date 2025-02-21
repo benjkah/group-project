@@ -51,7 +51,6 @@ export async function deleteAvailability(id) {
 
 
 export async function deleteCompetence(id){
-    console.log("API");
     try {
         const response = await axios.delete(`${API_BASE_URL}/user/deleteComp/${id}`);
     
@@ -59,6 +58,36 @@ export async function deleteCompetence(id){
         return response.data;
       } catch (error) {
         throw new Error(error.response?.data?.message || 'An error occurred during deletion.');
+      }
+}
+
+export async function addCompetence(id, name, startDate, endDate){
+    try {
+        const response = await axios.post(`${API_BASE_URL}/user/addComp`, {
+            id,
+            name,
+            startDate,
+            endDate
+        });
+        console.log("Add comp: ", response.data);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'An error occurred during insertion.');
+      }
+}
+
+export async function addAvailability(id, fromDate, toDate) {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/user/addAvail`, {
+            id,
+            fromDate,
+            toDate
+        });
+    
+        console.log("Add Avail: ", response.data);
+        return response.data;
+      } catch (error) {
+        throw new Error(error.response?.data?.message || 'An error occurred during insertion.');
       }
 }
 

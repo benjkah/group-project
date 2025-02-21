@@ -24,7 +24,11 @@ class UserDAO {
     //return the user details from the database based on their person_id.
 
     static async findUserById(person_id) {
-        const query = `SELECT person_id, name, surname, email FROM [dbo].[person] WHERE person_id = @person_id`;
+        const query = `
+          SELECT p.person_id, p.name, p.surname, p.email, a.application_id
+          FROM [dbo].[person] p
+          JOIN [dbo].[application] a ON p.person_id = a.person_id
+          WHERE p.person_id = @person_id;`;
         const values = [person_id];
         const paramNames = ["person_id"];
         const isStoredProcedure = false;
@@ -35,11 +39,17 @@ class UserDAO {
    // return  user comenetcies from the database 
     static async findCompetencies(person_id) {
         const competenceQuery = `
-            SELECT  cp.competence_profile_id, cp.competence_id, c.name, cp.years_of_experience
-            FROM [dbo].[competence_profile] cp
-            JOIN [dbo].[competence_translation] c 
-            ON cp.competence_id = c.competence_id 
-            WHERE cp.application_id = @person_id
+          SELECT 
+              cp.competence_profile_id, 
+              cp.competence_id, 
+              c.name AS competence_name, 
+              cp.years_of_experience
+          FROM [dbo].[competence_profile] cp
+          INNER JOIN [dbo].[competence_translation] c 
+              ON cp.competence_id = c.competence_id
+          INNER JOIN [dbo].[application] app 
+              ON cp.application_id = app.application_id
+          WHERE app.person_id = @person_id
         `;
         const values = [person_id];
         const paramNames = ["person_id"];
@@ -52,9 +62,10 @@ class UserDAO {
  // return  user availibilties from the database 
     static async findAvailability(person_id) {
         const availabilityQuery = `
-            SELECT availability_id, from_date, to_date  
-            FROM [dbo].[availability] 
-            WHERE application_id = @person_id
+          SELECT a.availability_id, a.from_date, a.to_date  
+          FROM [dbo].[availability] a
+          INNER JOIN [dbo].[application] app ON a.application_id = app.application_id
+          WHERE app.person_id = @person_id
         `;
         const values = [person_id];
         const paramNames = ["person_id"];
@@ -94,6 +105,41 @@ class UserDAO {
 
   return result;
   }
+
+  static async addCompetence(id, comp_id, startDate, endDate){
+    const competenceQuery = `
+        INSERT INTO [dbo].[competence_profile] (application_id, competence_id, start_date, end_date)
+        VALUES (@id, @comp_id, @startDate, @endDate);
+    `;
+    
+    console.log(competenceQuery);
+    
+    const values = [id, comp_id, startDate, endDate];
+    const paramNames = ["id", "comp_id", "startDate", "endDate"];
+    const isStoredProcedure = false;
+
+    const result = await executeQuery(competenceQuery, values, paramNames, isStoredProcedure);
+
+    return result;
+  }
+
+  static async addavailability(id, fromDate, toDate){
+      const availabilityQuery = `
+          INSERT INTO [dbo].[availability] (application_id, from_date, to_date)
+          VALUES (@id, @fromDate, @toDate);
+      `;
+      
+      console.log(availabilityQuery);
+      
+      const values = [id, fromDate, toDate];
+      const paramNames = ["id", "fromDate", "toDate"];
+      const isStoredProcedure = false;
+  
+      const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
+  
+      return result;
+  }
+
     // Check if user (by username/email/pnr) already exists
   static async findByUsernameOrEmailOrPnr(username, email, pnr) {
     const query = `

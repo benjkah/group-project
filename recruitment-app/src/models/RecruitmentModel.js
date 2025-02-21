@@ -1,6 +1,8 @@
 import { makeAutoObservable } from "mobx";
 
 class RecruitmentModelClass {
+  id = "";
+  appId = "";
   firstName = "";
   lastName = "";
   email = "";
@@ -17,6 +19,13 @@ class RecruitmentModelClass {
     this.availableCompenences = competences;
   }
 
+  setId(id){
+    this.id = id;
+  }
+  setAppId(appId){
+    console.log(appId);
+    this.appId = appId;
+  }
   setFirstName(firstName) {
     this.firstName = firstName;
   }
@@ -31,7 +40,7 @@ class RecruitmentModelClass {
   setCompetencies(competencies) {
     
     this.competencies = competencies;
-}
+  }
 
 setAvailability(availability) {
  

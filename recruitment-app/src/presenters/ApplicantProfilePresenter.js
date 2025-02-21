@@ -2,7 +2,7 @@
 import {useEffect} from 'react';
 
 import { observer } from "mobx-react-lite";
-import { fetchProfile, fetchCompetences, deleteAvailability, deleteCompetence } from "../services/ApplicantProfileAPI";
+import { fetchProfile, fetchCompetences, deleteAvailability, deleteCompetence, addCompetence, addAvailability } from "../services/ApplicantProfileAPI";
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
 export default observer(function ApplicantProfilePresenter({ model }) {
@@ -27,6 +27,8 @@ export default observer(function ApplicantProfilePresenter({ model }) {
                 model.setFirstName(data.name);
                 model.setLastName(data.surname);
                 model.setEmail(data.email);
+                model.setId(data.person_id);
+                model.setAppId(data.application_id);
                 console.log(data)
 
                 model.competencies = data.competencies.map(comp => ({
@@ -51,8 +53,14 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         loadApplicantProfile();
     }, []);
 
-    function handleAddCompetence(name, startDate, endDate) {
-        model.addCompetence(name, startDate, endDate);
+    async function handleAddCompetence(id, comp_id, startDate, endDate) {
+        try {
+            const data = await addCompetence(id, comp_id, startDate, endDate);
+      
+            return { success: true };
+          } catch (error) {
+            return { success: false, message: error.message };
+          }
     }
 
     async function handleRemoveCompetence(id) {
@@ -65,8 +73,14 @@ export default observer(function ApplicantProfilePresenter({ model }) {
           }
     }
 
-    function handleAddAvailability(fromDate, toDate) {
-        model.addAvailability(fromDate, toDate);
+    async function handleAddAvailability(id, fromDate, toDate) {
+        try {
+            const data = await addAvailability(id, fromDate, toDate);
+      
+            return { success: true };
+          } catch (error) {
+            return { success: false, message: error.message };
+          }
     }
 
     async function handleRemoveAvailability(id) {

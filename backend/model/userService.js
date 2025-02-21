@@ -1,3 +1,4 @@
+const e = require("express");
 const UserDAO = require("../integration/userDAO");
 
 class UserService {
@@ -54,10 +55,45 @@ class UserService {
                 throw new Error("No competence found with the given ID.");
             }
     
-            return { message: "Availability successfully removed." };
+            return { message: "Competence successfully removed." };
         } catch (error) {
             console.error("Error in deleteCompetence:", error.stack);
             throw new Error("Error removing competence: " + error.message);
+        }
+    }
+
+    static async addCompetence(id, comp_id, startDate, endDate){
+        try {
+    
+            const result = await UserDAO.addCompetence(id, comp_id, startDate, endDate);
+            
+            if (!result || result.affectedRows === 0) { // Ensure database operation was successful
+                throw new Error("Competence could not be added.");
+            }
+    
+            return { message: "Competence successfully added." };
+        } catch (error) {
+            console.error("Error in addCompetence:", error.stack);
+            throw new Error("Error adding competence: " + error.message);
+        }
+    }
+
+    static async addCompetence(id, fromDate, toDate){
+        try {
+            if (!id) {
+                throw new Error("Invalid profile ID provided.");
+            }
+    
+            const result = await UserDAO.removeAvailability(id);
+            
+            if (!result || result.affectedRows === 0) { // Ensure database operation was successful
+                throw new Error("Availability could not be added.");
+            }
+    
+            return { message: "Availability successfully added." };
+        } catch (error) {
+            console.error("Error in addAvailability:", error.stack);
+            throw new Error("Error adding availability: " + error.message);
         }
     }
     

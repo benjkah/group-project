@@ -47,12 +47,14 @@ export default observer(
 
         function handleAddCompetenceACB(event) {
             event.preventDefault();
-            
-            var selectedCompetence = event.target.competence.value;
+    
+            var selectedCompetence = event.target.competence;
+            var selectedOption = selectedCompetence.options[selectedCompetence.selectedIndex]; // Get selected <option>
+            var selectedId = selectedOption.id;
             var startDate = event.target.startDate.value;
             var endDate = event.target.endDate.value;
 
-            if (!selectedCompetence || !startDate || !endDate) {
+            if (!selectedId|| !startDate || !endDate) {
                 alert("All fields are required!");
                 return;
             }
@@ -65,7 +67,7 @@ export default observer(
                 return;
             }
 
-            props.addCompetence(selectedCompetence, startDate, endDate);
+            props.addCompetence(props.id, selectedId, startDate, endDate);
             event.target.reset();
         }
 
@@ -84,7 +86,7 @@ export default observer(
                 return;
             }
 
-            props.addAvailability(fromDate, toDate);
+            props.addAvailability(props.id,fromDate, toDate);
             event.target.reset();
         }
 
@@ -120,7 +122,8 @@ export default observer(
                     <select name="competence">
                         <option value="">Select Competence</option>
                         {props.availableCompetences.map(function(comp) {
-                            return <option key={comp.id} value={comp.name}>{comp.name}</option>;
+                            console.log(comp.id);
+                            return <option key={comp.id} id={comp.id} value={comp.name}>{comp.name}</option>;
                         })}
                     </select>
                     
