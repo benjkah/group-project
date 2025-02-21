@@ -23,7 +23,6 @@ class RecruitmentModelClass {
     this.id = id;
   }
   setAppId(appId){
-    console.log(appId);
     this.appId = appId;
   }
   setFirstName(firstName) {

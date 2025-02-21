@@ -61,6 +61,7 @@ class UserDAO {
     
  // return  user availibilties from the database 
     static async findAvailability(person_id) {
+      console.log("fin",person_id);
         const availabilityQuery = `
           SELECT a.availability_id, a.from_date, a.to_date  
           FROM [dbo].[availability] a
@@ -123,7 +124,7 @@ class UserDAO {
     return result;
   }
 
-  static async addavailability(id, fromDate, toDate){
+  static async addAvailability(id, fromDate, toDate){
       const availabilityQuery = `
           INSERT INTO [dbo].[availability] (application_id, from_date, to_date)
           VALUES (@id, @fromDate, @toDate);

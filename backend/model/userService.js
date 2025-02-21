@@ -78,13 +78,14 @@ class UserService {
         }
     }
 
-    static async addCompetence(id, fromDate, toDate){
+    static async addAvailability(id, fromDate, toDate){
+        console.log("Ser",id,fromDate.toDate);
         try {
             if (!id) {
                 throw new Error("Invalid profile ID provided.");
             }
     
-            const result = await UserDAO.removeAvailability(id);
+            const result = await UserDAO.addAvailability(id, fromDate, toDate);
             
             if (!result || result.affectedRows === 0) { // Ensure database operation was successful
                 throw new Error("Availability could not be added.");

@@ -42,9 +42,10 @@ export default observer(
 
 
         function displayAvailabilityACB(avail) {
+            console.log(avail);
             return avail.fromDate + " to " + avail.toDate;
         }
-
+        
         function handleAddCompetenceACB(event) {
             event.preventDefault();
     
@@ -77,7 +78,7 @@ export default observer(
 
         function handleAddAvailabilityACB(event) {
             event.preventDefault();
-            
+            console.log(props.appId)
             var fromDate = event.target.fromDate.value;
             var toDate = event.target.toDate.value;
 
@@ -86,7 +87,7 @@ export default observer(
                 return;
             }
 
-            props.addAvailability(props.id,fromDate, toDate);
+            props.addAvailability(props.appId,fromDate, toDate);
             event.target.reset();
         }
 

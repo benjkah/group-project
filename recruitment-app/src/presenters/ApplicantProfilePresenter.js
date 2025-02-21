@@ -31,20 +31,23 @@ export default observer(function ApplicantProfilePresenter({ model }) {
                 model.setAppId(data.application_id);
                 console.log(data)
 
-                model.competencies = data.competencies.map(comp => ({
+                if(Array.isArray(data.competencies)){
+                    model.competencies = data.competencies.map(comp => ({
                     competence_profile_id: comp.competence_profile_id,
                     id: comp.competence_id,
                     name: comp.name,
                     yearsOfExperience: parseFloat(comp.years_of_experience.toFixed(2)) 
-                }));
+                    }));
+                }
 
-                model.availability = data.availability.map(avail => ({
-                    
-                    availability_id: avail.availability_id,
-                    fromDate: new Date(avail.from_date).toISOString().split('T')[0], 
-                    toDate: new Date(avail.to_date).toISOString().split('T')[0]
-                }));
-
+                if(Array.isArray(data.availability)){
+                    model.availability = data.availability.map(avail => ({
+                        
+                        availability_id: avail.availability_id,
+                        fromDate: new Date(avail.from_date).toISOString().split('T')[0], 
+                        toDate: new Date(avail.to_date).toISOString().split('T')[0]
+                    }));
+                }
             } catch (error) {
                 console.error("Error fetching profile:", error.message);
             }
@@ -94,6 +97,8 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     }
     return (
         <ApplicantProfileView
+            id={model.id}
+            appId={model.appId}
             firstName={model.firstName}
             lastName={model.lastName}
             email={model.email}
