@@ -1,11 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 function ApplicationListView({ model }) {
-  console.log("AppListModel");
+
   if (model.loading) {
     return <p>Loading applications...</p>;
   }
+
+  console.log("ApplicationListModel model: ", model);
 
   return (
     <div>
@@ -14,11 +17,13 @@ function ApplicationListView({ model }) {
         <p>No applications found.</p>
       ) : (
         <ul>
-          {model.applications.map((app) => (
+          {model.sortedApplications.map((app) => (
             <li key={app.application_id}>
-              <strong>Application ID:</strong> {app.application_id}{" "}
-              <strong>Person ID:</strong> {app.person_id}{" "}
-              <strong>Handled ID:</strong> {app.handled_id}
+              <Link to={`/applications/${app.application_id}`}>
+                <strong>Application ID:</strong> {app.application_id}{" "}
+                <strong>Applicant:</strong> {app.name}{" "}{app.surname}{" "}
+                <strong>Status:</strong> {app.status}
+              </Link>
             </li>
           ))}
         </ul>
