@@ -149,7 +149,7 @@ router.post("/login", async (req, res) => {
   router.get('/user/:id', loadUser, function(req, res){
     res.send('Viewing user ' + req.user.name);
   });
-*/
+
 
 
 module.exports = router

@@ -80,6 +80,84 @@ class Controller {
           return res.status(500).json({ message: error.message });
         }
     }
+
+    static async deleteAvailability(req, res) {
+        try {
+            const { id } = req.params;  // Extract ID from request params
+            if (!id) {
+                return res.status(400).json({ message: "Availability ID is required" });
+            }
+    
+            const result = await UserService.deleteAvailability(id); // Call the service layer
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Availability not found" });
+            }
+    
+            res.status(200).json({ message: "Availability deleted successfully" });
+        } catch (error) {
+            console.error("Error deleting availability:", error);
+            res.status(500).json({ message: "Failed to delete availability" });
+        }
+    }
+    
+    static async deleteCompetence(req, res) {
+        try {
+            const { id } = req.params;  // Extract ID from request params
+            if (!id) {
+                return res.status(400).json({ message: "Competence ID is required" });
+            }
+    
+            const result = await UserService.deleteCompetence(id); // Call the service layer
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Competence not found" });
+            }
+    
+            res.status(200).json({ message: "Competence deleted successfully" });
+        } catch (error) {
+            console.error("Error deleting competence:", error);
+            res.status(500).json({ message: "Failed to delete competence" });
+        }
+    }
+
+    static async addCompetence(req, res){
+        try {
+            const { id, comp_id, startDate, endDate } = req.body;  // Extract ID from request params
+            if (!id) {
+                return res.status(400).json({ message: "Competence ID is required" });
+            }
+            const yearsOfExperience = ((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(2);
+
+            const result = await UserService.addCompetence(id, comp_id, yearsOfExperience); // Call the service layer
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Competence could not be added" });
+            }
+    
+            res.status(200).json({ message: "Competence added successfully" });
+        } catch (error) {
+            console.error("Error adding competence:", error);
+            res.status(500).json({ message: "Failed to add competence" });
+        }
+    }
+
+    static async addAvailability(req, res){
+        try {
+            const { id, fromDate, toDate } = req.body;  // Extract ID from request params
+            if (!id) {
+                return res.status(400).json({ message: "Person ID is required" });
+            }
+    
+            const result = await UserService.addAvailability(id, fromDate, toDate); // Call the service layer
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Availability could not be added" });
+            }
+    
+            res.status(200).json({ message: "Availability added successfully" });
+        } catch (error) {
+            console.error("Error adding availability:", error);
+            res.status(500).json({ message: "Failed to add availability" });
+        }
+    }
+    
 }
 
 

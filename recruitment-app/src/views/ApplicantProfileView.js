@@ -11,16 +11,25 @@ export default observer(
         console.log("ENTERING ApplProfView")
 
        // remove compenets
-        function handleRemoveCompetenceACB(id)
-        
+        async function handleRemoveCompetenceACB(id)
         {
-            props.removeCompetence(id);
+            const result = await props.removeCompetence(id);
+            if (!result.success) {
+                alert(result.message);
+            } else {
+
+            }
         }
 
 //remobve avalibility
-        function handleRemoveAvailabilityACB(id) 
+        async function handleRemoveAvailabilityACB(id) 
         {
-            props.removeAvailability(id);
+            const result = await props.removeAvailability(id);
+            if (!result.success) {
+                alert(result.message);
+            } else {
+
+            }
         }
 
 //show on the display
@@ -38,12 +47,14 @@ export default observer(
 
         function handleAddCompetenceACB(event) {
             event.preventDefault();
-            
-            var selectedCompetence = event.target.competence.value;
+    
+            var selectedCompetence = event.target.competence;
+            var selectedOption = selectedCompetence.options[selectedCompetence.selectedIndex]; // Get selected <option>
+            var selectedId = selectedOption.id;
             var startDate = event.target.startDate.value;
             var endDate = event.target.endDate.value;
 
-            if (!selectedCompetence || !startDate || !endDate) {
+            if (!selectedId|| !startDate || !endDate) {
                 alert("All fields are required!");
                 return;
             }
@@ -56,7 +67,7 @@ export default observer(
                 return;
             }
 
-            props.addCompetence(selectedCompetence, startDate, endDate);
+            props.addCompetence(props.appId, selectedId, startDate, endDate);
             event.target.reset();
         }
 
@@ -66,7 +77,6 @@ export default observer(
 
         function handleAddAvailabilityACB(event) {
             event.preventDefault();
-            
             var fromDate = event.target.fromDate.value;
             var toDate = event.target.toDate.value;
 
@@ -75,7 +85,7 @@ export default observer(
                 return;
             }
 
-            props.addAvailability(fromDate, toDate);
+            props.addAvailability(props.appId,fromDate, toDate);
             event.target.reset();
         }
 
@@ -98,7 +108,7 @@ export default observer(
         props.competencies.map((comp, index) => (
             <li key={comp.id || index}>  {/* Ensure unique key */}
                 {comp.name} - {displayCompetenceStatusACB(comp)} years 
-                <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.id)}>X</button>
+                <button className="delete-btn" onClick={() => handleRemoveCompetenceACB(comp.competence_profile_id)}>X</button>
             </li>
         ))
     ) : (
@@ -111,7 +121,7 @@ export default observer(
                     <select name="competence">
                         <option value="">Select Competence</option>
                         {props.availableCompetences.map(function(comp) {
-                            return <option key={comp.id} value={comp.name}>{comp.name}</option>;
+                            return <option key={comp.id} id={comp.id} value={comp.name}>{comp.name}</option>;
                         })}
                     </select>
                     
@@ -126,7 +136,7 @@ export default observer(
         props.availability.map((avail, index) => (
             <li key={avail.id || index}>  {/* Ensure unique key */}
                 {displayAvailabilityACB(avail)}
-                <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.id)}>X</button>
+                <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.availability_id)}>X</button>
             </li>
         ))
     ) : (
