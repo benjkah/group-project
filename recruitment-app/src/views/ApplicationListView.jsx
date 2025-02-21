@@ -1,15 +1,11 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-const ApplicationListView = observer(({ model }) => {
+function ApplicationListView({ model }) {
   console.log("AppListModel");
   if (model.loading) {
     return <p>Loading applications...</p>;
   }
-  /*
-  if (model.error) {
-    console.error("Error loading applications:", model.error);
-  }*/
 
   return (
     <div>
@@ -29,6 +25,6 @@ const ApplicationListView = observer(({ model }) => {
       )}
     </div>
   );
-});
+};
 
-export default ApplicationListView;
+export default observer(ApplicationListView);

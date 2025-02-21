@@ -72,7 +72,7 @@ class Controller {
     static async getAllApplications(req, res) {
         try {
           // Call the service
-          const applications = await ApplicationService.fetchAllApplications();
+          const applications = await AppService.fetchAllApplications();
           // Return the result set as JSON
           return res.json(applications);
         } catch (error) {
