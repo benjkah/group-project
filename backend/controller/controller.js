@@ -113,8 +113,9 @@ class Controller {
             if (!id) {
                 return res.status(400).json({ message: "Competence ID is required" });
             }
-    
-            const result = await UserService.addCompetence(id, comp_id, startDate, endDate); // Call the service layer
+            const yearsOfExperience = ((new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24 * 365.25)).toFixed(2);
+
+            const result = await UserService.addCompetence(id, comp_id, yearsOfExperience); // Call the service layer
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: "Competence could not be added" });
             }

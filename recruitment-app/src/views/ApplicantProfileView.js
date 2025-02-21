@@ -42,10 +42,9 @@ export default observer(
 
 
         function displayAvailabilityACB(avail) {
-            console.log(avail);
             return avail.fromDate + " to " + avail.toDate;
         }
-        
+
         function handleAddCompetenceACB(event) {
             event.preventDefault();
     
@@ -68,7 +67,7 @@ export default observer(
                 return;
             }
 
-            props.addCompetence(props.id, selectedId, startDate, endDate);
+            props.addCompetence(props.appId, selectedId, startDate, endDate);
             event.target.reset();
         }
 
@@ -78,7 +77,6 @@ export default observer(
 
         function handleAddAvailabilityACB(event) {
             event.preventDefault();
-            console.log(props.appId)
             var fromDate = event.target.fromDate.value;
             var toDate = event.target.toDate.value;
 
@@ -123,7 +121,6 @@ export default observer(
                     <select name="competence">
                         <option value="">Select Competence</option>
                         {props.availableCompetences.map(function(comp) {
-                            console.log(comp.id);
                             return <option key={comp.id} id={comp.id} value={comp.name}>{comp.name}</option>;
                         })}
                     </select>
@@ -137,7 +134,6 @@ export default observer(
                 <ul>
     {props.availability.length > 0 ? (
         props.availability.map((avail, index) => (
-            console.log("check", avail),
             <li key={avail.id || index}>  {/* Ensure unique key */}
                 {displayAvailabilityACB(avail)}
                 <button className="delete-btn" onClick={() => handleRemoveAvailabilityACB(avail.availability_id)}>X</button>

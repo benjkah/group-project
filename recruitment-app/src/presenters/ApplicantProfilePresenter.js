@@ -29,7 +29,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
                 model.setEmail(data.email);
                 model.setId(data.person_id);
                 model.setAppId(data.application_id);
-                console.log(data)
 
                 if(Array.isArray(data.competencies)){
                     model.competencies = data.competencies.map(comp => ({

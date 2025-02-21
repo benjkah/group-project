@@ -61,7 +61,6 @@ class UserDAO {
     
  // return  user availibilties from the database 
     static async findAvailability(person_id) {
-      console.log("fin",person_id);
         const availabilityQuery = `
           SELECT a.availability_id, a.from_date, a.to_date  
           FROM [dbo].[availability] a
@@ -97,7 +96,6 @@ class UserDAO {
       DELETE FROM [dbo].[availability]
       WHERE availability_id = @id;
   `;
-  console.log(availabilityQuery);
   const values = [id];
   const paramNames = ["id"];
   const isStoredProcedure = false;
@@ -107,16 +105,14 @@ class UserDAO {
   return result;
   }
 
-  static async addCompetence(id, comp_id, startDate, endDate){
+  static async addCompetence(id, comp_id, yearsOfExperience){
     const competenceQuery = `
-        INSERT INTO [dbo].[competence_profile] (application_id, competence_id, start_date, end_date)
-        VALUES (@id, @comp_id, @startDate, @endDate);
+        INSERT INTO [dbo].[competence_profile] (application_id, competence_id, years_of_experience)
+        VALUES (@id, @comp_id, @yearsOfExperience);
     `;
     
-    console.log(competenceQuery);
-    
-    const values = [id, comp_id, startDate, endDate];
-    const paramNames = ["id", "comp_id", "startDate", "endDate"];
+    const values = [id, comp_id, yearsOfExperience];
+    const paramNames = ["id", "comp_id", "yearsOfExperience"];
     const isStoredProcedure = false;
 
     const result = await executeQuery(competenceQuery, values, paramNames, isStoredProcedure);
@@ -129,8 +125,6 @@ class UserDAO {
           INSERT INTO [dbo].[availability] (application_id, from_date, to_date)
           VALUES (@id, @fromDate, @toDate);
       `;
-      
-      console.log(availabilityQuery);
       
       const values = [id, fromDate, toDate];
       const paramNames = ["id", "fromDate", "toDate"];

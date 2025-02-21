@@ -62,10 +62,10 @@ class UserService {
         }
     }
 
-    static async addCompetence(id, comp_id, startDate, endDate){
+    static async addCompetence(id, comp_id, yearsOfExperience){
         try {
     
-            const result = await UserDAO.addCompetence(id, comp_id, startDate, endDate);
+            const result = await UserDAO.addCompetence(id, comp_id, yearsOfExperience);
             
             if (!result || result.affectedRows === 0) { // Ensure database operation was successful
                 throw new Error("Competence could not be added.");
@@ -79,7 +79,6 @@ class UserService {
     }
 
     static async addAvailability(id, fromDate, toDate){
-        console.log("Ser",id,fromDate.toDate);
         try {
             if (!id) {
                 throw new Error("Invalid profile ID provided.");

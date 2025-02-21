@@ -61,11 +61,11 @@ export async function deleteCompetence(id){
       }
 }
 
-export async function addCompetence(id, name, startDate, endDate){
+export async function addCompetence(id, comp_id, startDate, endDate){
     try {
         const response = await axios.post(`${API_BASE_URL}/user/addComp`, {
             id,
-            name,
+            comp_id,
             startDate,
             endDate
         });
