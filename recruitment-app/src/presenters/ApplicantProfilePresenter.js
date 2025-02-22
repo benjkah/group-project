@@ -1,5 +1,7 @@
 
 import {useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
+import { logout } from "../services/AuthAPI";
 
 import { observer } from "mobx-react-lite";
 import { fetchProfile, fetchCompetences, deleteAvailability, deleteCompetence, addCompetence, addAvailability } from "../services/ApplicantProfileAPI";
@@ -100,6 +102,23 @@ export default observer(function ApplicantProfilePresenter({ model }) {
             return { success: false, message: error.message };
         }
     }
+
+
+
+    
+
+//use for logout
+const navigate = useNavigate();
+async function LogoutButton() {
+    
+    try {
+        await logout();
+        navigate("/"); 
+    } catch (error) {
+        console.error("Logout failed:", error.message);
+    }
+
+}
     return (
         <ApplicantProfileView
             id={model.id}
@@ -114,6 +133,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
             removeCompetence={handleRemoveCompetence}
             addAvailability={handleAddAvailability}
             removeAvailability={handleRemoveAvailability}
+            logout = {LogoutButton}
         />
     );
 });

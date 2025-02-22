@@ -72,7 +72,9 @@ export default observer(
         }
 
 
-
+        function handleLogout() {
+            props.logout();
+        }
 
 
         function handleAddAvailabilityACB(event) {
@@ -89,6 +91,9 @@ export default observer(
             event.target.reset();
         }
 
+
+
+        
 
 
 
@@ -151,6 +156,8 @@ export default observer(
                     <input type="date" name="toDate" />
                     <button type="submit">Add Availability</button>
                 </form>
+                <br></br>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         );
     }

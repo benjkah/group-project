@@ -25,6 +25,21 @@ return { ...user, application_id: application.application_id };
         }
     }
 
+    
+
+    static async logoutUser(res) {
+      try {
+          Authorization.removeCookie(res);
+          return { message: "Logout successful." };
+      } catch (error) {
+          console.error("Logout error:", error.message);
+          throw new Error("Error during logout.");
+      }
+  }
+
+
+
+
     static async registerUser(
         name,
         surname,

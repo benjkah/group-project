@@ -17,6 +17,26 @@ export async function login(username, password) {
   }
 }
 
+//Logout function
+export async function logout() {
+    try {
+        const response = await fetch("http://localhost:4000/access/logout", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Logout failed.");
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error("Error logging out: " + error.message);
+    }
+}
+
+
 export async function register(userData) {
   try {
     const response = await axios.post(`${API_BASE_URL}/access/register`, userData);

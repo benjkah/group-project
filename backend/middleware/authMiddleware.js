@@ -52,6 +52,14 @@ class   Authorization {
             expires: 0
         });
     }
+
+//removie cookie
+    static removeCookie(res) {
+        res.clearCookie(Authorization.cookieName, {
+            httpOnly: true,
+            
+        });
+    }
 }
 
 module.exports = Authorization;
