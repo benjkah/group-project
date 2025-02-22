@@ -67,12 +67,15 @@ export default observer(function ApplicantProfilePresenter({ model }) {
 
     async function handleRemoveCompetence(id) {
         try {
-            const data = await deleteCompetence(id);
-      
+            await deleteCompetence(id);
+    
+            
+            model.competencies = model.competencies.filter(comp => comp.competence_profile_id !== id);
+            
             return { success: true };
-          } catch (error) {
+        } catch (error) {
             return { success: false, message: error.message };
-          }
+        }
     }
 
     async function handleAddAvailability(id, fromDate, toDate) {
@@ -87,12 +90,15 @@ export default observer(function ApplicantProfilePresenter({ model }) {
 
     async function handleRemoveAvailability(id) {
         try {
-            const data = await deleteAvailability(id);
-      
+            await deleteAvailability(id);
+    
+            
+            model.availability = model.availability.filter(avail => avail.availability_id !== id);
+            
             return { success: true };
-          } catch (error) {
+        } catch (error) {
             return { success: false, message: error.message };
-          }
+        }
     }
     return (
         <ApplicantProfileView

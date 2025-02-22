@@ -57,10 +57,7 @@ setAvailability(availability) {
     console.log("competencies updated:", this.competencies);
   }
 
-  removeCompetence(id) {
-    this.competencies = this.competencies.filter(comp => comp.id !== id);
-    console.log("competence removed:", this.competencies);
-  }
+ 
 
   addAvailability(fromDate, toDate) {
     const newAvailability = {
@@ -72,10 +69,7 @@ setAvailability(availability) {
     console.log("availability updated:", this.availability);
   }
 
-  removeAvailability(id) {
-    this.availability = this.availability.filter(avail => avail.id !== id);
-    console.log("availability removed:", this.availability);
-  }
+ 
 
   calculateYears(startDate, endDate) {
     const start = new Date(startDate);
