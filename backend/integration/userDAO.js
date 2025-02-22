@@ -21,6 +21,33 @@ class UserDAO {
         return result.recordset.length > 0 ? result.recordset[0] : null;
     }
 
+//find application id 
+    static async findApplication(person_id) {
+      const query = `SELECT application_id FROM [dbo].[application] WHERE person_id = @person_id`;
+      const values = [person_id];
+      const paramNames = ["person_id"];
+      const isStoredProcedure = false;
+
+      const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+      return result.recordset.length > 0 ? result.recordset[0] : null;
+  }
+
+
+
+  static async createApplication(person_id) {
+    //insert person_id och handled_id  as defulat value = 1
+    const query = `INSERT INTO [dbo].[application] (person_id, handled_id) OUTPUT INSERTED.application_id VALUES (@person_id, 1)`;
+    const values = [person_id];
+    const paramNames = ["person_id"];
+    const isStoredProcedure = false;
+
+    const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+    return result.recordset.length > 0 ? result.recordset[0] : null;
+}
+
+
+
+
     //return the user details from the database based on their person_id.
 
     static async findUserById(person_id) {

@@ -8,10 +8,17 @@ class AccessService {
             if (!user) {
                 throw new Error("Invalid username or password.");
             }
+//check if the application id exist
+            let application = await UserDAO.findApplication(user.person_id);
+//if not creat a apllication
+            if (!application) {
+              application = await UserDAO.createApplication(user.person_id);
+          }
+
 // GENERATE the token jwt after the user is exist
             Authorization.sendCookie(user, res);
-//return the value 
-            return user;
+//return the value  user and application id
+return { ...user, application_id: application.application_id };
         } catch (error) {
           
             throw new Error("Login failed.");
