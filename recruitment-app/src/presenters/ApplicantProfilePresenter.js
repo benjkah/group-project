@@ -34,7 +34,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
                     model.competencies = data.competencies.map(comp => ({
                     competence_profile_id: comp.competence_profile_id,
                     id: comp.competence_id,
-                    name: comp.name,
+                    name: comp.competence_name,
                     yearsOfExperience: parseFloat(comp.years_of_experience.toFixed(2)) 
                     }));
                 }
