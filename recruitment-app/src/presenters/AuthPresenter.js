@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
-import userModel from "../models/UserModel";
 import { login as apiLogin, register as apiRegister } from "../services/AuthAPI";
 
 
-function AuthPresenter({ view: ViewComponent, mode }) {
+function AuthPresenter({ userModel, view: ViewComponent, mode }) {
   // mode can be "login" or "register" 
 
   console.log("AuthPres")
@@ -16,6 +15,8 @@ function AuthPresenter({ view: ViewComponent, mode }) {
     try {
       const data = await apiLogin(username, password);
 
+      console.log("userModel in AuthPresenter login ", userModel);
+
       // Update the model with data returned from the API
       userModel.setPersonID(data.person_id)
       userModel.setUsername(data.username);
@@ -25,6 +26,8 @@ function AuthPresenter({ view: ViewComponent, mode }) {
       userModel.setEmail(data.email);
       userModel.setRole(data.role_id);
       userModel.setLoggedIn(true);
+
+      console.log("userModel in AuthPresenter login ", userModel);
 
       return { success: true };
     } catch (error) {
@@ -65,6 +68,7 @@ function AuthPresenter({ view: ViewComponent, mode }) {
   // pass the correct handlers to the ViewComponent
   return (
     <ViewComponent
+
       mode={mode}         
       onLogin={login}
       onRegister={registerUser}

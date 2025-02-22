@@ -1,27 +1,26 @@
+import axios from 'axios'
+
 export async function fetchApplications() {
-    try {
-      const response = await fetch('applications', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      });
-  
-      if (!response.ok) {
-        let errorMessage = 'Failed to fetch applications.';
-        try {
-          const errorData = await response.json();
-          errorMessage = errorData.message || errorMessage;
-        } catch (e) {
-          errorMessage = response.statusText || errorMessage;
-        }
-        throw new Error(errorMessage);
+  try {
+    const response = await axios.get("/app/applications");
+    // Axios returns data in response.data
+    return response.data;
+  } catch (error) {
+    let errorMessage = "Failed to fetch applications.";
+
+    // If the error has a response (meaning the request was made and the server responded)
+    if (error.response) {
+      // Attempt to get a custom message from the server response
+      if (error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      } else if (error.response.statusText) {
+        errorMessage = error.response.statusText;
       }
-  
-      return await response.json();
-    } catch (error) {
-      throw new Error("Server error: " + error.message);
+    } else if (error.message) {
+      // General error message if there's no response object
+      errorMessage = error.message;
     }
+
+    throw new Error(errorMessage);
   }
-  
+}

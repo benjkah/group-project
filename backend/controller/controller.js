@@ -69,6 +69,18 @@ class Controller {
         }
     }
 
+    static async getAllApplications(req, res) {
+        try {
+          // Call the service
+          const applications = await AppService.fetchAllApplications();
+          // Return the result set as JSON
+          return res.json(applications);
+        } catch (error) {
+          console.error("Error retrieving applications:", error);
+          return res.status(500).json({ message: error.message });
+        }
+    }
+
     static async deleteAvailability(req, res) {
         try {
             const { id } = req.params;  // Extract ID from request params
