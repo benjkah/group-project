@@ -4,7 +4,7 @@ const Authorization = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/competences", Controller.getCompetences);
+router.get("/competences/:lan", Controller.getCompetences);
 
 router.get("/applications", 
     Authorization.checkLogin,

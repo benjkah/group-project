@@ -21,9 +21,9 @@ export async function fetchProfile() {
     }
 }
 
-export async function fetchCompetences(){
+export async function fetchCompetences(lan){
     try {
-        const response = await fetch(`${API_BASE_URL}/app/competences`, {
+        const response = await fetch(`${API_BASE_URL}/app/competences/${lan}`, {
             method: "GET", 
         });
 

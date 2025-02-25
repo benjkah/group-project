@@ -10,7 +10,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
   useEffect(() => {
     async function loadApplicantProfile() {
       try {
-        const competences = await fetchCompetences();
+        const competences = await fetchCompetences("en");
         model.availableCompetences = competences.map((comp) => ({
           id: comp.competence_id,
           name: comp.name,
@@ -111,6 +111,19 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     }
   }
 
+  async function toggleLanguage(lan){
+    try {
+      const competences = await fetchCompetences(lan);
+        model.availableCompetences = competences.map((comp) => ({
+          id: comp.competence_id,
+          name: comp.name,
+        }));
+      return { success: true };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
+  }
+
   const navigate = useNavigate();
   async function handleLogout() {
     try {
@@ -137,6 +150,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
       addAvailability={handleAddAvailability}
       removeAvailability={handleRemoveAvailability}
       logout={handleLogout}
+      toggleLanguage={toggleLanguage}
     />
   );
 });

@@ -36,9 +36,10 @@ class Controller {
     }
 
     static async getCompetences(req, res) {
-        let lan = "en"; //temporary until global language is implemented
+        const { lan } = req.params;
         try {
             const competences = await AppService.getCompetences(lan);
+            console.log(competences);
             res.status(200).json(competences);
         } catch (error) {
             console.error("Error fetching competences:", error);
