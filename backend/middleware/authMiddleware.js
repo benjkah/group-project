@@ -30,6 +30,8 @@ class   Authorization {
 
     // check if recruiter
     static checkRecruiter(req, res, next) {
+        console.log("checkRecruiter");
+        console.log("req.role_id: ", req.role_id);
         if (req.role_id !== 1) {
           return res.status(403).json({ message: "Forbidden - Recruiters only." });
         }
@@ -41,8 +43,9 @@ class   Authorization {
 
  
     static sendCookie(user, res) {
+        console.log("sendCookie user: ", user);
         const jwtToken = jwt.sign(
-            { person_id: user.person_id, username: user.username },  
+            { person_id: user.person_id, username: user.username, role_id: user.role_id },  
             process.env.JWT_SECRET,
             { expiresIn: "30 minutes" }
         );

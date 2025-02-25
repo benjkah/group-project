@@ -12,12 +12,13 @@ class UserDAO {
 
     //check the user login credentials by checking the database.
     static async verifyLogin(username, password) {
-        const query = `SELECT person_id, username FROM [dbo].[person] WHERE username = @username AND password = @password`;
+        const query = `SELECT person_id, username, role_id FROM [dbo].[person] WHERE username = @username AND password = @password`;
         const values = [username, password];
         const paramNames = ["username", "password"];
         const isStoredProcedure = false;
 
         const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+        console.log("results: ", result);
         return result.recordset.length > 0 ? result.recordset[0] : null;
     }
 
