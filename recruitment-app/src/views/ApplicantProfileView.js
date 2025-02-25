@@ -1,8 +1,12 @@
 import "../styles.css";
 
+import { useState } from "react";
 import { observer } from "mobx-react-lite";
 
 export default observer(function ApplicantProfileView(props) {
+
+  const languages = ["En", "Swe"]; // Add as many languages as you want
+  const [currentIndex, setCurrentIndex] = useState(0); // Track current language index
 
   function handleRemoveCompetenceACB(id) 
   {
@@ -72,10 +76,18 @@ export default observer(function ApplicantProfileView(props) {
     event.target.reset();
   }
 
+  function handleLanguageToggle() {
+    const newIndex = (currentIndex + 1) % languages.length; // Cycle through languages
+    setCurrentIndex(newIndex);
+    props.toggleLanguage(languages[newIndex]); // Call the method with the new language
+  }
+
 
   return (
     <div className="profile-container">
       <h2>Applicant Profile</h2>
+
+      <button onClick={handleLanguageToggle}>{languages[currentIndex]}</button>
 
       <h3>Personal Information</h3>
       <p>

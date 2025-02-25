@@ -15,7 +15,6 @@ class AppDAO{
     const values = [lan];
     const paramNames = ["lan"];
     const isStoredProcedure = false;
-
     const result = await executeQuery(competencesQuery, values, paramNames, isStoredProcedure);
     return result.recordset;
     }
