@@ -22,6 +22,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         model.setEmail(data.email);
         model.setId(data.person_id);
         model.setAppId(data.application_id);
+        model.setHandledId(data.handled_id);
 
         if (Array.isArray(data.competencies)) {
           model.competencies = data.competencies.map((comp) => ({
@@ -139,6 +140,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
     <ApplicantProfileView
       id={model.id}
       appId={model.appId}
+      handledId={model.handledId}
       firstName={model.firstName}
       lastName={model.lastName}
       email={model.email}

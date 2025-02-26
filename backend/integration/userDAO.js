@@ -52,7 +52,7 @@ class UserDAO {
 
     static async findUserById(person_id) {
         const query = `
-          SELECT p.person_id, p.name, p.surname, p.email, a.application_id
+          SELECT p.person_id, p.name, p.surname, p.email, a.application_id, a.handled_id
           FROM [dbo].[person] p
           JOIN [dbo].[application] a ON p.person_id = a.person_id
           WHERE p.person_id = @person_id;`;
@@ -74,6 +74,7 @@ class UserDAO {
           FROM [dbo].[competence_profile] cp
           INNER JOIN [dbo].[competence_translation] c 
               ON cp.competence_id = c.competence_id
+              AND c.language_id = 1 -- fetches only english translation as it for this assignment is enough
           INNER JOIN [dbo].[application] app 
               ON cp.application_id = app.application_id
           WHERE app.person_id = @person_id

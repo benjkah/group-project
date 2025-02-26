@@ -86,7 +86,14 @@ export default observer(function ApplicantProfileView(props) {
   return (
     <div className="profile-container">
       <h2>Applicant Profile</h2>
-
+      <h3>Application Status</h3>
+      <div className="status-label">
+          {props.handledId === 1 ? "Pending" :
+           props.handledId === 2 ? "Accepted" :
+           props.handledId === 3 ? "Denied" :
+           "Unknown"} {/* Fallback for unexpected values */}
+        </div>
+        <h3>Language</h3>
       <button onClick={handleLanguageToggle}>{languages[currentIndex]}</button>
 
       <h3>Personal Information</h3>
@@ -103,6 +110,7 @@ export default observer(function ApplicantProfileView(props) {
           props.competencies.map((comp) => (
             <li key={`${comp.competence_profile_id}-${comp.id}`}>
               {comp.name} - {displayCompetenceStatusACB(comp)} years
+              {props.handledId == 1 && (
               <button
                 className="delete-btn"
                 onClick={() =>
@@ -111,6 +119,7 @@ export default observer(function ApplicantProfileView(props) {
               >
                 X
               </button>
+              )}
             </li>
           ))
         ) : (
@@ -118,6 +127,7 @@ export default observer(function ApplicantProfileView(props) {
         )}
       </ul>
 
+      {props.handledId == 1 && (
       <form onSubmit={handleAddCompetenceACB}>
         <select name="competence">
           <option value="">Select Competence</option>
@@ -131,6 +141,7 @@ export default observer(function ApplicantProfileView(props) {
         <input type="date" name="endDate" />
         <button type="submit">Add Competence</button>
       </form>
+      )}
 
       <h3>Availability</h3>
       <ul>
@@ -138,6 +149,7 @@ export default observer(function ApplicantProfileView(props) {
           props.availability.map((avail) => (
             <li key={`${avail.availability_id}-${avail.fromDate}`}>
               {displayAvailabilityACB(avail)}
+              {props.handledId == 1 && (
               <button
                 className="delete-btn"
                 onClick={() =>
@@ -146,18 +158,21 @@ export default observer(function ApplicantProfileView(props) {
               >
                 X
               </button>
+              )}
             </li>
           ))
         ) : (
           <p>No availability added yet.</p>
         )}
       </ul>
-
+      
+      {props.handledId == 1 && (
       <form onSubmit={handleAddAvailabilityACB}>
         <input type="date" name="fromDate" />
         <input type="date" name="toDate" />
         <button type="submit">Add Availability</button>
       </form>
+      )}
 
       <br />
       <button onClick={props.logout}>Logout</button>

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class RecruitmentModelClass {
   id = "";
   appId = "";
+  handledId = "";
   firstName = "";
   lastName = "";
   email = "";
@@ -24,6 +25,9 @@ class RecruitmentModelClass {
   }
   setAppId(appId){
     this.appId = appId;
+  }
+  setHandledId(handledId){
+    this.handledId = handledId;
   }
   setFirstName(firstName) {
     this.firstName = firstName;
