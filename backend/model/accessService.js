@@ -3,6 +3,7 @@ const Authorization = require("../middleware/authMiddleware");
 
 class AccessService {
     static async loginUser(username, password, res) {
+        console.log("accessService loginUser");
         try {
             const user = await UserDAO.verifyLogin(username, password);
             if (!user) {
@@ -14,7 +15,6 @@ class AccessService {
             if (!application) {
               application = await UserDAO.createApplication(user.person_id);
           }
-
 // GENERATE the token jwt after the user is exist
             Authorization.sendCookie(user, res);
 //return the value  user and application id

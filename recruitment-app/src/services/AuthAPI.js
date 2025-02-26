@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_BASE_URL = 'http://localhost:4000';
 
 export async function login(username, password) {
+  console.log("login api call ");
   try {
     const response = await axios.post(
       `${API_BASE_URL}/access/login`,
@@ -10,7 +11,6 @@ export async function login(username, password) {
       { withCredentials: true }
     );
 
-    console.log("login api call ", response.data);
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'An error occurred during login.');
