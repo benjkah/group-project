@@ -4,11 +4,11 @@
   "description": "",
   "scripts": {
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "jest --watchAll --verbose --coverage"
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0"
+    "@azure/functions": "^4.0.0",
+    "jest": "^29.7.0"
   },
-  "devDependencies": {},
   "main": "src/{index.js,functions/*.js}"
 }

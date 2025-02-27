@@ -1,10 +1,24 @@
 const sql = require("mssql");
 const { config } = require("./config");
 
+/**
+ * connect to DB
+ * @returns 
+ */
 function connect() {
   return sql.connect(config);
 }
 
+
+/**
+ * communicates with the database through sql
+ * @param {*} query SQL cood
+ * @param {[]} values 
+ * @param {[]} paramNames 
+ * @param {boolean} isStoredProcedure 
+ * @param {null} outputParamName 
+ * @returns 
+ */
 async function executeQuery(
   query,
   values = [],
