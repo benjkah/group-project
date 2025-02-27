@@ -73,8 +73,6 @@ setAvailability(availability) {
     console.log("availability updated:", this.availability);
   }
 
- 
-
   calculateYears(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);

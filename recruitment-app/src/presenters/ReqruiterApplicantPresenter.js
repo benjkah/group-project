@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { logout } from "../services/AuthAPI";
 import { observer } from "mobx-react-lite";
-import {fetchApplication} from "../services/ReqruiterApplicantAPI";
+import {fetchApplication, changeApplicationStatus} from "../services/ReqruiterApplicantAPI";
 
 import ReqruiterApplicantView from "../views/ReqruiterApplicantView";
 
@@ -42,18 +41,14 @@ export default observer(function ReqruiterApplicantPresenter({ model }) {
     loadApplicantProfile();
   }, [model]);
 
-  async function handleProfileHandling(handleId){
-
-  }
-
   const navigate = useNavigate();
-  async function handleLogout() {
-    try {
-      await logout();
-      navigate("/");
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-    }
+  async function handleApplication(handleId){
+    if (handleId === 2 || handleId === 3) {
+        await changeApplicationStatus(model.appId, handleId);
+      } else {
+        console.warn("Invalid handleId:", handleId);
+      }
+    navigate(-1);
   }
 
   
@@ -67,8 +62,7 @@ export default observer(function ReqruiterApplicantPresenter({ model }) {
       email={model.email}
       competencies={model.competencies}
       availability={model.availability}
-      handleProfileHandling={model.handleProfileHandling}
-      logout={handleLogout}
+      handleApplication={handleApplication}
     />
   );
 });

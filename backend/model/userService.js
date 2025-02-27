@@ -44,6 +44,24 @@ class UserService {
         }
     }
 
+    static async changeApplicationStatus(appId, handleId){
+        try {
+            if (!appId || !handleId) {
+                throw new Error("Invalid ID provided.");
+            }
+    
+            const result = await UserDAO.changeApplicationStatus(appId, handleId);
+            if (!result || result.affectedRows === 0) { // Ensure database operation was successful
+                throw new Error("No application found with the given ID.");
+            }
+    
+            return { message: "Application successfully handled." };
+        } catch (error) {
+            console.error("Error in changeApplicationStatus:", error.stack);
+            throw new Error("Error handling application: " + error.message);
+        }
+    }
+
     static async deleteAvailability(id) {
         try {
             if (!id) {

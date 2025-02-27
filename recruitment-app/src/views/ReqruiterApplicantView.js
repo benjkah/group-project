@@ -60,7 +60,11 @@ export default observer(function ReqruiterApplicantView(props) {
       </ul>
       
       <br />
-      <button onClick={props.logout}>Logout</button>
+      <div className="button-container">
+        <button className="deny-btn" onClick={() => props.handleApplication(3)}>Deny</button>
+        <button className="skip-btn" onClick={() => props.handleApplication(1)}>Skip</button>
+        <button className="accept-btn" onClick={() => props.handleApplication(2)}>Accept</button>
+      </div>
     </div>
   );
 });

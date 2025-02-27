@@ -35,7 +35,6 @@ class Controller {
         }
     }
     static async getApplication(req, res) {
-        console.log("log");
         try {
             const { id } = req.params; 
             const userProfile = await UserService.getApplication(id);
@@ -43,6 +42,25 @@ class Controller {
         } catch (error) {
             console.error("Error fetching profile:", error);
             res.status(500).json({ message: error.message });
+        }
+    }
+    static async changeApplicationStatus(req,res){
+        try {
+            const appId = req.params.id;
+            const { handleId } = req.body;
+            if (!appId) {
+                return res.status(400).json({ message: "Application ID is required" });
+            }
+    
+            const result = await UserService.changeApplicationStatus(appId, handleId);
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Application not found" });
+            }
+    
+            res.status(200).json({ message: "Status changed successfully" });
+        } catch (error) {
+            console.error("Error changing status:", error);
+            res.status(500).json({ message: "Failed to change status" });
         }
     }
 

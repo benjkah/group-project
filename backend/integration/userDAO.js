@@ -165,6 +165,33 @@ static async findAvailabilityByAppId(app_id) {
   return result.recordset;
 }
 
+static async changeApplicationStatus(app_id, handle_id) {
+  console.log("Received app_id:", app_id, "handle_id:", handle_id);
+
+  const statusChangeQuery = `
+      UPDATE [dbo].[application]
+      SET handled_id = @handle_id
+      WHERE application_id = @app_id;
+  `;
+  
+  const values = [app_id, handle_id];
+  const paramNames = ["app_id", "handle_id"];
+  const isStoredProcedure = false;
+
+  try {
+      const result = await executeQuery(statusChangeQuery, values, paramNames, isStoredProcedure);
+      if (result.rowsAffected[0] === 0) {
+          console.error("No application found with the given ID.");
+          throw new Error("No application found with the given ID.");
+      }
+
+      return { message: "Status changed successfully." };
+  } catch (error) {
+      console.error("Error in changeApplicationStatus:", error);
+      throw new Error("Error handling application: " + error.message);
+  }
+}
+
 
 
 
