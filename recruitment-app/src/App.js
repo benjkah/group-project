@@ -8,6 +8,8 @@ import RegistrationView from './views/RegistrationView';
 import ApplicationListPresenter from "./presenters/ApplicationListPresenter";
 import ApplicationListView from "./views/ApplicationListView";
 import axios from "axios"
+import ReqruiterApplicantView from './views/ReqruiterApplicantView';
+import ReqruiterApplicantPresenter from './presenters/ReqruiterApplicantPresenter';
 
 function App({ userModel, recruitmentModel, applicationListModel }) {
 
@@ -27,7 +29,14 @@ function App({ userModel, recruitmentModel, applicationListModel }) {
                   element={<AuthPresenter model={userModel} view={RegistrationView} />} 
                   
                 />
-                <Route path="/applications" element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />} />
+                <Route path="/applications" 
+                element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />}
+                
+                />
+                <Route path="/applications/:id"
+                element={<ReqruiterApplicantPresenter model={recruitmentModel} view={ReqruiterApplicantView} mode={1} />}
+
+                />
             </Routes>
         </div>
     </Router>

@@ -104,6 +104,76 @@ class UserDAO {
         return result.recordset;
     }
 
+
+
+
+
+
+
+// Return the user details from the database based on their application_id.
+static async findUserByAppId(app_id) {
+  const query = `
+      SELECT p.person_id, p.name, p.surname, p.email, a.application_id, a.handled_id
+      FROM [dbo].[person] p
+      JOIN [dbo].[application] a ON p.person_id = a.person_id
+      WHERE a.application_id = @app_id;
+  `;
+  const values = [app_id];
+  const paramNames = ["app_id"];
+  const isStoredProcedure = false;
+
+  const result = await executeQuery(query, values, paramNames, isStoredProcedure);
+  return result.recordset.length > 0 ? result.recordset[0] : null;
+}
+
+// Return user competencies from the database based on application_id.
+static async findCompetenciesByAppId(app_id) {
+  const competenceQuery = `
+      SELECT 
+          cp.competence_profile_id, 
+          cp.competence_id, 
+          c.name AS competence_name, 
+          cp.years_of_experience
+      FROM [dbo].[competence_profile] cp
+      INNER JOIN [dbo].[competence_translation] c 
+          ON cp.competence_id = c.competence_id
+          AND c.language_id = 1 -- Fetches only English translation
+      INNER JOIN [dbo].[application] app 
+          ON cp.application_id = app.application_id
+      WHERE cp.application_id = @app_id;
+  `;
+  const values = [app_id];
+  const paramNames = ["app_id"];
+  const isStoredProcedure = false;
+
+  const result = await executeQuery(competenceQuery, values, paramNames, isStoredProcedure);
+  return result.recordset;
+}
+
+// Return user availabilities from the database based on application_id.
+static async findAvailabilityByAppId(app_id) {
+  const availabilityQuery = `
+      SELECT a.availability_id, a.from_date, a.to_date  
+      FROM [dbo].[availability] a
+      WHERE a.application_id = @app_id;
+  `;
+  const values = [app_id];
+  const paramNames = ["app_id"];
+  const isStoredProcedure = false;
+
+  const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
+  return result.recordset;
+}
+
+
+
+
+
+
+
+
+
+
     //remove competence from application
     static async removeCompetence(id){
         const competencesQuery = `

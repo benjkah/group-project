@@ -34,6 +34,17 @@ class Controller {
             res.status(500).json({ message: error.message });
         }
     }
+    static async getApplication(req, res) {
+        console.log("log");
+        try {
+            const { id } = req.params; 
+            const userProfile = await UserService.getApplication(id);
+            res.status(200).json(userProfile);
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+            res.status(500).json({ message: error.message });
+        }
+    }
 
     static async getCompetences(req, res) {
         const { lan } = req.params;
