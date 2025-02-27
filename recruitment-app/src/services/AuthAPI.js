@@ -3,7 +3,6 @@ import axios from 'axios';
 const API_BASE_URL = 'http://localhost:4000';
 
 export async function login(username, password) {
-  console.log("login api call ");
   try {
     const response = await axios.post(
       `${API_BASE_URL}/access/login`,
@@ -40,8 +39,8 @@ export async function logout() {
 export async function register(userData) {
   try {
     const response = await axios.post(`${API_BASE_URL}/access/register`, userData);
-    console.log("register new user AuthAPI userData: ", userData)
-    console.log("register new user AuthAPI response.data: ", response.data)
+    // console.log("register new user AuthAPI userData: ", userData)
+    // console.log("register new user AuthAPI response.data: ", response.data)
 
     return response.data;
   } catch (error) {

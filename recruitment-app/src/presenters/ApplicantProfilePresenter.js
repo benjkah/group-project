@@ -42,6 +42,7 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         }
       } catch (error) {
         console.error("Error fetching profile:", error.message);
+        handleLogout();
       }
     }
     loadApplicantProfile();

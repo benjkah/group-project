@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function RegistrationView({ onLogin, onRegister, userModel, mode }) {
-  console.log("RegView")
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");

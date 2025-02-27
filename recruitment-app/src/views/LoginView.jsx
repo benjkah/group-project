@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 function LoginView({ onLogin, onRegister, userModel, mode,  }) {
-  console.log("LoginView.js")
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +15,7 @@ function LoginView({ onLogin, onRegister, userModel, mode,  }) {
     if (!result.success) {
       alert(result.message);
     } else {
-      console.log("userModel LoginView -> handleSubmit ", userModel);
+      // console.log("userModel LoginView -> handleSubmit ", userModel);
       navigate("/profile");
   }
 }

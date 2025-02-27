@@ -8,7 +8,6 @@ function ApplicationListPresenter({ model, view: ViewComponent = ApplicationList
   useEffect(() => {
     async function loadApplications() {
 
-      console.log("AppListPres");
       model.setLoading(true);
       try {
         const apps = await fetchApplications();

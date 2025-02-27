@@ -9,12 +9,14 @@ class UserModel {
   password = "";     
   role_id = 1;        // 1=Recruiter, 2=Applicant (placeholder?)
   username = "";      
-
-
   isLoggedIn = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  loggeOut(){
+    this.isLoggedIn = false;
   }
 
   
@@ -31,5 +33,4 @@ class UserModel {
 }
 
 const userModel = new UserModel();
-console.log("userModel ", userModel);
 export default userModel;

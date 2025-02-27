@@ -2,10 +2,12 @@ import { observer } from "mobx-react-lite";
 import { login as apiLogin, register as apiRegister } from "../services/AuthAPI";
 
 
+/**
+ * mode can be "login" or "register"
+ * @param {userModel, view: ViewComponent, mode } param
+ * @returns 
+ */
 function AuthPresenter({ userModel, view: ViewComponent, mode }) {
-  // mode can be "login" or "register" 
-
-  console.log("AuthPres")
 
   async function login(username, password) {
     if (!username || !password) {
@@ -14,8 +16,6 @@ function AuthPresenter({ userModel, view: ViewComponent, mode }) {
 
     try {
       const data = await apiLogin(username, password);
-
-      console.log("userModel in AuthPresenter login ", userModel);
 
       // Update the model with data returned from the API
       userModel.setPersonID(data.person_id)
@@ -26,8 +26,6 @@ function AuthPresenter({ userModel, view: ViewComponent, mode }) {
       userModel.setEmail(data.email);
       userModel.setRole(data.role_id);
       userModel.setLoggedIn(true);
-
-      console.log("userModel in AuthPresenter login ", userModel);
 
       return { success: true };
     } catch (error) {
@@ -57,7 +55,6 @@ function AuthPresenter({ userModel, view: ViewComponent, mode }) {
       userModel.setRole(data.role_id);
       userModel.setLoggedIn(true);
 
-      console.log("userModel in AuthPres ", userModel);
 
       return { success: true };
     } catch (error) {

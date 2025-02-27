@@ -18,7 +18,6 @@ class UserDAO {
         const isStoredProcedure = false;
 
         const result = await executeQuery(query, values, paramNames, isStoredProcedure);
-        console.log("results: ", result);
         return result.recordset.length > 0 ? result.recordset[0] : null;
     }
 
@@ -166,7 +165,6 @@ static async findAvailabilityByAppId(app_id) {
 }
 
 static async changeApplicationStatus(app_id, handle_id) {
-  console.log("Received app_id:", app_id, "handle_id:", handle_id);
 
   const statusChangeQuery = `
       UPDATE [dbo].[application]

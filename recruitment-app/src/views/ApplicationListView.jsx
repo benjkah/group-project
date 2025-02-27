@@ -45,8 +45,6 @@ function ApplicationListView({ model }) {
   }
 
 
-  console.log("ApplicationListModel model: ", model);
-
   return (
     <div>
       <h2>Job Applications</h2>

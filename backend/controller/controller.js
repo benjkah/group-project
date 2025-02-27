@@ -67,7 +67,6 @@ class Controller {
         const { lan } = req.params;
         try {
             const competences = await AppService.getCompetences(lan);
-            console.log(competences);
             res.status(200).json(competences);
         } catch (error) {
             console.error("Error fetching competences:", error);

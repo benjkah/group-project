@@ -58,7 +58,7 @@ setAvailability(availability) {
       yearsOfExperience
     };
     this.competencies = this.competencies.concat(newCompetence);
-    console.log("competencies updated:", this.competencies);
+    // console.log("competencies updated:", this.competencies);
   }
 
  
@@ -70,7 +70,7 @@ setAvailability(availability) {
       toDate
     };
     this.availability = this.availability.concat(newAvailability);
-    console.log("availability updated:", this.availability);
+    // console.log("availability updated:", this.availability);
   }
 
   calculateYears(startDate, endDate) {
