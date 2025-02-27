@@ -1,6 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * The view of 404 error
+ * @returns 
+ */
 function View404() {
   
   const navigate = useNavigate();
