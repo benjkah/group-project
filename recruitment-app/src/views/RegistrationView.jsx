@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function RegistrationView({ onLogin, onRegister, userModel, mode }) {
@@ -119,7 +118,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
             required
           />
         </div>
-        {password != confirmPass && confirmPass.length > 0 && (
+        {password !== confirmPass && confirmPass.length > 0 && (
           <div className="error-message">Passwords do not match</div>
         )}
         <button type="submit">

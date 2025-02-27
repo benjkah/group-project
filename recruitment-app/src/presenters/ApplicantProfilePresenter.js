@@ -6,15 +6,17 @@ import {fetchProfile, fetchCompetences,deleteAvailability,deleteCompetence,addCo
 
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
+
 export default observer(function ApplicantProfilePresenter({ model }) {
+  const navigate = useNavigate();
   useEffect(() => {
     async function loadApplicantProfile() {
       try {
         const competences = await fetchCompetences("en");
-        model.availableCompetences = competences.map((comp) => ({
+        model.setAvailableCompetences(competences.map((comp) => ({
           id: comp.competence_id,
           name: comp.name,
-        }));
+        })));
 
         const data = await fetchProfile();
         model.setFirstName(data.name);
@@ -23,32 +25,35 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         model.setId(data.person_id);
         model.setAppId(data.application_id);
         model.setHandledId(data.handled_id);
+        model.setLoggedIn(true);
 
         if (Array.isArray(data.competencies)) {
-          model.competencies = data.competencies.map((comp) => ({
+          model.setCompetencies(data.competencies.map((comp) => ({
             competence_profile_id: comp.competence_profile_id,
             id: comp.competence_id,
             name: comp.competence_name,
             yearsOfExperience: parseFloat(comp.years_of_experience.toFixed(2)),
-          }));
+          })));
         }
 
         if (Array.isArray(data.availability)) {
-          model.availability = data.availability.map((avail) => ({
+          model.setAvailability(data.availability.map((avail) => ({
             availability_id: avail.availability_id,
             fromDate: new Date(avail.from_date).toISOString().split("T")[0],
             toDate: new Date(avail.to_date).toISOString().split("T")[0],
-          }));
+          })));
         }
+
+
       } catch (error) {
+        model.setLoggedIn(false);
         console.error("Error fetching profile:", error.message);
-        handleLogout();
       }
     }
     loadApplicantProfile();
   }, [model]);
 
-
+  
 
   async function handleAddCompetence(id, comp_id, startDate, endDate) {
     try {
@@ -125,11 +130,11 @@ export default observer(function ApplicantProfilePresenter({ model }) {
       return { success: false, message: error.message };
     }
   }
-
-  const navigate = useNavigate();
+  
   async function handleLogout() {
     try {
       await logout();
+      model.setLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.error("Logout failed:", error.message);

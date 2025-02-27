@@ -8,6 +8,9 @@ class RecruitmentModelClass {
   lastName = "";
   email = "";
 
+  isLoggedIn = false;
+  setLoggedIn(status) { this.isLoggedIn = status; }
+
   competencies = [];
   availability = [];
   availableCompetences = [];
@@ -46,7 +49,6 @@ class RecruitmentModelClass {
   }
 
 setAvailability(availability) {
- 
   this.availability = availability;
 }
 
@@ -80,6 +82,12 @@ setAvailability(availability) {
     const years = diffrens / 365; 
     return parseFloat(years.toFixed(2)); 
   }
+
+
+  setAvailableCompetences(setings){
+    this.availableCompetences = setings;
+  }
+
 }
 
 const recruitmentModel = new RecruitmentModelClass();

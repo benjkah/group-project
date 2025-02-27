@@ -15,32 +15,38 @@ import The404Presenter from "./presenters/The404Presenter";
 
 function App({ userModel, recruitmentModel, applicationListModel }) {
 
+    const routesLoggin = [
+        <Routes>
+        <Route path="/" element={<AuthPresenter userModel={userModel} view={LoginView} mode={2} />} />
+        <Route 
+            path="/profile" 
+            element={<ApplicantProfilePresenter model={recruitmentModel} view={ApplicantProfileView} />} 
+        />
+        <Route 
+          path="/register"
+          element={<AuthPresenter model={userModel} view={RegistrationView} />} 
+          
+        />
+        <Route path="/applications" 
+        element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />}
+        
+        />
+        <Route path="/applications/:id"
+        element={<ReqruiterApplicantPresenter model={recruitmentModel} view={ReqruiterApplicantView} mode={1} />}
+
+        />
+        <Route path="/*" element={<The404Presenter />} /> 
+    </Routes>
+    ]
+
   return (
     <Router>
         <div>
-            <h1>Recruitment Portal</h1>
-            {/* Define Routes */}
-            <Routes>
-                <Route path="/" element={<AuthPresenter userModel={userModel} view={LoginView} mode={2} />} />
-                <Route 
-                    path="/profile" 
-                    element={<ApplicantProfilePresenter model={recruitmentModel} view={ApplicantProfileView} />} 
-                />
-                <Route 
-                  path="/register"
-                  element={<AuthPresenter model={userModel} view={RegistrationView} />} 
-                  
-                />
-                <Route path="/applications" 
-                element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} mode={1} />}
-                
-                />
-                <Route path="/applications/:id"
-                element={<ReqruiterApplicantPresenter model={recruitmentModel} view={ReqruiterApplicantView} mode={1} />}
 
-                />
-                <Route path="/*" element={<The404Presenter />} /> 
-            </Routes>
+            <h1>Recruitment Portal</h1>
+            
+            {routesLoggin }
+            
         </div>
     </Router>
 );

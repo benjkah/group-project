@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
 
 function LoginView({ onLogin, onRegister, userModel, mode,  }) {
 
