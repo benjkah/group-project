@@ -164,7 +164,13 @@ class UserDAO {
       return result;
   }
 
-    // Check if user (by username/email/pnr) already exists
+    /**
+     * Check if user (by username/email/pnr) already exists
+     * @param {string} username 
+     * @param {string} email 
+     * @param {string} pnr
+     * @returns true or false
+     */
   static async findByUsernameOrEmailOrPnr(username, email, pnr) {
     const query = `
       SELECT person_id, username, email, pnr
@@ -181,7 +187,12 @@ class UserDAO {
     return result.recordset.length > 0 ? result.recordset[0] : null;
   }
 
-  // Insert a new user
+  
+  /**
+   * Insert a new user
+   * @param {} param {name, surname, pnr, email, username, password, role_id}
+   * @returns true or false
+   */
   static async createUser({ name, surname, pnr, email, username, password, role_id }) {
     const query = `
       INSERT INTO [dbo].[person] (

@@ -47,7 +47,7 @@ const corsOptions = {
 };
 app.use(cookieParser()); //use cookies
 app.use(cors(corsOptions));
-//app.use('/', router);
+
 app.use("/user", userRouter);
 app.use('/access', accessRouter);
 app.use('/app', appRouter);
@@ -56,5 +56,5 @@ app.use('/app', appRouter);
 
 const port = process.env.DB_LOCAL_PORT;
 app.listen(port, () => {
-  console.log(`Server is running at port: ${port}`);
+  // console.log(`Server is running at port: ${port}`);
 });

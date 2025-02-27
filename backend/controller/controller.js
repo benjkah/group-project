@@ -7,7 +7,6 @@ class Controller {
         try {
             const username = req.body.username;
             const password = req.body.password;
-
             const user = await AccessService.loginUser(username, password, res);
             res.json({ message: "Login successful", user });  
         } catch (error) {
@@ -47,34 +46,22 @@ class Controller {
         }
     }
     
+    /**
+     * register new user
+     * On success, you can respond with the created user
+     * 
+     * Typically we'd check for 4xx vs 5xx,
+     * but for simplicity, let's just return 400 with the error message
+     * @param {*} req name, surname, pnr, email, username, password, role_id - optional.
+     * @param {*} res save return data
+     * @returns 
+     */
     static async register(req, res) {
         try {
-          const { 
-            name, 
-            surname, 
-            pnr, 
-            email, 
-            username, 
-            password,
-            role_id // optional
-          } = req.body;
-    
-          // Call into the service
-          const newUser = await AccessService.registerUser(
-            name,
-            surname,
-            pnr,
-            email,
-            username,
-            password,
-            role_id
-          );
-    
-          // On success, you can respond with the created user
-          return res.json({ message: "Registration successful", user: newUser });
+            const newUser = await AccessService.registerUser(req.body);
+
+            return res.json({ message: "Registration successful", user: newUser });
         } catch (error) {
-          // Typically we'd check for 4xx vs 5xx,
-          // but for simplicity, let's just return 400 with the error message
           return res.status(400).json({ message: error.message });
         }
     }
