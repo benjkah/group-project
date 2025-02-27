@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ApplicantProfilePresenter from "./presenters/ApplicantProfilePresenter";
 import ApplicantProfileView from "./views/ApplicantProfileView";
@@ -7,9 +7,11 @@ import LoginView from './views/LoginView';
 import RegistrationView from './views/RegistrationView';
 import ApplicationListPresenter from "./presenters/ApplicationListPresenter";
 import ApplicationListView from "./views/ApplicationListView";
-import axios from "axios"
+
 import ReqruiterApplicantView from './views/ReqruiterApplicantView';
 import ReqruiterApplicantPresenter from './presenters/ReqruiterApplicantPresenter';
+
+import The404Presenter from "./presenters/The404Presenter";
 
 function App({ userModel, recruitmentModel, applicationListModel }) {
 
@@ -37,6 +39,7 @@ function App({ userModel, recruitmentModel, applicationListModel }) {
                 element={<ReqruiterApplicantPresenter model={recruitmentModel} view={ReqruiterApplicantView} mode={1} />}
 
                 />
+                <Route path="/*" element={<The404Presenter />} /> 
             </Routes>
         </div>
     </Router>

@@ -101,7 +101,7 @@ class AccessService {
           if(!email.match(/^\S+@\S+\.\S+$/)) throw new Error("Email: " + email + " is invalid");  
 
           const fn = /\b([1-9]{1}[0-9]{3}||[0-9]{2})([0-1])([0-9])([0-3]||[6-9])([0-9])-\d{4}\b/;
-          if(!pnr.match(fn)) throw new Error(pnr + " is invalid, will have formed YYYYMMDD-XXXX or YYMMDD-XXXX");
+          if(!pnr.match(fn)) throw new Error("Personal identification number " + pnr + " is invalid, will have formed YYYYMMDD-XXXX or YYMMDD-XXXX");
 
         } catch (error) {
           throw new Error(error.message);
