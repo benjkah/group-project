@@ -57,6 +57,10 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+
+app.get("/", (req, res) => {
+  res.send("Azure Backend is running! so u dont need start it local");
+});
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
@@ -69,3 +73,4 @@ const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Server is running at port: ${port}`);
 });
+
