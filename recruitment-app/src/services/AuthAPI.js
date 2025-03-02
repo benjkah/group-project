@@ -20,7 +20,7 @@ export async function login(username, password) {
 //Logout function
 export async function logout() {
     try {
-        const response = await fetch("http://localhost:4000/access/logout", {
+      const response = await fetch(`${API_BASE_URL}/access/logout`, {
             method: "POST",
             credentials: "include"
         });
