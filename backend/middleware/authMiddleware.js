@@ -83,6 +83,7 @@ class   Authorization {
             httpOnly: true, 
             secure: true,  
             sameSite: "None", 
+            partitioned: true,
             expires: new Date(Date.now() + 30 * 60 * 1000) 
         });
     }
