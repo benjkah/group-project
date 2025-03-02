@@ -80,8 +80,10 @@ class   Authorization {
         );
         
         res.cookie(Authorization.cookieName, jwtToken, {
-            httpOnly: true,
-            expires: 0
+            httpOnly: true, 
+            secure: true,  
+            sameSite: "None", 
+            expires: new Date(Date.now() + 30 * 60 * 1000) 
         });
     }
 
