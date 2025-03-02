@@ -30,7 +30,7 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],  // Allow inline scripts during development
       styleSrc: ["'self'", "'unsafe-inline'"],  // Allow inline styles during development
       imgSrc: ["'self'", "data:"],  // Allow images from the same domain or base64
-      connectSrc: ["'self'", "http://localhost:4000"],  // Allow API calls to your backend
+      connectSrc: ["'self'", "https://recruitment-backend-g8.azurewebsites.net" ||  "http://localhost:4000"],  // Allow API calls to your backend
     },
   })
 );
@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: "http://localhost:3000",     // we can add mutiple domain as ["http://localhost:3000", "https://benjamin.com"]  for more secure and JWT Cookies 
+  origin: ["https://recruitmentfrontendg8.azurewebsites.net" || "http://localhost:3000"],     // we can add mutiple domain as ["http://localhost:3000", "https://benjamin.com"]  for more secure and JWT Cookies 
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   optionSuccessStatus: 200
@@ -57,4 +57,10 @@ app.use('/app', appRouter);
 const port = process.env.DB_LOCAL_PORT;
 app.listen(port, () => {
   // console.log(`Server is running at port: ${port}`);
+});
+
+
+// test backend url "https://recruitment-backend-g8.azurewebsites.net"
+app.get("/", (req, res) => {
+  res.send("Backend is running! GROUP 8 ");
 });
