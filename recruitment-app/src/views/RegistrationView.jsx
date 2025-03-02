@@ -70,7 +70,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
         </div>
 
         <div>
-          <label>PNR</label>
+          <label> Personal identity number </label>
           <input 
             type="text"
             value={pnr}
@@ -80,7 +80,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
         </div>
 
         <div>
-          <label>Email</label>
+          <label>Email address</label>
           <input 
             type="email"
             value={email}
