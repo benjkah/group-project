@@ -28,7 +28,7 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", process.env.REACT_APP_API_URL || "http://localhost:4000"],
+      connectSrc: ["'self'", process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"],
     },
   })
 );
