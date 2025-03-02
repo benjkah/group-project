@@ -110,7 +110,7 @@ export default observer(function ApplicantProfileView(props) {
           props.competencies.map((comp) => (
             <li key={`${comp.competence_profile_id}-${comp.id}`}>
               {comp.name} - {displayCompetenceStatusACB(comp)} years
-              {props.handledId == 1 && (
+              {props.handledId === 1 && (
               <button
                 className="delete-btn"
                 onClick={() =>
@@ -127,7 +127,7 @@ export default observer(function ApplicantProfileView(props) {
         )}
       </ul>
 
-      {props.handledId == 1 && (
+      {props.handledId ===1 && (
       <form onSubmit={handleAddCompetenceACB}>
         <select name="competence">
           <option value="">Select Competence</option>
@@ -149,7 +149,7 @@ export default observer(function ApplicantProfileView(props) {
           props.availability.map((avail) => (
             <li key={`${avail.availability_id}-${avail.fromDate}`}>
               {displayAvailabilityACB(avail)}
-              {props.handledId == 1 && (
+              {props.handledId === 1 && (
               <button
                 className="delete-btn"
                 onClick={() =>
@@ -166,7 +166,7 @@ export default observer(function ApplicantProfileView(props) {
         )}
       </ul>
       
-      {props.handledId == 1 && (
+      {props.handledId === 1 && (
       <form onSubmit={handleAddAvailabilityACB}>
         <input type="date" name="fromDate" />
         <input type="date" name="toDate" />
