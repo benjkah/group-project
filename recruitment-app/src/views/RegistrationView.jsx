@@ -73,6 +73,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
           <label> Personal identity number </label>
           <input 
             type="text"
+            placeholder="YYMMDD-XXXX"
             value={pnr}
             onChange={e => setPNR(e.target.value)}
             required
