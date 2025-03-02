@@ -58,12 +58,13 @@ const corsOptions = {
 };
 
 
-app.get("/", (req, res) => {
-  res.send("Azure Backend is running! so u dont need start it local");
-});
+
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
+app.get("/", (req, res) => {
+  res.send(" 🔥 Azure Backend is running! so u dont need start it local 🔥");
+});
 app.use("/user", userRouter);
 app.use('/access', accessRouter);
 app.use('/app', appRouter);
