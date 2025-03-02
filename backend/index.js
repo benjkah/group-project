@@ -28,7 +28,8 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", process.env.REACT_APP_BACKEND_URL || "http://localhost:4000"],
+      connectSrc: ["'self'", "https://recruitment-backend-g8-ehcncmbphdc6a6ad.swedencentral-01.azurewebsites.net", "https://red-coast-0ef75bd03.6.azurestaticapps.net", "http://localhost:4000"],
+
     },
   })
 );
@@ -37,10 +38,22 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  "https://red-coast-0ef75bd03.6.azurestaticapps.net",  //  Frontend in production
+  "http://localhost:3000"  // Local frontend (for testing)
+];
+
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL || "http://localhost:3000"],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 200
 };
 
