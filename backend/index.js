@@ -30,7 +30,7 @@ app.use(
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],  // Allow inline scripts during development
       styleSrc: ["'self'", "'unsafe-inline'"],  // Allow inline styles during development
       imgSrc: ["'self'", "data:"],  // Allow images from the same domain or base64
-      connectSrc: ["'self'", "https://recruitment-backend-g8.azurewebsites.net", "http://localhost:4000"]  // Allow API calls to your backend
+      connectSrc: ["'self'", "https://recruitment-backend-g8-ehcncmbphdc6a6ad.swedencentral-01.azurewebsites.net", "http://localhost:4000"]  // Allow API calls to your backend
     },
   })
 );
@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: ["https://recruitmentfrontendg8.azurewebsites.net", "http://localhost:3000"], //  Now correctly includes localhost
+  origin: ["https://red-coast-0ef75bd03.6.azurestaticapps.net/", "http://localhost:3000"], //  Now correctly includes localhost
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ["Content-Type", "Authorization"], //  Allows headers
