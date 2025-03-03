@@ -40,8 +40,7 @@ class AccessService {
               application = await UserDAO.createApplication(user.person_id);
           }
 
-         
-        
+          await Authorization.sendCookie(user, res); 
           
 
           return { ...user, application_id: application.application_id };
