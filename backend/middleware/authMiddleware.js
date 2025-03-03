@@ -76,15 +76,14 @@ class   Authorization {
         const jwtToken = jwt.sign(
             { person_id: user.person_id, username: user.username, role_id: user.role_id },  
             process.env.JWT_SECRET,
-            { expiresIn: "120 minutes" }
+            { expiresIn: "2h" }
         );
         
         res.cookie(Authorization.cookieName, jwtToken, {
-            httpOnly: true, 
-            secure: true,  
-            sameSite: "None", 
-            partitioned: true,
-            expires: new Date(Date.now() + 2 * 60 * 60 * 1000)  //two ours
+        httpOnly: true, 
+        secure: isProduction,  
+        sameSite: isProduction ? "None" : "Lax",
+        expires: new Date(Date.now() + 2 * 60 * 60 * 1000) 
 
         });
     }
