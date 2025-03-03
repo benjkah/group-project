@@ -96,6 +96,7 @@ class   Authorization {
     static removeCookie(res) {
         res.clearCookie(Authorization.cookieName, {
             httpOnly: true,
+            expires: 0
         });
     }
 }
