@@ -41,6 +41,7 @@ class AccessService {
           }
 
           await Authorization.sendCookie(user, res); 
+          
 
           return { ...user, application_id: application.application_id };
         } catch (error) {
