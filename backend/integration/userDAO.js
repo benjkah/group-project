@@ -11,15 +11,20 @@ class UserDAO {
 
 
     //check the user login credentials by checking the database.
-    static async verifyLogin(username, password) {
-        const query = `SELECT person_id, username, role_id FROM [dbo].[person] WHERE username = @username AND password = @password`;
-        const values = [username, password];
-        const paramNames = ["username", "password"];
-        const isStoredProcedure = false;
-
-        const result = await executeQuery(query, values, paramNames, isStoredProcedure);
-        return result.recordset.length > 0 ? result.recordset[0] : null;
-    }
+    static async verifyLogin(username, password, transaction) {
+      const request = new sql.Request(transaction);
+      request.input("username", sql.VarChar, username);
+      request.input("password", sql.VarChar, password);
+  
+      const query = `
+          SELECT person_id, username, role_id 
+          FROM [dbo].[person] 
+          WHERE username = @username AND password = @password;
+      `;
+  
+      const result = await request.query(query);
+      return result.recordset.length > 0 ? result.recordset[0] : null;
+  }
 
 //find application id 
     static async findApplication(person_id) {

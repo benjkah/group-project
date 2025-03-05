@@ -28,22 +28,35 @@ class AccessService {
      * @returns user, application_id: application.application_id
      */
     static async loginUser(username, password, res) {
+      const pool = await sql.connect(config);
+      const transaction = new sql.Transaction(pool);
+
         try {
-            const user = await UserDAO.verifyLogin(username, password);
+          await transaction.begin();
+            const user = await UserDAO.verifyLogin(username, password, transaction);
             if (!user) {
                 throw new Error("Invalid username or password.");
             }
 
-            let application = await UserDAO.findApplication(user.person_id);
+            let application = await UserDAO.findApplication(user.person_id, transaction);
 
             if (!application) {
-              application = await UserDAO.createApplication(user.person_id);
+              application = await UserDAO.createApplication(user.person_id, transaction);
           }
 
+<<<<<<< Updated upstream
           Authorization.sendCookie(user, res);
+=======
+          await transaction.commit();
+
+          await Authorization.sendCookie(user, res); 
+          
+>>>>>>> Stashed changes
 
           return { ...user, application_id: application.application_id };
         } catch (error) {
+          await transaction.rollback();
+          console.error("Login transaction failed:", error);
             throw new Error("Login failed.");
         }
     }
