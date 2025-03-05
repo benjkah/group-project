@@ -96,9 +96,14 @@ class   Authorization {
     static removeCookie(res) {
         res.clearCookie(Authorization.cookieName, {
             httpOnly: true,
-            expires: 0
+            secure: true,  
+            sameSite: "None",
+            partitioned: true,
+            path: "/",
         });
     }
+    
+    
 }
 
 module.exports = Authorization;
