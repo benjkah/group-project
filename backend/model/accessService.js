@@ -44,15 +44,10 @@ class AccessService {
               application = await UserDAO.createApplication(user.person_id, transaction);
           }
 
-<<<<<<< Updated upstream
-          Authorization.sendCookie(user, res);
-=======
           await transaction.commit();
 
           await Authorization.sendCookie(user, res); 
-          
->>>>>>> Stashed changes
-
+        
           return { ...user, application_id: application.application_id };
         } catch (error) {
           await transaction.rollback();
