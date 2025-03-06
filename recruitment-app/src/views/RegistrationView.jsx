@@ -70,9 +70,10 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
         </div>
 
         <div>
-          <label>PNR</label>
+          <label> Personal identity number </label>
           <input 
             type="text"
+            placeholder="YYMMDD-XXXX"
             value={pnr}
             onChange={e => setPNR(e.target.value)}
             required
@@ -80,7 +81,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
         </div>
 
         <div>
-          <label>Email</label>
+          <label>Email address</label>
           <input 
             type="email"
             value={email}

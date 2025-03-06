@@ -39,5 +39,7 @@ class ApplicationListModel {
   }
 }
 
-export default new ApplicationListModel();
+const applicationListModel = new ApplicationListModel(); //Benjamin changed to solve ESLint error.
+
+export default applicationListModel;
 

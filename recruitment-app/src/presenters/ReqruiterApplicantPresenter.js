@@ -39,7 +39,7 @@ export default observer(function ReqruiterApplicantPresenter({ model }) {
       }
     }
     loadApplicantProfile();
-  }, [model]);
+  }, [model,id]); //benjamin changed here beacuase id missed
 
   const navigate = useNavigate();
   async function handleApplication(handleId){

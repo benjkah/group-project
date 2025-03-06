@@ -76,12 +76,16 @@ class   Authorization {
         const jwtToken = jwt.sign(
             { person_id: user.person_id, username: user.username, role_id: user.role_id },  
             process.env.JWT_SECRET,
-            { expiresIn: "30 minutes" }
+            { expiresIn: "2h" }
         );
         
         res.cookie(Authorization.cookieName, jwtToken, {
-            httpOnly: true,
-            expires: 0
+            httpOnly: true, 
+            secure: true,  
+            sameSite: "None", 
+            partitioned: true,
+            maxAge : null 
+
         });
     }
 
@@ -92,8 +96,14 @@ class   Authorization {
     static removeCookie(res) {
         res.clearCookie(Authorization.cookieName, {
             httpOnly: true,
+            secure: true,  
+            sameSite: "None",
+            partitioned: true,
+            path: "/",
         });
     }
+    
+    
 }
 
 module.exports = Authorization;
