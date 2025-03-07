@@ -23,6 +23,7 @@ class ApplicationListModel {
 
   get sortedApplications() {
     const apps = this.applications.slice();
+    console.log("ApplicationListModel apps: ", apps);
     apps.sort((a, b) => {
       // Determine if each application is unhandled
       const aIsUnhandled = a.status.toLowerCase() === "unhandled" ? 0 : 1;

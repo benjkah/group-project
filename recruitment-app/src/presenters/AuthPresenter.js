@@ -53,7 +53,7 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
       userModel.setSurname(data.surname);
       userModel.setPNR(data.pnr);
       userModel.setEmail(data.email);
-      userModel.setRole(data.role_id);
+      userModel.setRoleID(data.role_id);
       userModel.setLoggedIn(true);
 
 

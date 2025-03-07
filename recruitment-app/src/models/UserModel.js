@@ -30,6 +30,20 @@ class UserModel {
 
   setError(error) {this.error = error}
 
+  reset() {
+    this.person_id = null;
+    this.role_id = null;
+    this.name = "";
+    this.surname = "";
+    this.pnr = "";
+    this.email = "";
+    this.password = "";
+    this.username = "";
+    this.isLoggedIn = false;
+    this.error = null;
+  }
+
+
 }
 
 const userModel = new UserModel();

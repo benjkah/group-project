@@ -8,8 +8,6 @@ class RecruitmentModelClass {
   lastName = "";
   email = "";
 
-  isLoggedIn = false;
-  setLoggedIn(status) { this.isLoggedIn = status; }
 
   competencies = [];
   availability = [];

@@ -20,7 +20,7 @@ function App({ userModel, recruitmentModel, applicationListModel }) {
                     <Route path="/profile" element={<ApplicantProfilePresenter model={recruitmentModel} userModel={userModel} view={ApplicantProfileView} />} />
                     <Route path="/register" element={<AuthPresenter userModel={userModel} view={RegistrationView} />} />
                     <Route path="/applications" element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} />} />
-                    <Route path="/applications/:id" element={<ReqruiterApplicantPresenter model={recruitmentModel} view={ReqruiterApplicantView} />} />
+                    <Route path="/applications/:id" element={<ReqruiterApplicantPresenter model={recruitmentModel} userModel={userModel} view={ReqruiterApplicantView} />} />
                     <Route path="/*" element={<The404Presenter />} /> 
                 </Routes>
             </div>
