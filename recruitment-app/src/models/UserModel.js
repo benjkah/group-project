@@ -13,11 +13,28 @@ class UserModel {
   error = null;
 
 
+  /**
+   * Initializes the ApplicationListModel and makes its properties observable.
+   * 
+   * `makeAutoObservable` enables automatic tracking of state changes within the model.
+   */
   constructor() {
     makeAutoObservable(this);
   }
 
-  
+  /**
+   * Logs the user out by updating the authentication state.
+   * 
+   * This function sets the `isLoggedIn` flag to `false`,
+   * effectively logging out the user.
+   */
+  loggeOut(){
+    this.isLoggedIn = false;
+  }
+
+  /**
+   * Following set functions act to update the properties of the model.
+   */
   setName(value) { this.name = value; }
   setSurname(value) { this.surname = value; }
   setPNR(value) { this.pnr = value; }

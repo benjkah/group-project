@@ -1,5 +1,15 @@
 import axios from 'axios'
 
+/**
+ * Fetches the list of applications from the server.
+ * 
+ * Sends a GET request to retrieve all applications. If the request is successful, 
+ * it returns the application data. If an error occurs, it attempts to extract a 
+ * meaningful error message from the server response.
+ * 
+ * @returns {Promise<Object>} A promise resolving to the fetched application data.
+ * @throws {Error} If the request fails, an error message is thrown.
+ */
 export async function fetchApplications() {
   try {
     const response = await axios.get("/app/applications");
