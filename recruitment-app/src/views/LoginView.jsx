@@ -2,7 +2,7 @@ import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
-function LoginView({ onLogin, onRegister, userModel, mode,  }) {
+function LoginView({ onLogin, userModel }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,8 +13,7 @@ function LoginView({ onLogin, onRegister, userModel, mode,  }) {
     const result = await onLogin(username, password);
     if (!result.success) {
       alert(result.message);
-    } else {
-      // console.log("userModel LoginView -> handleSubmit ", userModel);
+    } else{
       navigate("/profile");
   }
 }

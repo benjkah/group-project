@@ -7,7 +7,9 @@ import { login as apiLogin, register as apiRegister } from "../services/AuthAPI"
  * @param {userModel, view: ViewComponent, mode } param
  * @returns 
  */
-function AuthPresenter({ userModel, view: ViewComponent, mode }) {
+function AuthPresenter({ userModel, view: ViewComponent }) {
+
+  console.log("AuthPres userModel: ", userModel);
 
   async function login(username, password) {
     if (!username || !password) {
@@ -16,16 +18,15 @@ function AuthPresenter({ userModel, view: ViewComponent, mode }) {
 
     try {
       const data = await apiLogin(username, password);
+      console.log("AuthPres data: ", data)
 
       // Update the model with data returned from the API
-      userModel.setPersonID(data.person_id)
-      userModel.setUsername(data.username);
-      userModel.setName(data.name);
-      userModel.setSurname(data.surname);
-      userModel.setPNR(data.pnr);
-      userModel.setEmail(data.email);
-      userModel.setRole(data.role_id);
+      userModel.setPersonID(data.user.person_id)
+      userModel.setUsername(data.user.username);
       userModel.setLoggedIn(true);
+      userModel.setRoleID(data.user.role_id)
+
+      console.log("AuthPres login userModel: ", userModel);
 
       return { success: true };
     } catch (error) {
@@ -64,9 +65,7 @@ function AuthPresenter({ userModel, view: ViewComponent, mode }) {
 
   // pass the correct handlers to the ViewComponent
   return (
-    <ViewComponent
-
-      mode={mode}         
+    <ViewComponent        
       onLogin={login}
       onRegister={registerUser}
       userModel={userModel}

@@ -7,9 +7,15 @@ import {fetchProfile, fetchCompetences,deleteAvailability,deleteCompetence,addCo
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
 
-export default observer(function ApplicantProfilePresenter({ model }) {
+export default observer(function ApplicantProfilePresenter({ model, userModel }) {
+
   const navigate = useNavigate();
   useEffect(() => {
+    if (model.isLoggedIn === false) {
+      navigate("/");
+    }else if (userModel.role_id === 1) {
+      navigate("/applications");
+    }
     async function loadApplicantProfile() {
       try {
         const competences = await fetchCompetences("en");
@@ -47,11 +53,12 @@ export default observer(function ApplicantProfilePresenter({ model }) {
 
       } catch (error) {
         model.setLoggedIn(false);
+        model.setError(error);
         console.error("Error fetching profile:", error.message);
       }
     }
     loadApplicantProfile();
-  }, [model]);
+  }, [model, navigate]);
 
   
 
