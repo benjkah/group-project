@@ -53,7 +53,6 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
 
       } catch (error) {
         model.setLoggedIn(false);
-        model.setError(error);
         console.error("Error fetching profile:", error.message);
       }
     }
