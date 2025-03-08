@@ -1,14 +1,23 @@
 const AppDAO = require("../integration/appDAO");
 
+/* AppService class for getting comptences from database
+*/
 class AppService {
 
-    static async getCompetences(lan) {
+    /**
+     * It will feches competencies based on the specified language.
+     * @param {string} lan - The language code English and Swedish
+     * @returns 
+     * Returns an array of competencies or a message if no competencies are found.
+     * @throws {Error} If an error occurs while fetching competencies.
+     **/
+    static  async getCompetences(lan) {
         try {
             let competences = await AppDAO.fetchCompetences(lan);
-            //if the value is emty array []  so return a (optional)message "No competencies found."
+            
+           
             competences = competences.length > 0 ? competences : { message: "No competences found." };
 
-        
             return competences;
         } catch (error) {
             console.error("App error:", error.message);
@@ -16,13 +25,18 @@ class AppService {
         }
     }
 
+    /**
+     * Fetches all job applications.
+     * @returns Will returns an array of data.
+     * @throws {Error} handle error  while retrieving data.
+     */
     static async fetchAllApplications() {
         try {
-          // Get all applications from the DAO
-          const applications = await AppDAO.getAllApplications();
-          return applications;
+            // Get all applications from the DAO
+            const applications = await AppDAO.getAllApplications();
+            return applications;
         } catch (error) {
-          throw new Error("Failed to fetch applications.");
+            throw new Error("Failed to fetch applications.");
         }
     }
 }
