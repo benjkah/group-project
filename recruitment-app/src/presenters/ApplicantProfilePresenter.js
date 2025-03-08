@@ -146,7 +146,6 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
     try {
       await logout();
       userModel.reset();
-      //navigate("/");
     } catch (error) {
       console.error("Logout failed:", error.message);
     }
