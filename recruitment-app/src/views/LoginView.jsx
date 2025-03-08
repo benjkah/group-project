@@ -1,23 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
-function LoginView({ onLogin, onRegister, userModel, mode,  }) {
+function LoginView({ onLogin, userModel }) {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  
 
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await onLogin(username, password);
+    console.log("role_id: ", userModel.role_id)
     if (!result.success) {
       alert(result.message);
-    } else {
-      // console.log("userModel LoginView -> handleSubmit ", userModel);
-      navigate("/profile");
+    } 
   }
-}
+
+  useEffect(() => {
+    if (userModel.isLoggedIn) {
+      if (userModel.role_id === 2) {
+        navigate("/profile");
+      } else if (userModel.role_id === 1) {
+        navigate("/applications");
+      }
+    }
+  }, [userModel.isLoggedIn, userModel.role_id]);
+
+
   return (
     <div style={{ maxWidth: "300px", margin: "0 auto" }}>
       <h2>Login</h2>

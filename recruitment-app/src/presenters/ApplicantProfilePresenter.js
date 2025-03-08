@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../services/AuthAPI";
 import { observer } from "mobx-react-lite";
@@ -7,9 +7,22 @@ import {fetchProfile, fetchCompetences,deleteAvailability,deleteCompetence,addCo
 import ApplicantProfileView from "../views/ApplicantProfileView";
 
 
-export default observer(function ApplicantProfilePresenter({ model }) {
+export default observer(function ApplicantProfilePresenter({ model, userModel }) {
+
   const navigate = useNavigate();
+
   useEffect(() => {
+    if (!userModel.isLoggedIn) {
+      if (!userModel.isLoggedIn) {
+        navigate("/");
+      } else if (userModel.role_id === 1) {
+        navigate("/applications");
+      }
+    }
+  }, [userModel.isLoggedIn, userModel.role_id]);
+  
+  useEffect(() => {
+    
     async function loadApplicantProfile() {
       try {
         const competences = await fetchCompetences("en");
@@ -25,7 +38,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
         model.setId(data.person_id);
         model.setAppId(data.application_id);
         model.setHandledId(data.handled_id);
-        model.setLoggedIn(true);
 
         if (Array.isArray(data.competencies)) {
           model.setCompetencies(data.competencies.map((comp) => ({
@@ -46,7 +58,6 @@ export default observer(function ApplicantProfilePresenter({ model }) {
 
 
       } catch (error) {
-        model.setLoggedIn(false);
         console.error("Error fetching profile:", error.message);
       }
     }
@@ -134,8 +145,9 @@ export default observer(function ApplicantProfilePresenter({ model }) {
   async function handleLogout() {
     try {
       await logout();
-      model.setLoggedIn(false);
-      navigate("/");
+      console.log("model.isLoggedIn: ", model.isLoggedIn)
+      userModel.reset();
+      //navigate("/");
     } catch (error) {
       console.error("Logout failed:", error.message);
     }

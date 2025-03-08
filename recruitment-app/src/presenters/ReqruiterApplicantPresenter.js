@@ -5,8 +5,20 @@ import {fetchApplication, changeApplicationStatus} from "../services/ReqruiterAp
 
 import ReqruiterApplicantView from "../views/ReqruiterApplicantView";
 
-export default observer(function ReqruiterApplicantPresenter({ model }) {
+export default observer(function ReqruiterApplicantPresenter({ model, userModel }) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userModel.isLoggedIn) {
+      if (!userModel.isLoggedIn) {
+        navigate("/");
+      } else if (userModel.role_id === 1) {
+        navigate("/applications");
+      }
+    }
+  }, [userModel.isLoggedIn, userModel.role_id]);
+
     const { id } = useParams();
+    console.log("id ", id);
   useEffect(() => {
     async function loadApplicantProfile() {
       try {
@@ -41,7 +53,6 @@ export default observer(function ReqruiterApplicantPresenter({ model }) {
     loadApplicantProfile();
   }, [model,id]); //benjamin changed here beacuase id missed
 
-  const navigate = useNavigate();
   async function handleApplication(handleId){
     if (handleId === 2 || handleId === 3) {
         await changeApplicationStatus(model.appId, handleId);

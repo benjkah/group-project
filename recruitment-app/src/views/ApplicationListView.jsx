@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 function ApplicationListView({ model }) {
   const navigate = useNavigate();
 
+  console.log("ApplicationListView model: ", model)
 
   useEffect(() => {
     // If there's an error indicating unauthorized access, redirect after a delay
