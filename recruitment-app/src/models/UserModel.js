@@ -22,15 +22,6 @@ class UserModel {
     makeAutoObservable(this);
   }
 
-  /**
-   * Logs the user out by updating the authentication state.
-   * 
-   * This function sets the `isLoggedIn` flag to `false`,
-   * effectively logging out the user.
-   */
-  loggeOut(){
-    this.isLoggedIn = false;
-  }
 
   /**
    * Following set functions act to update the properties of the model.

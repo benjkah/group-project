@@ -145,7 +145,6 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   async function handleLogout() {
     try {
       await logout();
-      console.log("model.isLoggedIn: ", model.isLoggedIn)
       userModel.reset();
       //navigate("/");
     } catch (error) {
