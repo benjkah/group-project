@@ -15,7 +15,7 @@ export default observer(function ReqruiterApplicantPresenter({ model, userModel 
         navigate("/applications");
       }
     }
-  }, [userModel.isLoggedIn, userModel.role_id]);
+  }, [userModel.isLoggedIn, userModel.role_id, navigate]);
 
     const { id } = useParams();
     console.log("id ", id);

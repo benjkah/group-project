@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../services/AuthAPI";
 import { observer } from "mobx-react-lite";
@@ -19,7 +19,7 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
         navigate("/applications");
       }
     }
-  }, [userModel.isLoggedIn, userModel.role_id]);
+  }, [userModel.isLoggedIn, userModel.role_id, navigate]);
   
   useEffect(() => {
     
