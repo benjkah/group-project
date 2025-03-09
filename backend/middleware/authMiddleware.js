@@ -69,7 +69,8 @@ class Authorization {
             secure: true,  
             sameSite: "None",
             path: "/",     
-            expires: 0  
+            expires: 0 ,
+            partitioned: true 
         });
     }
 
