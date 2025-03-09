@@ -57,7 +57,7 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
         );
 
         return () => updateUI(); // Cleanup
-    }, []);
+    }, [userModel.isLoggedIn]);
 
     if (!isAuthChecked) return <div>Loading...</div>;
 
