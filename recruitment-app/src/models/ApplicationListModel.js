@@ -20,7 +20,7 @@ class ApplicationListModel {
    * @param {Array} apps - The array of application objects retrieved from the API.
    */
   setApplications(apps) {
-    this.applications = apps;
+    this.applications = Array.isArray(apps) ? apps : [];
   }
 
   /**
