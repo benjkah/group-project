@@ -11,6 +11,7 @@ class UserModel {
   username = "";     
   isLoggedIn = false;
   error = null;
+  isAuthChecked = false;
 
 
   /**

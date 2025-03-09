@@ -1,4 +1,5 @@
 import axios from 'axios';
+import userModel from '../models/UserModel';
 
 const API_BASE_URL = "http://localhost:4000"|| process.env.REACT_APP_BACKEND_URL ;
 //const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
@@ -55,6 +56,32 @@ export async function logout() {
     } catch (error) {
         throw new Error("Error logging out: " + error.message);
     }
+}
+
+/**
+ * Checks ifthe user is logged in. Otherwise, it sets the user as logged out.
+ * 
+ * @async
+ * @function checkAuth
+ * @returns This function does not return a value but updates the userModel values.
+ */
+export async function checkAuth() {
+  try {
+      const response = await axios.get(`${API_BASE_URL}/access/auth-check`, {
+          withCredentials: true,  
+      });
+
+      if (response.data.isAuthenticated) {
+          userModel.setLoggedIn(true);
+         
+      } else {
+          userModel.setLoggedIn(false);
+          
+      }
+  } catch (error) {
+      
+      userModel.setLoggedIn(false);
+  }
 }
 
 /**
