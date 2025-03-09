@@ -1,8 +1,8 @@
 import axios from 'axios';
 import userModel from '../models/UserModel';
 
-const API_BASE_URL = "http://localhost:4000"|| process.env.REACT_APP_BACKEND_URL ;
-//const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
+//const API_BASE_URL = "http://localhost:4000"|| process.env.REACT_APP_BACKEND_URL ;
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
 
 /**
