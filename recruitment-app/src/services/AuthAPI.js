@@ -81,7 +81,7 @@ export async function checkAuth() {
       
       userModel.setLoggedIn(false);
   }
-}93
+}
 
 /**
  * Registers a new user.
