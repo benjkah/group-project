@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { reaction } from "mobx";
-import userModel from "./models/UserModel";
 import { checkAuth } from "./services/AuthAPI";
 
 // Presenters
@@ -38,7 +37,7 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
         };
 
         verifyAuth();
-    }, []);
+    }, [userModel.isLoggedIn]);
 
     useEffect(() => {
         /**
@@ -49,7 +48,7 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
             (loggedIn) => setIsLoggedIn(loggedIn)
         );
         return () => updateUI();
-    }, []);
+    }, [userModel.isLoggedIn]);
 
     if (!isAuthChecked) return <div>Loading...</div>;
 
