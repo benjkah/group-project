@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function RegistrationView({ onLogin, onRegister, userModel, mode }) {
 
@@ -126,7 +126,9 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
           Sign Up
         </button>
       </form>
-      <p>Already have an account?</p>
+      <p>
+        <Link to="/"> Already have an account?</Link>
+      </p>
     </div>
   );
 }
