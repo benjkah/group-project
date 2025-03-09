@@ -31,18 +31,17 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
     
 
     const result = await onRegister(userData);
-    e.preventDefault();
-    if (!result.success) {
-      alert(result.message);
-    } else {
-      alert("Registration successful! Logging you in...");
-      const result = await onLogin(username, password);
+    
+   
+    
       if (!result.success) {
         alert(result.message);
       } else {
+        userModel.reset();
+        alert("Registration successful!");
         navigate("/profile");
     }
-  }
+  
 }
 
   return (
