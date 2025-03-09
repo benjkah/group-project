@@ -11,13 +11,11 @@ class UserModel {
   username = "";     
   isLoggedIn = false;
   error = null;
-  isAuthChecked = false;
-
 
   /**
    * Initializes the ApplicationListModel and makes its properties observable.
    * 
-   * `makeAutoObservable` enables automatic tracking of state changes within the model.
+   * makeAutoObservable enables automatic tracking of state changes within the model.
    */
   constructor() {
     makeAutoObservable(this);

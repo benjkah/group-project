@@ -65,8 +65,18 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
                         </>
                     ) : (
                         <>
-                            <Route path="/" element={<Navigate to="/profile" replace />} />
-                            <Route path="/register" element={<Navigate to="/profile" replace />} />
+                            <Route 
+  path="/" 
+  element={userModel.isLoggedIn ? 
+    (userModel.role_id === 1 ? <Navigate to="/applications" replace /> : <Navigate to="/profile" replace />) 
+    : <AuthPresenter userModel={userModel} view={LoginView} />} 
+/>
+<Route 
+  path="/register" 
+  element={userModel.isLoggedIn ? 
+    (userModel.role_id === 1 ? <Navigate to="/applications" replace /> : <Navigate to="/profile" replace />) 
+    : <AuthPresenter userModel={userModel} view={RegistrationView} />} 
+/>
                         </>
                     )}
 
@@ -94,3 +104,5 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
 }
 
 export default App;
+
+

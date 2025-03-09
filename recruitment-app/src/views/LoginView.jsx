@@ -19,7 +19,7 @@ function LoginView({ onLogin, userModel }) {
   }
 
   useEffect(() => {
-    if (userModel.isLoggedIn) {
+    if (userModel.isLoggedIn && userModel.role_id !== null) {
       if (userModel.role_id === 2) {
         navigate("/profile");
       } else if (userModel.role_id === 1) {
