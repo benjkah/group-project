@@ -22,7 +22,7 @@ import ReqruiterApplicantView from "./views/ReqruiterApplicantView";
  * Main application component.
  * Handles authentication and routing.
  */
-function App({ recruitmentModel, applicationListModel }) {
+function App({ recruitmentModel, applicationListModel, userModel }) {
     const [isAuthChecked, setIsAuthChecked] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(userModel.isLoggedIn);
 
