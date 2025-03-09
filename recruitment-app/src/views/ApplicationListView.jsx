@@ -49,7 +49,7 @@ function ApplicationListView({ model }) {
   return (
     <div>
       <h2>Job Applications</h2>
-      {model.loading ? (
+      {!model.loading ? (
         <p>Loading applications...</p>
       ) : model.sortedApplications.length === 0 ? (
         <p>No applications found.</p>
