@@ -13,12 +13,10 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
 
   useEffect(() => {
     if (!userModel.isLoggedIn) {
-      if (!userModel.isLoggedIn) {
-        navigate("/");
-      } else if (userModel.role_id === 1) {
+      navigate("/");
+    } else if (userModel.role_id === 1) {
         navigate("/applications");
       }
-    }
   }, [userModel.isLoggedIn, userModel.role_id, navigate]);
   
   useEffect(() => {

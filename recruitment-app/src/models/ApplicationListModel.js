@@ -46,6 +46,7 @@ class ApplicationListModel {
   /**
    * Computes a sorted list of applications, prioritizing unhandled applications first.
    * 
+   * If apps is empty, returns apps instantly so .sort does not lead to error
    * Applications with a status of "unhandled" appear before handled ones.
    * If two applications have the same status, they are sorted by their `application_id`.
    * 
@@ -54,7 +55,6 @@ class ApplicationListModel {
   get sortedApplications() {
     const apps = this.applications.slice();
     
-    console.log("apps: ", apps);
     if (apps.length === 0) {
       return apps;
     }
