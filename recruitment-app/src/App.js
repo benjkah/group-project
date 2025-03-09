@@ -27,28 +27,37 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
 
     useEffect(() => {
         /**
-         * Checks if the user is authenticated. 
+         * Checks if the user is authenticated. Prevents redundant calls.
          */
         const verifyAuth = async () => {
-            if (!userModel.isLoggedIn) {
-                await checkAuth(); 
+            if (!isAuthChecked && !userModel.isLoggedIn) {
+                try {
+                    await checkAuth();
+                } catch (error) {
+                    console.error("Auth check failed:", error);
+                }
             }
             setIsAuthChecked(true);
         };
 
         verifyAuth();
-    }, [userModel.isLoggedIn]);
+    }, [isAuthChecked, userModel.isLoggedIn]);
 
     useEffect(() => {
         /**
          * Observes authentication state changes and updates UI accordingly.
+         * Ensures it only updates when `isLoggedIn` actually changes.
          */
         const updateUI = reaction(
             () => userModel.isLoggedIn,
-            (loggedIn) => setIsLoggedIn(loggedIn)
+            (loggedIn) => {
+                setIsLoggedIn(loggedIn);
+            },
+            { fireImmediately: false } // Prevents initial execution
         );
-        return () => updateUI();
-    }, [userModel.isLoggedIn]);
+
+        return () => updateUI(); // Cleanup
+    }, []);
 
     if (!isAuthChecked) return <div>Loading...</div>;
 
@@ -64,30 +73,23 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
                             <Route path="/register" element={<AuthPresenter userModel={userModel} view={RegistrationView} />} />
                         </>
                     ) : (
-                        <>
-                            <Route 
-  path="/" 
-  element={userModel.isLoggedIn ? 
-    (userModel.role_id === 1 ? <Navigate to="/applications" replace /> : <Navigate to="/profile" replace />) 
-    : <AuthPresenter userModel={userModel} view={LoginView} />} 
-/>
-<Route 
-  path="/register" 
-  element={userModel.isLoggedIn ? 
-    (userModel.role_id === 1 ? <Navigate to="/applications" replace /> : <Navigate to="/profile" replace />) 
-    : <AuthPresenter userModel={userModel} view={RegistrationView} />} 
-/>
-                        </>
+                        <Route
+                            path="*"
+                            element={<Navigate to={userModel.role_id === 1 ? "/applications" : "/profile"} replace />}
+                        />
                     )}
 
                     {/* Protected Routes */}
-                    {isLoggedIn ? (
+                    {isLoggedIn && (
                         <>
                             <Route path="/profile" element={<ApplicantProfilePresenter model={recruitmentModel} userModel={userModel} view={ApplicantProfileView} />} />
                             <Route path="/applications" element={<ApplicationListPresenter model={applicationListModel} view={ApplicationListView} />} />
                             <Route path="/applications/:id" element={<ReqruiterApplicantPresenter model={recruitmentModel} userModel={userModel} view={ReqruiterApplicantView} />} />
                         </>
-                    ) : (
+                    )}
+
+                    {/* Redirect unauthorized users */}
+                    {!isLoggedIn && (
                         <>
                             <Route path="/profile" element={<Navigate to="/" replace />} />
                             <Route path="/applications" element={<Navigate to="/" replace />} />
@@ -104,5 +106,3 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
 }
 
 export default App;
-
-
