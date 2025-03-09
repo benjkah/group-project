@@ -53,6 +53,11 @@ class ApplicationListModel {
    */
   get sortedApplications() {
     const apps = this.applications.slice();
+    
+    console.log("apps: ", apps);
+    if (apps.length === 0) {
+      return apps;
+    }
   
     apps.sort((a, b) => {
       const aIsUnhandled = a.status.toLowerCase() === "unhandled" ? 0 : 1;

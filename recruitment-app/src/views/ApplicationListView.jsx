@@ -49,9 +49,7 @@ function ApplicationListView({ model }) {
   return (
     <div>
       <h2>Job Applications</h2>
-      {!model.loading ? (
-        <p>Loading applications...</p>
-      ) : model.sortedApplications.length === 0 ? (
+      {model.sortedApplications.length === 0 ? (
         <p>No applications found.</p>
       ) : (
         <ul>
@@ -59,7 +57,7 @@ function ApplicationListView({ model }) {
             <li key={app.application_id}>
               <Link to={`/applications/${app.application_id}`}>
                 <strong>Application ID:</strong> {app.application_id}{" "}
-                <strong>Applicant:</strong> {app.name} {app.surname}{" "}
+                <strong>Applicant:</strong> {app.name}{" "}{app.surname}{" "}
                 <strong>Status:</strong> {app.status}
               </Link>
             </li>

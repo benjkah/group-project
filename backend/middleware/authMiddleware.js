@@ -21,6 +21,7 @@ class Authorization {
      */
     static checkLogin(req, res, next) {
         const token = req.cookies[Authorization.cookieName];
+        console.log("token: ", token);
 
         if (!token) {
             return res.status(401).json({ message: "Unauthorized - No token provided" });
