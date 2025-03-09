@@ -15,6 +15,7 @@ export async function fetchApplication(id) {
     try {
         const response = await fetch(`${API_BASE_URL}/user/applicantProfile/${id}`, {
             method: "GET", 
+            credentials: "include" 
         });
 
         if (!response.ok) {
@@ -46,8 +47,9 @@ export async function changeApplicationStatus(id, handleId) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ handleId }), 
+            },
+            credentials: "include", // ✅ Ensures cookies are sent
+            body: JSON.stringify({ handleId }), 
         });
 
         if (!response.ok) {
