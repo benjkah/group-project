@@ -71,7 +71,8 @@ export async function checkAuth() {
 
       if (response.data.isAuthenticated) {
           userModel.setLoggedIn(true);
-         
+          userModel.setRoleID(response.data.user.role_id);
+          console.log("setRoleID ", response.data.user.role_id)
       } else {
           userModel.setLoggedIn(false);
           

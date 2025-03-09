@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
  import { observer } from "mobx-react-lite";
  import { Link, useNavigate } from "react-router-dom";
  
- function ApplicationListView({ model }) {
+ function ApplicationListView({ model, logout }) {
    const navigate = useNavigate();
  
    console.log("ApplicationListView model: ", model)
@@ -40,15 +40,18 @@ import React, { useEffect } from "react";
        </div>
      );
    }
- 
+   
    if (model.loading) {
      return <p>Loading applications...</p>;
    }
  
  
    return (
-     <div>
-       <h2>Job Applications</h2>
+    <div>
+      <header>
+        <h2>Job Applications</h2>
+        <button onClick={logout}>Logout</button>
+      </header>
       
        {model.loading ? (
          <p>Loading applications...</p>

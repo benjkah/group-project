@@ -106,7 +106,9 @@ class Authorization {
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.json({ isAuthenticated: true, user: decoded });
+            req.role_id = decoded.role_id;
+            console.log("auth role_id: ", req.role_id)
+            res.json({ isAuthenticated: true, user: decoded, role_id: decoded.role_id });
         } catch (error) {
             res.json({ isAuthenticated: false });
         }

@@ -2,9 +2,10 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import ApplicationListView from "../views/ApplicationListView";
 import { fetchApplications } from "../services/ApplicationListAPI";
+import { logout } from "../services/AuthAPI";
 
 
-function ApplicationListPresenter({ model, view: ViewComponent = ApplicationListView }) {
+function ApplicationListPresenter({ model, userModel, view: ViewComponent = ApplicationListView }) {
   useEffect(() => {
     async function loadApplications() {
 
@@ -25,7 +26,20 @@ function ApplicationListPresenter({ model, view: ViewComponent = ApplicationList
     loadApplications();
   }, [model]);
 
-  return <ViewComponent model={model} />;
+    async function handleLogout() {
+      try {
+        await logout();
+        userModel.reset();
+      } catch (error) {
+        console.error("Logout failed:", error.message);
+      }
+    }
+  
+
+  return <ViewComponent 
+    model={model}
+    logout={handleLogout} 
+    />;
 }
 
 export default observer(ApplicationListPresenter);
