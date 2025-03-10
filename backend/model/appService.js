@@ -27,12 +27,12 @@ class AppService {
 
     /**
      * Fetches all job applications.
+     * Get all applications from the DAO
      * @returns Will returns an array of data.
      * @throws {Error} handle error  while retrieving data.
      */
     static async fetchAllApplications() {
         try {
-            // Get all applications from the DAO
             const applications = await AppDAO.getAllApplications();
             return applications;
         } catch (error) {
