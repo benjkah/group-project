@@ -15,6 +15,13 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
   const navigate = useNavigate();
 
 
+  /**
+   * Handles the registration form submission.
+   * Prevents default form behavior, collects user data, and attempts registration.
+   * If registration is successful, automatically logs in the user and redirects to the profile page.
+   * 
+   * @param {Event} e - The form submit event.
+   */
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -26,7 +33,7 @@ function RegistrationView({ onLogin, onRegister, userModel, mode }) {
       username,
       password,
       confirmPass,
-      role_id: 2 // default applicant, or let them choose if recruiter should be able to register as well
+      role_id: 2 
     };
     
 

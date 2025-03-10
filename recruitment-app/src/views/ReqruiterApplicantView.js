@@ -4,11 +4,24 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function ReqruiterApplicantView(props) {
 
+  /**
+   * Displays the applicant's years of experience for a given competence.
+   * If the value is not a number, defaults to "0.00".
+   * 
+   * @param {Object} comp - Competence object containing yearsOfExperience.
+   * @returns {string} - Formatted years of experience.
+   */
   function displayCompetenceStatusACB(comp) 
   {
     return isNaN(comp.yearsOfExperience) ? "0.00" : comp.yearsOfExperience;
   }
 
+  /**
+   * Formats availability dates for display.
+   * 
+   * @param {Object} avail - Availability object containing fromDate and toDate.
+   * @returns {string} - Formatted date range.
+   */
   function displayAvailabilityACB(avail) {
     return `${avail.fromDate} to ${avail.toDate}`;
   }

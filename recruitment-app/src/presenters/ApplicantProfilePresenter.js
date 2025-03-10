@@ -21,6 +21,10 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   
   useEffect(() => {
     
+    /**
+     * Loads applicant profile data, including personal details, competences, and availability.
+     * Fetches data from the API and updates the model state accordingly.
+     */
     async function loadApplicantProfile() {
       try {
         const competences = await fetchCompetences("en");
@@ -63,7 +67,16 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   }, [model]);
 
   
-
+  /**
+   * Adds a new competence to the applicant's profile.
+   * Updates the model state after fetching the latest profile data.
+   * 
+   * @param {number} id - Applicant ID.
+   * @param {number} comp_id - Competence ID.
+   * @param {string} startDate - Start date for competence.
+   * @param {string} endDate - End date for competence.
+   * @returns {Promise<Object>} - Success or error message.
+   */
   async function handleAddCompetence(id, comp_id, startDate, endDate) {
     try {
       await addCompetence(id, comp_id, startDate, endDate);
@@ -81,7 +94,13 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   }
 
 
-
+  /**
+   * Removes a competence from the applicant's profile.
+   * Updates the model state after deletion.
+   * 
+   * @param {number} id - Competence profile ID.
+   * @returns {Promise<Object>} - Success or error message.
+   */
   async function handleRemoveCompetence(id) {
     if (!id) return { success: false, message: "Invalid ID for deletion." };
     try {
@@ -96,7 +115,15 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   }
 
 
-
+  /**
+   * Adds an availability period to the applicant's profile.
+   * Updates the model state after fetching the latest profile data.
+   * 
+   * @param {number} id - Applicant ID.
+   * @param {string} fromDate - Start date of availability.
+   * @param {string} toDate - End date of availability.
+   * @returns {Promise<Object>} - Success or error message.
+   */
   async function handleAddAvailability(id, fromDate, toDate) {
     try {
       await addAvailability(id, fromDate, toDate);
@@ -113,7 +140,13 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   }
 
 
-
+  /**
+   * Removes an availability period from the applicant's profile.
+   * Updates the model state after deletion.
+   * 
+   * @param {number} id - Availability ID.
+   * @returns {Promise<Object>} - Success or error message.
+   */
   async function handleRemoveAvailability(id) {
     if (!id) return { success: false, message: "Invalid ID for deletion." };
     try {
@@ -126,7 +159,14 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
       return { success: false, message: error.message };
     }
   }
-
+  
+   /**
+   * Toggles the language of the available competences.
+   * Fetches competences in the selected language and updates the model state.
+   * 
+   * @param {string} lan - Language code (e.g., "en", "sv").
+   * @returns {Promise<Object>} - Success or error message.
+   */
   async function toggleLanguage(lan){
     try {
       const competences = await fetchCompetences(lan);
@@ -140,6 +180,10 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
     }
   }
   
+  /**
+   * Logs out the user by calling the logout API.
+   * Redirects the user to the login page after logging out.
+   */
   async function handleLogout() {
     try {
       await logout();

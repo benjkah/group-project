@@ -11,6 +11,14 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
 
   console.log("AuthPres userModel: ", userModel);
 
+  /**
+   * Handles the login functionality. 
+   * It checks for valid username and password, calls the API to login, and updates the user model on success.
+   * 
+   * @param {string} username - The username entered by the user.
+   * @param {string} password - The password entered by the user.
+   * @returns {Object} - Returns an object containing success status and an optional message.
+   */
   async function login(username, password) {
     if (!username || !password) {
       return { success: false, message: "Username/Password required." };
@@ -20,7 +28,7 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
       const data = await apiLogin(username, password);
       console.log("AuthPres data: ", data)
 
-      // Update the model with data returned from the API
+
       userModel.setPersonID(data.user.person_id)
       userModel.setUsername(data.user.username);
       userModel.setLoggedIn(true);
@@ -35,6 +43,14 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
   }
 
 
+  /**
+   * Handles the registration functionality. 
+   * It checks if all required fields are filled, validates password matching, and calls the API to register the user.
+   * If successful, it updates the user model.
+   * 
+   * @param {Object} userData - The data entered by the user during registration.
+   * @returns {Object} - Returns an object containing success status and an optional message.
+   */
   async function registerUser(userData) {
     if (!userData.name || !userData.surname || !userData.pnr ||
         !userData.email || !userData.username || !userData.password) {

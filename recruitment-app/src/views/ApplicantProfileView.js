@@ -5,9 +5,15 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function ApplicantProfileView(props) {
 
-  const languages = ["En", "Swe"]; // Add as many languages as you want
-  const [currentIndex, setCurrentIndex] = useState(0); // Track current language index
+  const languages = ["En", "Swe"];
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  /**
+   * Handles the removal of a competence by ID.
+   * Ensures an ID is provided before attempting to remove.
+   * 
+   * @param {number} id - The ID of the competence to be removed.
+   */
   function handleRemoveCompetenceACB(id) 
   {
     if (!id) {
@@ -17,6 +23,12 @@ export default observer(function ApplicantProfileView(props) {
     props.removeCompetence(id);
   }
 
+  /**
+   * Handles the removal of an availability entry by ID.
+   * Ensures an ID is provided before attempting to remove.
+   * 
+   * @param {number} id - The ID of the availability entry to be removed.
+   */
   function handleRemoveAvailabilityACB(id)
    {
     if (!id) {
@@ -26,15 +38,34 @@ export default observer(function ApplicantProfileView(props) {
     props.removeAvailability(id);
   }
 
+  /**
+   * Displays the competence status by returning years of experience.
+   * Defaults to "0.00" if the value is not a valid number.
+   * 
+   * @param {Object} comp - The competence object.
+   * @returns {string} - Formatted years of experience.
+   */
   function displayCompetenceStatusACB(comp) 
   {
     return isNaN(comp.yearsOfExperience) ? "0.00" : comp.yearsOfExperience;
   }
 
+  /**
+   * Formats availability period as a string.
+   * 
+   * @param {Object} avail - The availability object.
+   * @returns {string} - Formatted date range.
+   */
   function displayAvailabilityACB(avail) {
     return `${avail.fromDate} to ${avail.toDate}`;
   }
 
+  /**
+   * Handles adding a new competence entry.
+   * Validates inputs before submission.
+   * 
+   * @param {Event} event - Form submission event.
+   */
   function handleAddCompetenceACB(event) {
     event.preventDefault();
 
@@ -59,8 +90,12 @@ export default observer(function ApplicantProfileView(props) {
     event.target.reset();
   }
 
-
-
+  /**
+   * Handles adding a new availability entry.
+   * Ensures required fields are provided before submission.
+   * 
+   * @param {Event} event - Form submission event.
+   */
   function handleAddAvailabilityACB(event) {
     event.preventDefault();
 
@@ -76,6 +111,10 @@ export default observer(function ApplicantProfileView(props) {
     event.target.reset();
   }
 
+  /**
+   * Toggles the language setting.
+   * Cycles through the available language options.
+   */
   function handleLanguageToggle() {
     const newIndex = (currentIndex + 1) % languages.length; // Cycle through languages
     setCurrentIndex(newIndex);

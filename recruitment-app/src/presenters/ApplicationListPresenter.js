@@ -7,6 +7,11 @@ import { logout } from "../services/AuthAPI";
 
 function ApplicationListPresenter({ model, userModel, view: ViewComponent = ApplicationListView }) {
   useEffect(() => {
+
+    /**
+     * Loads applicant profile data, including personal details, competences, and availability.
+     * Fetches data from the API and updates the model state accordingly.
+     */
     async function loadApplications() {
 
       model.setLoading(true);
@@ -15,8 +20,6 @@ function ApplicationListPresenter({ model, userModel, view: ViewComponent = Appl
         model.setApplications(apps);
         model.setError(null);
       } catch (error) {
-        // Instead of setting the error in a way that the view would display it,
-        // you could set applications to an empty array.
         model.setApplications([]);
         model.setError(error.message);
       } finally {

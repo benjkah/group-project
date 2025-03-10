@@ -20,6 +20,11 @@ export default observer(function ReqruiterApplicantPresenter({ model, userModel 
     const { id } = useParams();
     console.log("id ", id);
   useEffect(() => {
+
+    /**
+     * Loads applicant profile data, including personal details, competences, and availability.
+     * Fetches data from the API and updates the model state accordingly.
+     */
     async function loadApplicantProfile() {
       try {
         const data = await fetchApplication(id);
@@ -51,8 +56,14 @@ export default observer(function ReqruiterApplicantPresenter({ model, userModel 
       }
     }
     loadApplicantProfile();
-  }, [model,id]); //benjamin changed here beacuase id missed
+  }, [model,id]);
 
+  /**
+   * Handles changing the status of the application.
+   * The status is determined by the `handleId` parameter, which is either 2 (Accept) or 3 (Deny).
+   * 
+   * @param {number} handleId - The status to set for the application (2 for Accept, 3 for Deny).
+   */
   async function handleApplication(handleId){
     if (handleId === 2 || handleId === 3) {
         await changeApplicationStatus(model.appId, handleId);

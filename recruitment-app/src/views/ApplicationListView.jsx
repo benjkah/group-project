@@ -8,7 +8,6 @@ import React, { useEffect } from "react";
    console.log("ApplicationListView model: ", model)
  
    useEffect(() => {
-     // If there's an error indicating unauthorized access, redirect after a delay
      if (model.error && (model.error.includes("Unauthorized") || model.error.includes("Forbidden"))) {
        const timer = setTimeout(() => {
          if (model.error.includes("Unauthorized")){
@@ -16,13 +15,12 @@ import React, { useEffect } from "react";
          }else if (model.error.includes("Forbidden")){
            navigate("/profile");
          }
-       }, 3000); // 3 second delay
+       }, 3000);
        return () => clearTimeout(timer);
      }
    }, [model.error, navigate]);
  
    if (model.error && model.error.includes("Unauthorized")) {
-     // Display the error message and inform the user about the redirect
      return (
        <div>
          <p>{model.error}</p>
@@ -32,7 +30,6 @@ import React, { useEffect } from "react";
    }
  
    if (model.error && model.error.includes("Forbidden")) {
-     // Display the error message and inform the user about the redirect
      return (
        <div>
          <p>{model.error}</p>
