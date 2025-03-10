@@ -25,6 +25,7 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
     try {
       const data = await apiLogin(username, password);
 
+      userModel.reset();
       userModel.setPersonID(data.user.person_id)
       userModel.setUsername(data.user.username);
       userModel.setLoggedIn(true);
