@@ -9,6 +9,12 @@ function LoginView({ onLogin, userModel }) {
   const navigate = useNavigate();
   
 
+  /**
+   * Handles the login form submission.
+   * Prevents default form behavior, attempts login, and navigates based on success.
+   * 
+   * @param {Event} e - The form submit event.
+   */
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await onLogin(username, password);
