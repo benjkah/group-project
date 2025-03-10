@@ -49,26 +49,22 @@ import React, { useEffect } from "react";
         <h2>Job Applications</h2>
         <button onClick={logout}>Logout</button>
       </header>
-      
-       {model.loading ? (
-         <p>Loading applications...</p>
-       ) : model.sortedApplications.length === 0 ? (
-         <p>No applications found.</p>
-       ) : (
-         <ul>
-           {model.sortedApplications.map((app) => (
-             <li key={app.application_id}>
-               <Link to={`/applications/${app.application_id}`}>
-                 <strong>Application ID:</strong> {app.application_id}{" "}
-                 
-                 <strong>Applicant:</strong> {app.name} {app.surname}{" "}
-                 <strong>Status:</strong> {app.status}
-               </Link>
-             </li>
-           ))}
-         </ul>
-       )}
-     </div>
+      {model.sortedApplications.length === 0 ? (
+        <p>No applications found.</p>
+      ) : (
+        <ul>
+          {model.sortedApplications.map((app) => (
+            <li key={app.application_id}>
+              <Link to={`/applications/${app.application_id}`}>
+                <strong>Application ID:</strong> {app.application_id}{" "}
+                <strong>Applicant:</strong> {app.name} {app.surname}{" "}
+                <strong>Status:</strong> {app.status}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
    );
  };
  
