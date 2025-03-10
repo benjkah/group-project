@@ -1,16 +1,23 @@
 const { executeQuery } = require("../database.js");
 
 
-// UserDAO (Data Access Object) class used  for database interactions
-//Dont use error handling here in DAO
-//  use Null for object that not EXIST
-// use empty array [] for object that is empty
+/**
+  * Data Access Object (DAO) for user-related database operations.
+  * This class interacts with the database but does not handle errors.
+  * Returns `null` for objects that do not exist and an empty array `[]` for empty results.
+  */
 
 class UserDAO {
 
 
 
-    //check the user login credentials by checking the database.
+     /**
+      * Controll the user login credentials.
+      * @param {string} username - The username .
+      * @param {string} password - The password .
+      * @returns The user's basic details if found, otherwise null.
+      */
+
     static async verifyLogin(username, password) {
         const query = `SELECT person_id, username, role_id FROM [dbo].[person] WHERE username = @username AND password = @password`;
         const values = [username, password];
@@ -21,7 +28,11 @@ class UserDAO {
         return result.recordset.length > 0 ? result.recordset[0] : null;
     }
 
-//find application id 
+/**
+      * Finds an application ID by person ID.
+      * @param {number} person_id - The ID of the user as person_id.
+      * @returns The application ID if found, otherwise null.
+      */
     static async findApplication(person_id) {
       const query = `SELECT application_id FROM [dbo].[application] WHERE person_id = @person_id`;
       const values = [person_id];
@@ -32,6 +43,11 @@ class UserDAO {
       return result.recordset.length > 0 ? result.recordset[0] : null;
   }
 
+  /**
+      * Creates a new application for a user that doesnt have application id.
+      * @param {number} person_id - The ID of the user.
+      * @returns The created application ID if successful, otherwise will null.
+      */
 
 
   static async createApplication(person_id) {
@@ -48,7 +64,11 @@ class UserDAO {
 
 
 
-    //return the user details from the database based on their person_id.
+    /**
+      * Retrieves user details by  using person ID.
+      * @param {number} person_id - The user person_id of the user.
+      * @returns The user details if found, otherwise null.
+      */
 
     static async findUserById(person_id) {
         const query = `
@@ -63,7 +83,12 @@ class UserDAO {
         const result = await executeQuery(query, values, paramNames, isStoredProcedure);
         return result.recordset.length > 0 ? result.recordset[0] : null;
     }
-   // return  user comenetcies from the database 
+
+    /**
+      * Retrieves a user's competencies by using personid.
+      * @param {number} person_id - The person id of the user.
+      * @returns An array of competencies will return.
+      */
     static async findCompetencies(person_id) {
         const competenceQuery = `
           SELECT 
@@ -87,7 +112,11 @@ class UserDAO {
         return result.recordset;
     }
     
- // return  user availibilties from the database 
+ /**
+      * Retrieves a user's availability by person ID.
+      * @param {number} person_id - The person_id of the user.
+      * @returns An array of availability records.
+      */
     static async findAvailability(person_id) {
         const availabilityQuery = `
           SELECT a.availability_id, a.from_date, a.to_date  
@@ -108,8 +137,13 @@ class UserDAO {
 
 
 
+/**
+ * Retrieves user details from the database according to application id.
+ *
+ * @param app_id The application ID to search for.
+ * @return The user details if found, otherwise null.
+ */
 
-// Return the user details from the database based on their application_id.
 static async findUserByAppId(app_id) {
   const query = `
       SELECT p.person_id, p.name, p.surname, p.email, a.application_id, a.handled_id
@@ -125,7 +159,15 @@ static async findUserByAppId(app_id) {
   return result.recordset.length > 0 ? result.recordset[0] : null;
 }
 
-// Return user competencies from the database based on application_id.
+/**
+ * Retrieves the user's competencies from the database according  to application_id.
+ *
+ * This method gets  competency details such as Id, name, and years of experience
+ *
+ *
+ * @param {number} app_id - The application_id to search for competencies.
+ * @returns A promise that return to an array of competency records.
+ */
 static async findCompetenciesByAppId(app_id) {
   const competenceQuery = `
       SELECT 
@@ -149,7 +191,15 @@ static async findCompetenciesByAppId(app_id) {
   return result.recordset;
 }
 
-// Return user availabilities from the database based on application_id.
+/**
+ * Retrieves the user's availability  from the database according to application_id.
+ *
+ * This method gets availability details and  its start and end dates. 
+ *
+ *
+ * @param {number} app_id -  search for availability records.
+ * @returns return to an array of availability records.
+ */
 static async findAvailabilityByAppId(app_id) {
   const availabilityQuery = `
       SELECT a.availability_id, a.from_date, a.to_date  
@@ -163,6 +213,16 @@ static async findAvailabilityByAppId(app_id) {
   const result = await executeQuery(availabilityQuery, values, paramNames, isStoredProcedure);
   return result.recordset;
 }
+
+/**
+ * Updates the application status by changing the handled ID in the database.
+ *
+ *
+ * @param {number} app_id - The ID of the application to update.
+ * @param {number} handle_id - The new handled ID to assign to the application.
+ * @returns  return a   promise that with success message if the update is successful.
+ *
+ */
 
 static async changeApplicationStatus(app_id, handle_id) {
 
@@ -193,13 +253,11 @@ static async changeApplicationStatus(app_id, handle_id) {
 
 
 
-
-
-
-
-
-
-    //remove competence from application
+    /**
+      * Deletes a competence from an application.
+      * @param {number} id - The ID of the competence profile.
+      * @returns The result of the deletion return by new value
+      */
     static async removeCompetence(id){
         const competencesQuery = `
         DELETE FROM [dbo].[competence_profile]
@@ -214,7 +272,12 @@ static async changeApplicationStatus(app_id, handle_id) {
     return result;
     }
 
-    //remove availability from application
+     /**
+      * Deletes an availability record by its ID.
+      * @param {number} id - The ID of the availability entry.
+      * @returns return a promis with success message.
+      * @throws {Error} If the ID is invalid or the availability is not found.
+      */
     static async removeAvailability(id){
       const availabilityQuery = `
       DELETE FROM [dbo].[availability]
@@ -228,6 +291,14 @@ static async changeApplicationStatus(app_id, handle_id) {
 
   return result;
   }
+
+   /**
+      * Adds a new competence to an application.
+      * @param {number} id - The application ID.
+      * @param {number} comp_id - The competence ID.
+      * @param {number} yearsOfExperience - The user years of experience.
+      * @returns The result of the insertion operation.
+      */
 
   static async addCompetence(id, comp_id, yearsOfExperience){
     const competenceQuery = `
@@ -243,6 +314,14 @@ static async changeApplicationStatus(app_id, handle_id) {
 
     return result;
   }
+
+   /**
+      * Adds new availability to an application.
+      * @param {number} id - The application ID.
+      * @param {string} fromDate - The start date 
+      * @param {string} toDate - The end date 
+      * @returns The result of the insertion operation and it return new value.
+      */
 
   static async addAvailability(id, fromDate, toDate){
       const availabilityQuery = `

@@ -1,4 +1,9 @@
 
+/**
+ *  configuration settings for connecting to  Azure SQL database.
+ *
+ */
+
 const config = {
     server: process.env.DB_AZURE_SERVER,
     database: process.env.DB_AZURE_DATABASE,
