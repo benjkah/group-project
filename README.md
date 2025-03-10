@@ -14,7 +14,7 @@ Build a new system for managing the company's job applications, which should be 
 
 ### links
 
- - [Github](https://gits-15.sys.kth.se/IV1203-Gr-8-VT25/group-project)
+ - [Github](https://github.com/benjkah/group-project)
  - [Frontend website](https://red-coast-0ef75bd03.6.azurestaticapps.net)
  - [API backend](https://recruitment-backend-g8-ehcncmbphdc6a6ad.swedencentral-01.azurewebsites.net)
 
@@ -49,7 +49,7 @@ Set in map "backend"
 Clone the project
 
 ```bash
-  git clone https://gits-15.sys.kth.se/IV1203-Gr-8-VT25/group-project.git
+  git clone https://github.com/benjkah/group-project.git
 ```
 
 Open 2 windos project directory
