@@ -5,7 +5,7 @@ import { fetchApplications } from "../services/ApplicationListAPI";
 import { logout } from "../services/AuthAPI";
 
 
-function ApplicationListPresenter({ model, userModel, view: ViewComponent = ApplicationListView }) {
+function ApplicationListPresenter({ model, userModel, recruitmentModel, view: ViewComponent = ApplicationListView }) {
   useEffect(() => {
 
     /**
@@ -32,6 +32,7 @@ function ApplicationListPresenter({ model, userModel, view: ViewComponent = Appl
     async function handleLogout() {
       try {
         await logout();
+        recruitmentModel.reset();
         userModel.reset();
       } catch (error) {
         console.error("Logout failed:", error.message);

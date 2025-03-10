@@ -187,6 +187,7 @@ export default observer(function ApplicantProfilePresenter({ model, userModel })
   async function handleLogout() {
     try {
       await logout();
+      model.reset();
       userModel.reset();
     } catch (error) {
       console.error("Logout failed:", error.message);

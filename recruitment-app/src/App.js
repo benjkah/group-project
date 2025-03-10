@@ -80,6 +80,7 @@ function App({ recruitmentModel, applicationListModel, userModel }) {
                 <ApplicationListPresenter
                   model={applicationListModel}
                   userModel={userModel}
+                  recruitmentModel={recruitmentModel}
                   view={ApplicationListView}
                 />
               } />
