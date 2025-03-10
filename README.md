@@ -189,7 +189,8 @@ SRC:.
 ## Backend
 The backend value router maps strucktor,
 
-![image](https://gits-15.sys.kth.se/storage/user/17638/files/cce504ac-590a-44ea-8fa3-346e81a294dd)
+![image](https://github.com/user-attachments/assets/cebe73f4-db8c-4bb9-9333-0ff39debdd23)
+
 
 The backend server work as the programs API system. The use the komunication 
 
