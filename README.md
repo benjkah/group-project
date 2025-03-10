@@ -58,7 +58,7 @@ Open 2 windos project directory
 Go to the project directory
 
 ```bash
-  cd group-project\backend
+  cd your_local_path_to_project\group-project\backend
 ```
 
 Install dependencies
@@ -78,7 +78,7 @@ Start the backend server
 Go to the project directory
 
 ```bash
-  cd group-project\recruitment-app
+  cd your_local_path_to_project\group-project\recruitment-app
 ```
 
 Install dependencies
@@ -140,7 +140,7 @@ The system distinguishes between two types of users, applicants and recruiters. 
 
 ## Frontend
 
-This is a React-based frontend application built using modern technologies to ensure a seamless user experience.
+The React-based frontend file structure:
 
 
 ```
@@ -187,7 +187,7 @@ SRC:.
 
 
 ## Backend
-The backend value router maps strucktor,
+Backend routing structure maps the flow of requests through the backend components.
 
 ![image](https://github.com/user-attachments/assets/cebe73f4-db8c-4bb9-9333-0ff39debdd23)
 
