@@ -22,6 +22,22 @@ class RecruitmentModelClass {
     makeAutoObservable(this);
   }
 
+
+  /**
+   * Resets all properties of the model to their initial values.
+   */
+  reset() {
+    this.id = "";
+    this.appId = "";
+    this.handledId = "";
+    this.firstName = "";
+    this.lastName = "";
+    this.email = "";
+    this.competencies = [];
+    this.availability = [];
+    this.availableCompetences = [];
+  }
+
   /**
    * Following set functions act to update the properties of the model.
    */
