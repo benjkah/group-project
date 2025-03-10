@@ -72,6 +72,11 @@ export default observer(function ApplicantProfileView(props) {
       return;
     }
 
+    if (new Date(toDate) <= new Date(fromDate)) {
+      alert("End date must be after start date!");
+      return;
+    }
+
     props.addAvailability(props.appId, fromDate, toDate);
     event.target.reset();
   }
