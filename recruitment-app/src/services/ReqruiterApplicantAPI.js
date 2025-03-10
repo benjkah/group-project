@@ -1,3 +1,4 @@
+import axios from "axios";
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 //const API_BASE_URL = "http://localhost:4000"|| process.env.REACT_APP_BACKEND_URL ;
 /**
@@ -12,22 +13,19 @@ const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000
  * @throws {Error} If fetching the profile fails, an error message is thrown.
  */
 export async function fetchApplication(id) {
-    try {
-        const response = await fetch(`${API_BASE_URL}/user/applicantProfile/${id}`, {
-            method: "GET", 
-            credentials: "include" 
-        });
-
-        if (!response.ok) {
-            const errorMessage = await response.json();
-            throw new Error(errorMessage.message || "Failed to fetch profile.");
-        }
-        
-        return await response.json();
-    } catch (error) {
-        throw new Error("Server error: " + error.message);
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/applicantProfile/${id}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
     }
+    throw new Error("Server error: " + error.message);
+  }
 }
+
 
 /**
  * Changes the status of an application.
@@ -43,24 +41,23 @@ export async function fetchApplication(id) {
  */
 export async function changeApplicationStatus(id, handleId) {
     try {
-        const response = await fetch(`${API_BASE_URL}/user/applicationStatus/${id}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include", // ✅ Ensures cookies are sent
-            body: JSON.stringify({ handleId }), 
-        });
-
-        if (!response.ok) {
-            const errorMessage = await response.json();
-            throw new Error(errorMessage.message || "Failed to fetch profile.");
+      const response = await axios.post(
+        `${API_BASE_URL}/user/applicationStatus/${id}`,
+        { handleId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
-        
-        return await response.json();
+      );
+      return response.data;
     } catch (error) {
-        throw new Error("Server error: " + error.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error("Server error: " + error.message);
     }
-}
+  }
 
 

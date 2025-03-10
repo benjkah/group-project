@@ -13,21 +13,17 @@ const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:4000
  */
 export async function fetchProfile() {
     try {
-        const response = await fetch(`${API_BASE_URL}/user/profile`, {
-            method: "GET",
-            credentials: "include", 
-        });
-
-        if (!response.ok) {
-            const errorMessage = await response.json();
-            throw new Error(errorMessage.message || "Failed to fetch profile.");
-        }
-        
-        return await response.json();
+      const response = await axios.get(`${API_BASE_URL}/user/profile`, {
+        withCredentials: true,
+      });
+      return response.data;
     } catch (error) {
-        throw new Error("Server error: " + error.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error("Server error: " + error.message);
     }
-}
+  }
 
 /**
  * Fetches a list of competences based on the provided language.
@@ -39,22 +35,19 @@ export async function fetchProfile() {
  * @returns {Promise<Array>} A promise resolving to an array of competences.
  * @throws {Error} If the request fails or encounters an error.
  */
-export async function fetchCompetences(lan){
-    try {
-        const response = await fetch(`${API_BASE_URL}/app/competences/${lan}`, {
-            method: "GET", 
-        });
 
-        if (!response.ok) {
-            const errorMessage = await response.json();
-            throw new Error(errorMessage.message || "Failed to fetch competences.");
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        throw new Error("Server error: " + error.message);
+export async function fetchCompetences(lan) {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/app/competences/${lan}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
     }
+    throw new Error("Server error: " + error.message);
+  }
 }
+
 
 /**
  * Deletes an availability entry for a user.

@@ -39,21 +39,17 @@ export async function login(username, password) {
  * @throws {Error} If logout fails, an error message is thrown.
  */
 export async function logout() {
-    try {
-      const response = await fetch(`${API_BASE_URL}/access/logout`, {
-            method: "POST",
-            credentials: "include"
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || "Logout failed.");
-        }
-
-        return await response.json();
-    } catch (error) {
-        throw new Error("Error logging out: " + error.message);
+  try {
+    const response = await axios.post(`${API_BASE_URL}/access/logout`, null, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
     }
+    throw new Error("Error logging out: " + error.message);
+  }
 }
 
 /**
