@@ -5,8 +5,6 @@ import React, { useEffect } from "react";
  function ApplicationListView({ model, logout }) {
    const navigate = useNavigate();
  
-   console.log("ApplicationListView model: ", model)
- 
    useEffect(() => {
      if (model.error && (model.error.includes("Unauthorized") || model.error.includes("Forbidden"))) {
        const timer = setTimeout(() => {

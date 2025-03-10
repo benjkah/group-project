@@ -18,7 +18,6 @@ function LoginView({ onLogin, userModel }) {
   async function handleSubmit(e) {
     e.preventDefault();
     const result = await onLogin(username, password);
-    console.log("role_id: ", userModel.role_id)
     if (!result.success) {
       alert(result.message);
     } 

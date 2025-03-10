@@ -18,7 +18,7 @@ export default observer(function ReqruiterApplicantPresenter({ model, userModel 
   }, [userModel.isLoggedIn, userModel.role_id, navigate]);
 
     const { id } = useParams();
-    console.log("id ", id);
+
   useEffect(() => {
 
     /**

@@ -9,8 +9,6 @@ import { login as apiLogin, register as apiRegister } from "../services/AuthAPI"
  */
 function AuthPresenter({ userModel, view: ViewComponent }) {
 
-  console.log("AuthPres userModel: ", userModel);
-
   /**
    * Handles the login functionality. 
    * It checks for valid username and password, calls the API to login, and updates the user model on success.
@@ -26,15 +24,11 @@ function AuthPresenter({ userModel, view: ViewComponent }) {
 
     try {
       const data = await apiLogin(username, password);
-      console.log("AuthPres data: ", data)
-
 
       userModel.setPersonID(data.user.person_id)
       userModel.setUsername(data.user.username);
       userModel.setLoggedIn(true);
       userModel.setRoleID(data.user.role_id)
-
-      console.log("AuthPres login userModel: ", userModel);
 
       return { success: true };
     } catch (error) {

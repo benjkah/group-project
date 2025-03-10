@@ -21,7 +21,6 @@ class Authorization {
      */
     static checkLogin(req, res, next) {
         const token = req.cookies[Authorization.cookieName];
-        console.log("token: ", token);
 
         if (!token) {
             return res.status(401).json({ message: "Unauthorized - No token provided" });
@@ -107,7 +106,6 @@ class Authorization {
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.role_id = decoded.role_id;
-            console.log("auth role_id: ", req.role_id)
             res.json({ isAuthenticated: true, user: decoded, role_id: decoded.role_id });
         } catch (error) {
             res.json({ isAuthenticated: false });
